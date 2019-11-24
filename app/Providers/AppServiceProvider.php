@@ -11,7 +11,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public final function register(): void
     {
         //
     }
@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public final function boot(): void
     {
         //
     }

@@ -1,0 +1,7 @@
+{
+    "components": {
+        "profile": {
+            "picture": "components/profile/Picture.vue"
+        }
+    }
+}
