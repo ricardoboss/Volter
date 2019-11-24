@@ -1,0 +1,15 @@
+*
+
+!.gitignore
+
+!*.iml
+
+!composerJson.xml
+!laravel-plugin.xml
+!modules.xml
+!php.xml
+!vcs.xml
+!webResources.xml
+
+!runConfigurations/
+!runConfigurations/*
