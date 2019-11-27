@@ -1,32 +1,35 @@
 <template>
     <div :class="[bodyBgTheme, bodyTextTheme, 'vh-100']">
         <nav :class="['navbar', 'navbar-expand-lg', navbarTheme, navbarBgTheme]">
-            <button class="navbar-toggler" data-target="#navbarTogglerMain"
-                    data-toggle="collapse"
-                    type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <router-link :to="{ name: 'home' }" class="navbar-brand">Volter</router-link>
+            <div class="container-lg">
+                <button class="navbar-toggler" data-target="#navbarTogglerMain"
+                        data-toggle="collapse"
+                        type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <router-link :to="{ name: 'home' }" class="navbar-brand">Volter</router-link>
 
-            <div class="collapse navbar-collapse" id="navbarTogglerMain">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link :to="{ name: 'settings' }" class="nav-link">Settings</router-link>
-                    </li>
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarTogglerMain">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link :to="{ name: 'settings' }" class="nav-link">Settings</router-link>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
-        <main>
+        <main class="container pt-3">
             <router-view></router-view>
         </main>
     </div>
 </template>
 
 <script>
+    import * as $ from "jquery";
     import {mapGetters} from "vuex";
 
     export default {
@@ -72,6 +75,12 @@
                 }
 
                 return 'bg-' + this.theme;
+            }
+        },
+
+        watch: {
+            '$route'() {
+                $('#navbarTogglerMain').collapse('hide');
             }
         }
     }

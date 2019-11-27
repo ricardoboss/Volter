@@ -7,8 +7,7 @@ Vue.use(VueRouter);
 
 export default new VueRouter({
     mode: 'history',
-    linkActiveClass: "active",
-    linkExactActiveClass: "exact-active",
+    linkExactActiveClass: "active",
 
     routes: [
         {

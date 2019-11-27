@@ -1,5 +1,9 @@
 <template>
+    <div>
+        <h1>Volter</h1>
 
+        <p class="lead">Team Password Vault</p>
+    </div>
 </template>
 
 <script lang="ts">
