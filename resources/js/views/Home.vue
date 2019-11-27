@@ -2,7 +2,7 @@
     <div>
         <h1>Volter</h1>
 
-        <p class="lead">Team Password Vault</p>
+        <p class="lead">In-House Password Vault</p>
     </div>
 </template>
 

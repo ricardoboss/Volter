@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Settings</h1>
 
         <button @click="setDarkTheme" class="btn btn-outline-secondary">Dark</button>
