@@ -11,5 +11,29 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/app.ts', 'public/js')
+    .css('resources/sass/app.scss', 'public/css')
+    .options({
+        vue: {
+            esModule: true
+        }
+    })
+    .autoload({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery'
+    })
+    .webpackConfig({
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    loader: "ts-loader",
+                    exclude: /node_modules/
+                }
+            ]
+        },
+        resolve: {
+            extensions: ['*', '.ts', '.tsx', '.vue']
+        }
+    });
