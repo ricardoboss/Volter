@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Settings</h1>
 
         <button @click="setDarkTheme" class="btn btn-outline-secondary">Dark</button>
@@ -8,16 +8,17 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
-
     export default {
         name: "Settings",
 
         methods: {
-            ...mapActions([
-                'setDarkTheme',
-                'setLightTheme'
-            ])
+            setDarkTheme() {
+                this.$store.dispatch('settings/setDarkTheme');
+            },
+
+            setLightTheme() {
+                this.$store.dispatch('settings/setLightTheme');
+            }
         }
     }
 </script>

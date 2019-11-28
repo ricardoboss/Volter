@@ -1,31 +1,14 @@
 import Vue from "vue"
-import Vuex, {ActionContext, StoreOptions} from "vuex"
-import {RootState} from "./RootState";
+import Vuex, {StoreOptions} from "vuex"
+import {RootState} from "./states/RootState";
+import settings from "./modules/Settings";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        theme: 'dark'
-    },
+    strict: process.env.NODE_ENV !== 'production',
 
-    actions: {
-        setLightTheme(context: ActionContext<RootState, RootState>) {
-            context.commit('setTheme', 'light')
-        },
-
-        setDarkTheme(context: ActionContext<RootState, RootState>) {
-            context.commit('setTheme', 'dark')
-        }
-    },
-
-    mutations: {
-        setTheme(state: RootState, theme: string) {
-            state.theme = theme;
-        }
-    },
-
-    getters: {
-        getTheme: state => state.theme,
+    modules: {
+        settings
     }
 } as StoreOptions<RootState>)

@@ -36,7 +36,7 @@
         name: "App",
 
         computed: {
-            ...mapGetters({
+            ...mapGetters('settings', {
                 theme: 'getTheme'
             }),
 

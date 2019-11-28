@@ -18,11 +18,6 @@ mix.js('resources/js/app.ts', 'public/js')
             esModule: true
         }
     })
-    .autoload({
-        jQuery: 'jquery',
-        $: 'jquery',
-        jquery: 'jquery'
-    })
     .webpackConfig({
         module: {
             rules: [
@@ -37,3 +32,5 @@ mix.js('resources/js/app.ts', 'public/js')
             extensions: ['*', '.ts', '.tsx', '.vue']
         }
     });
+
+mix.disableNotifications();
