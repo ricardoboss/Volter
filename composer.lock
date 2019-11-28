@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bensampo/laravel-enum",
-            "version": "v1.28",
+            "version": "v1.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BenSampo/laravel-enum.git",
-                "reference": "f9dffdf1e9eeb74e77d65125b96d5090011e4df6"
+                "reference": "2948e7535fae0a98760a34607572dae2038eb9b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/f9dffdf1e9eeb74e77d65125b96d5090011e4df6",
-                "reference": "f9dffdf1e9eeb74e77d65125b96d5090011e4df6",
+                "url": "https://api.github.com/repos/BenSampo/laravel-enum/zipball/2948e7535fae0a98760a34607572dae2038eb9b8",
+                "reference": "2948e7535fae0a98760a34607572dae2038eb9b8",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
                 "package",
                 "validation"
             ],
-            "time": "2019-11-27T20:03:30+00:00"
+            "time": "2019-11-28T00:14:55+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
