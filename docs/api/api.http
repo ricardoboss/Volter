@@ -1,0 +1,7 @@
+POST http://{{host}}/api/auth/login
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+email={{email}}&password={{password}}
+
+###
