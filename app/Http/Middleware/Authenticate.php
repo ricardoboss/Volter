@@ -2,20 +2,33 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\ApiErrorCodes;
+use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
+     * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return string
+     * @param Request $request
+     * @param Closure $next
+     * @param string[] ...$guards
+     * @return mixed
      */
-    protected function redirectTo($request)
+    public function handle($request, Closure $next, ...$guards)
     {
-        if (!$request->expectsJson()) {
-            return route('login');
+        try {
+            $this->authenticate($request, $guards);
+        } catch (AuthenticationException $e) {
+            return response()->failed(
+                ApiErrorCodes::Unauthorized,
+                ["Unauthorized."]
+            );
         }
+
+        return $next($request);
     }
 }
