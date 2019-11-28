@@ -1,15 +1,23 @@
-import axios from 'axios'
-import 'bootstrap'
-import Vue from 'vue'
 /**
- * Octicons
+ * VueJS Framework
+ */
+import Vue from "vue"
+/**
+ * Bootstrap JS
+ */
+import "bootstrap/dist/js/bootstrap"
+/**
+ * Octicon icons
  */
 import Octicon from 'vue-octicon/components/Octicon.vue'
 import 'vue-octicon/icons'
-
 /**
  * Initialize axios to use the CSRF token from Laravel
  */
+import axios from "axios"
+import VueAxios from "vue-axios";
+
+Vue.component('octicon', Octicon);
 
 // set default header
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -24,5 +32,5 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-Vue.component('octicon', Octicon);
-
+// use vue axios plugin
+Vue.use(VueAxios, axios);
