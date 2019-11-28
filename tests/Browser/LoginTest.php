@@ -1,13 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Browser;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Throwable;
 
+/**
+ * Class LoginTest
+ * @package Tests\Browser
+ */
 class LoginTest extends DuskTestCase
 {
     use DatabaseMigrations;
@@ -15,7 +20,6 @@ class LoginTest extends DuskTestCase
     /**
      * A Dusk test example.
      *
-     * @return void
      * @throws Throwable
      */
     public final function testLogin(): void
