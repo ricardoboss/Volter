@@ -30,18 +30,18 @@ email={{email}}&password={{password}}
     });
 
     client.test("Token Type", function () {
-        client.assert(response.body["token_type"] === "bearer", "Invalid token type returned");
+        client.assert(response.body["result"]["token_type"] === "bearer", "Invalid token type returned");
     });
 
     client.test("Expire time", function () {
-        client.assert(response.body["expires_in"] === 3600, "Unexpected expire time returned");
+        client.assert(response.body["result"]["expires_in"] === 3600, "Unexpected expire time returned");
     });
 
     client.test("Access token", function () {
-        client.assert(response.body["access_token"], "Invalid access token returned");
+        client.assert(response.body["result"]["access_token"], "Invalid access token returned");
     });
 
-    client.global.set("access_token", response.body["access_token"]);
+    client.global.set("access_token", response.body["result"]["access_token"]);
  %}
 
 ### authenticated user information
@@ -72,18 +72,18 @@ Authorization: bearer {{access_token}}
     });
 
     client.test("Token Type", function () {
-        client.assert(response.body["token_type"] === "bearer", "Invalid token type returned");
+        client.assert(response.body["result"]["token_type"] === "bearer", "Invalid token type returned");
     });
 
     client.test("Expire time", function () {
-        client.assert(response.body["expires_in"] === 3600, "Unexpected expire time returned");
+        client.assert(response.body["result"]["expires_in"] === 3600, "Unexpected expire time returned");
     });
 
     client.test("Access token", function () {
-        client.assert(response.body["access_token"], "Invalid access token returned");
+        client.assert(response.body["result"]["access_token"], "Invalid access token returned");
     });
 
-    client.global.set("access_token", response.body["access_token"]);
+    client.global.set("access_token", response.body["result"]["access_token"]);
  %}
 
 ### logout

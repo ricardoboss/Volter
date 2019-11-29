@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -6,6 +7,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class ResponseMacroServiceProvider
+ *
+ * @package App\Providers
+ */
 class ResponseMacroServiceProvider extends ServiceProvider
 {
     /**
@@ -78,9 +84,14 @@ class ResponseMacroServiceProvider extends ServiceProvider
         Response::macro('access_token', function (string $token) {
             /** @var Response $this */
             return $this->json([
-                'access_token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60,
+                'success' => true,
+                'result' => [
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60,
+                ],
+                'messages' => [],
+                'errors' => [],
             ]);
         });
     }
