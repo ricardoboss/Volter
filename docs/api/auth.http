@@ -1,0 +1,97 @@
+### failed login
+
+POST http://{{host}}/api/auth/login
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+email=test@example.com&password=wrong
+
+> {%
+    client.test("Status", function () {
+        client.assert(response.status === 401, "Invalid response status");
+    });
+
+    client.test("Success", function () {
+        client.assert(!response.body["success"], "Request was not successful");
+    });
+ %}
+
+### successful login
+
+POST http://{{host}}/api/auth/login
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+email={{email}}&password={{password}}
+
+> {%
+    client.test("Status", function() {
+      client.assert(response.status === 200, "Invalid response status");
+    });
+
+    client.test("Token Type", function () {
+        client.assert(response.body["token_type"] === "bearer", "Invalid token type returned");
+    });
+
+    client.test("Expire time", function () {
+        client.assert(response.body["expires_in"] === 3600, "Unexpected expire time returned");
+    });
+
+    client.test("Access token", function () {
+        client.assert(response.body["access_token"], "Invalid access token returned");
+    });
+
+    client.global.set("access_token", response.body["access_token"]);
+ %}
+
+### authenticated user information
+
+GET http://{{host}}/api/auth/me
+Accept: application/json
+Authorization: bearer {{access_token}}
+
+> {%
+    client.test("Status", function () {
+        client.assert(response.status === 200, "Invalid response status");
+    });
+
+    client.test("Success", function () {
+        client.assert(response.body["success"], "Request was not successful");
+    });
+ %}
+
+### refresh access token
+
+GET http://{{host}}/api/auth/refresh
+Accept: application/json
+Authorization: bearer {{access_token}}
+
+> {%
+    client.test("Status", function () {
+        client.assert(response.status === 200, "Invalid response status");
+    });
+
+    client.test("Token Type", function () {
+        client.assert(response.body["token_type"] === "bearer", "Invalid token type returned");
+    });
+
+    client.test("Expire time", function () {
+        client.assert(response.body["expires_in"] === 3600, "Unexpected expire time returned");
+    });
+
+    client.test("Access token", function () {
+        client.assert(response.body["access_token"], "Invalid access token returned");
+    });
+
+    client.global.set("access_token", response.body["access_token"]);
+ %}
+
+### logout
+
+POST http://{{host}}/api/auth/logout
+Accept: application/json
+Authorization: bearer {{access_token}}
+
+> {%
+
+ %}

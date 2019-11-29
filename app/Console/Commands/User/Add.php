@@ -54,7 +54,7 @@ class Add extends Command
         $user->refresh();
 
         $this->info("User created:");
-        $this->show($user, ['ID', 'Name', 'Email', 'Created at']);
+        $this->show($user, ['id', 'name', 'email', 'created_at']);
 
         return 0;
     }

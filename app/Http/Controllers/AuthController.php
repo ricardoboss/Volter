@@ -1,10 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Enums\ApiErrorCodes;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Class AuthController
+ * @package App\Http\Controllers
+ */
 class AuthController extends Controller
 {
     /**
@@ -21,8 +26,6 @@ class AuthController extends Controller
 
     /**
      * Get a JWT via given credentials.
-     *
-     * @return JsonResponse
      */
     public function login(): JsonResponse
     {
@@ -42,8 +45,6 @@ class AuthController extends Controller
 
     /**
      * Log the current user out.
-     *
-     * @return JsonResponse
      */
     public function logout(): JsonResponse
     {
@@ -54,8 +55,6 @@ class AuthController extends Controller
 
     /**
      * Get the currently authenticated user.
-     *
-     * @return JsonResponse
      */
     public function me(): JsonResponse
     {

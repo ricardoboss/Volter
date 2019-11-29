@@ -16,9 +16,6 @@ trait ShowModel
 {
     /**
      * Print a table with only the headers and one row containing the given attributes.
-     *
-     * @param Model $model
-     * @param array $attributes
      */
     public function show(Model $model, array $attributes): void
     {
