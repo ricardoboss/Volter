@@ -1,7 +1,16 @@
 # Volter Docs - API
 
 1. [Overview](#overview)
-2. [Authentication](#authentication)
+    1. [Syntax](#syntax)
+        1. [Requests](#requests)
+        2. [Responses](#responses)
+        3. [Variables](#variables)
+    2. [Testing](#testing)
+3. [Authentication](#authentication)
+    1. [Login](#login)
+    2. [Logout](#logout)
+    3. [Refresh](#refresh)
+    4. [Authenticated User Information](#authenticated-user-information)
 
 ## Overview
 
@@ -38,6 +47,26 @@ Every JSON response has the same markup. Here is an example of a response:
 * `messages`: status messages, usually meant for reporting information to the user.
 * `errors`: error messages to help debug what went wrong.
 
+#### Variables
+
+Variables are documented by enclosing the name of the variable with two paris of curly braces: `{{var_name}}`.
+They can appear anywhere in the request: as a header value, in the URL or in the body.
+Most of the time, the type of the variable can be derived from the name and context it is used in.
+The default type is `string`.
+
+### Testing
+
+**If you are using PhpStorm 2019.3 or later**, you can use the files ending with `.http` for testing.
+PhpStorm lets you execute the files directly in the editor with it's built-in HTTP client.
+By pressing `alt + enter` while the cursor is in the url, you can select which environment to use.
+The environments are stored in the `http-client.env.json` file.
+For private variables you can clone the file `http-client.private.env.example.json` to `http-client.private.env.json` and update the values.
+It will automatically be ignored by git.
+
+**For testing without PhpStorm**, you could use any generic API testing utility.
+We recommend using [Postman](https://www.getpostman.com/) for this.
+A collection for Postman is being considered, but not in the works yet.
+
 ## Authentication
 
 See file `auth.http`. Use these endpoints to authenticate yourself with Volter.
@@ -45,7 +74,7 @@ See file `auth.http`. Use these endpoints to authenticate yourself with Volter.
 ### Login
 
 ```http request
-POST http://{{host}}/api/auth/login
+POST /api/auth/login
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
 
@@ -55,7 +84,7 @@ email={{email}}&password={{password}}
 ### Logout
 
 ```http request
-POST http://{{host}}/api/auth/logout
+POST /api/auth/logout
 Accept: application/json
 Authorization: Bearer {{access_token}}
 ```
@@ -63,7 +92,7 @@ Authorization: Bearer {{access_token}}
 ### Refresh
 
 ```http request
-GET http://{{host}}/api/auth/refresh
+GET /api/auth/refresh
 Accept: application/json
 Authorization Bearer {{access_token}}
 ```
@@ -71,7 +100,7 @@ Authorization Bearer {{access_token}}
 ### Authenticated User Information
 
 ```http request
-GET http://{{host}}/api/auth/me
+GET /api/auth/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
 ```
