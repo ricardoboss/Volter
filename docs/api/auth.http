@@ -12,7 +12,7 @@ email=test@example.com&password=wrong
     });
 
     client.test("Success", function () {
-        client.assert(!response.body["success"], "Request was not successful");
+        client.assert(!response.body["success"], "Request was successful but shouldn't have been");
     });
  %}
 
@@ -25,8 +25,12 @@ Content-Type: application/x-www-form-urlencoded
 email={{email}}&password={{password}}
 
 > {%
-    client.test("Status", function() {
-      client.assert(response.status === 200, "Invalid response status");
+    client.test("Status", function () {
+        client.assert(response.status === 200, "Invalid response status");
+    });
+
+    client.test("Success", function () {
+        client.assert(response.body["success"], "Request was not successful");
     });
 
     client.test("Token Type", function () {
@@ -71,6 +75,10 @@ Authorization: bearer {{access_token}}
         client.assert(response.status === 200, "Invalid response status");
     });
 
+    client.test("Success", function () {
+        client.assert(response.body["success"], "Request was not successful");
+    });
+
     client.test("Token Type", function () {
         client.assert(response.body["result"]["token_type"] === "bearer", "Invalid token type returned");
     });
@@ -93,7 +101,15 @@ Accept: application/json
 Authorization: bearer {{access_token}}
 
 > {%
+    client.test("Status", function () {
+        client.assert(response.status === 200, "Invalid response status");
+    });
 
+    client.test("Success", function () {
+        client.assert(response.body["success"], "Request was not successful");
+    });
+
+    client.global.clear("access_token");
  %}
 
 ###

@@ -29,7 +29,7 @@ request such as JSON or a query string.
 
 #### Responses
 
-Every JSON response has the same markup. Here is an example of a response:
+Responses are typically in JSON. Every JSON response has the same markup. Here is an example of a response:
 
 ```json
 {
@@ -47,6 +47,8 @@ Every JSON response has the same markup. Here is an example of a response:
 * `messages`: status messages, usually meant for reporting information to the user.
 * `errors`: error messages to help debug what went wrong.
 
+The response code is also important for handling errors. The response above for example has response code `401 Unauthorized`.
+
 #### Variables
 
 Variables are documented by enclosing the name of the variable with two paris of curly braces: `{{var_name}}`.
@@ -60,10 +62,12 @@ The default type is `string`.
 PhpStorm lets you execute the files directly in the editor with it's built-in HTTP client.
 By pressing `alt + enter` while the cursor is in the url, you can select which environment to use.
 The environments are stored in the `http-client.env.json` file.
-For private variables you can clone the file `http-client.private.env.example.json` to `http-client.private.env.json` and update the values.
+For private variables you can copy the file `http-client.private.env.example.json` to `http-client.private.env.json` and update the values.
 It will automatically be ignored by git.
 
-**For testing without PhpStorm**, you could use any generic API testing utility.
+If you now execute a request within PhpStorm from a `.http` file, the included tests are automatically executed.
+
+**For testing without PhpStorm**, you can use any generic API testing utility.
 We recommend using [Postman](https://www.getpostman.com/) for this.
 A collection for Postman is being considered, but not in the works yet.
 
@@ -81,6 +85,16 @@ Content-Type: application/x-www-form-urlencoded
 email={{email}}&password={{password}}
 ```
 
+Result:
+
+```json
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU3NTExNjQzMSwiZXhwIjoxNTc1MTIwMDMxLCJuYmYiOjE1NzUxMTY0MzEsImp0aSI6InNhUmI3WktiZnBsazJpYksiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.J4mWIsXWgwLJRxcwLGYbaxYxHrmzF0KGMDH6JIMXh_o",
+    "token_type": "bearer",
+    "expires_in": 3600
+}
+```
+
 ### Logout
 
 ```http request
@@ -89,13 +103,21 @@ Accept: application/json
 Authorization: Bearer {{access_token}}
 ```
 
+Result:
+
+```json
+true
+```
+
 ### Refresh
 
 ```http request
 GET /api/auth/refresh
 Accept: application/json
-Authorization Bearer {{access_token}}
+Authorization: Bearer {{access_token}}
 ```
+
+Result is the same as for the `/api/auth/login` request.
 
 ### Authenticated User Information
 
@@ -103,4 +125,17 @@ Authorization Bearer {{access_token}}
 GET /api/auth/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
+```
+
+Result:
+
+```json
+{
+    "id": 1,
+    "name": "Ricardo Boss",
+    "email": "r@b",
+    "email_verified_at": "2019-11-27 23:52:20",
+    "created_at": "2019-11-27 22:50:45",
+    "updated_at": "2019-11-27 22:55:22"
+}
 ```
