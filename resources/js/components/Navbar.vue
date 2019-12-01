@@ -46,7 +46,7 @@
                         text: "Logged out.",
                         type: "success",
                         timer: 2000,
-                        onAfterClose: () => {
+                        onRender: () => {
                             this.$router.push({name: 'login'});
                         }
                     }))

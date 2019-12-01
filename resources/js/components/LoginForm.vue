@@ -35,22 +35,20 @@
         },
 
         methods: {
-            doLogin() {
-                this.$store.dispatch('auth/login',
+            async doLogin() {
+                await this.$store.dispatch('auth/login',
                     {
                         email: this.form_email,
                         password: this.form_password
                     })
-                    .then(() => this.$swal({
+                    .then(async () => await this.$router.push({name: 'home'}))
+                    .then(async () => await this.$swal({
                         toast: true,
                         position: 'top',
                         showConfirmButton: false,
                         text: "You are now logged in.",
                         type: "success",
-                        timer: 2000,
-                        onRender: () => {
-                            this.$router.push({name: 'home'});
-                        }
+                        timer: 2000
                     }))
                     .catch(err => {
                         console.error("Error while performing login:", err);

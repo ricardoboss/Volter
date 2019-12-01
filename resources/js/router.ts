@@ -49,10 +49,14 @@ router.beforeEach((to, from, next) => {
         if (authenticated) {
             next();
         } else {
+            console.log("Auth is required");
+
             next({name: 'login'});
         }
     } else if (requiresGuest) {
         if (authenticated) {
+            console.log("Guest is required");
+
             next({name: 'home'});
         } else {
             next();

@@ -18,8 +18,8 @@
         mounted() {
             if (!this.$store.state['auth/isAuthenticated']) {
                 // attempt to log in from a stored token
-                this.$store.dispatch('auth/loginFromStorage')
-                    .then(() => this.$router.push({name: 'home'}));
+                this.$store.dispatch('auth/loginFromStorage');
+                this.$router.replace({name: 'home'});
             }
         },
 
