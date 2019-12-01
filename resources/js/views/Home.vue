@@ -3,21 +3,25 @@
         <h1>Volter</h1>
 
         <p class="lead">In-House Password Vault</p>
+
+        <p v-if="isAuthenticated">
+            Welcome, {{ this.user.name }}!
+        </p>
     </div>
 </template>
 
-<script lang="ts">
-    import Vue from "vue"
-    import Component from "vue-class-component"
+<script>
+    import {mapGetters, mapState} from "vuex";
 
-    @Component
-    export default class Home extends Vue {
-        data() {
-            return {}
+    export default {
+        computed: {
+            ...mapState('auth', [
+                'user'
+            ]),
+
+            ...mapGetters('auth', {
+                isAuthenticated: 'isAuthenticated'
+            }),
         }
     }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

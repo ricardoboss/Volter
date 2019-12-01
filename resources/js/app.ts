@@ -1,25 +1,9 @@
-/**
- * SCSS styles
- */
-import "../sass/app.scss"
-/**
- * Load all Javascript utilities and other dependencies.
- */
-import "./bootstrap.ts"
-/**
- * Load VueJS and all the components
- */
-import Vue from "vue"
-import "./components/index.ts"
-/**
- * Load VueRouter and Vuex
- */
-import router from "./router"
-import store from "./store"
-/**
- * Load App component
- */
-import App from "./views/App.vue";
+import "../sass/app.scss" // SCSS styles
+import "./bootstrap.ts" // Load all Javascript utilities and other dependencies.
+import Vue from "vue" // Load VueJS and all the components
+import router from "./router" // Load VueRouter
+import store from "./store" // Load Vuex
+import App from "./views/App.vue"; // Load App component
 
 /**
  * Craft application

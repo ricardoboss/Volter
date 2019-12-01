@@ -1,24 +1,19 @@
-/**
- * VueJS Framework
- */
-import Vue from "vue"
-/**
- * Bootstrap JS
- */
 import "bootstrap/dist/js/bootstrap"
+import Vue from "vue"
+import Octicon from "vue-octicon/components/Octicon.vue"
+import axios from "axios"
+import VueAxios from "vue-axios";
+import VueSweetalert2 from "vue-sweetalert2";
 /**
  * Octicon icons
  */
-import Octicon from 'vue-octicon/components/Octicon.vue'
-import 'vue-octicon/icons'
-/**
- * Initialize axios to use the CSRF token from Laravel
- */
-import axios from "axios"
-import VueAxios from "vue-axios";
+import "vue-octicon/icons"
 
 Vue.component('octicon', Octicon);
 
+/**
+ * Initialize axios to use the CSRF token from Laravel
+ */
 // set default header
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -34,3 +29,8 @@ if (token) {
 
 // use vue axios plugin
 Vue.use(VueAxios, axios);
+
+/**
+ * Initialize Sweetalert
+ */
+Vue.use(VueSweetalert2);
