@@ -7,8 +7,6 @@ import Vue from "vue";
 import auth from "../../api/auth";
 
 const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User | null> => {
-    commit('setLoadingUser', true);
-
     try {
         // request user data using token
         let user = await auth.me(token);
@@ -25,13 +23,10 @@ const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User | 
         commit('unsetToken');
 
         return null;
-    } finally {
-        commit('setLoadingUser', false);
     }
 };
 
 const state = {
-    loadingUser: false,
     token: null,
     user: null,
 } as AuthState;
@@ -124,10 +119,6 @@ const actions = {
 };
 
 const mutations = {
-    setLoadingUser(state: AuthState, loading: boolean) {
-        state.loadingUser = loading;
-    },
-
     unsetToken(state: AuthState) {
         console.log("Resetting token");
 
