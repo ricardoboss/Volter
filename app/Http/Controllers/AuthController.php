@@ -30,6 +30,8 @@ class AuthController extends Controller
     public function login(): JsonResponse
     {
         $credentials = request(['email', 'password']);
+
+        /** @var string|bool $token */
         $token = auth()->attempt($credentials);
 
         if (!$token) {
