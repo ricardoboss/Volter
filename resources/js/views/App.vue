@@ -1,14 +1,8 @@
 <template>
     <div :class="['vh-100']">
         <main class="container pt-3">
-            <login-form v-if="!isAuthenticated && !api.loading"/>
-            <div class="vh-100 vw-100 d-flex flex-column justify-content-center align-items-center"
-                 v-else-if="api.loading">
-                <p>
-                    Loading...
-                </p>
-                <div class="spinner-border"></div>
-            </div>
+            <loading-overlay v-if="api.loading"/>
+            <login-form v-else-if="!isAuthenticated"/>
             <router-view v-else/>
         </main>
     </div>
@@ -18,41 +12,52 @@
     import {mapGetters, mapState} from "vuex";
     import LoginForm from "../components/LoginForm";
     import axios from "axios";
+    import LoadingOverlay from "../components/LoadingOverlay";
 
     export default {
-        components: {LoginForm},
+        components: {LoadingOverlay, LoginForm},
 
         async created() {
-            function sleep(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms))
-            }
-
             // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
-            axios.interceptors.request.use(async config => {
-                await this.$store.dispatch('api/setLoading', true);
-
-                await sleep(500);
-
-                return config;
-            });
-
-            axios.interceptors.response.use(async response => {
-                await this.$store.dispatch('api/setLoading', false);
-
-                return response;
-            }, async error => {
-                await this.$store.dispatch('api/setLoading', false);
-
-                return Promise.reject(error);
-            });
+            this.setupAxiosInterceptors();
 
             if (!this.isAuthenticated) {
                 try {
                     // attempt to log in from a stored token
                     await this.$store.dispatch('auth/loginFromStorage');
                 } catch (e) {
-                    console.log("Error while mounting app: " + e);
+                    console.warn("Error while logging in via storage: " + e);
                 }
+            }
+        },
+
+        methods: {
+            setupAxiosInterceptors() {
+                // for simulating api loading delay
+                function sleep(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms))
+                }
+
+                axios.interceptors.request.use(async config => {
+                    await this.$store.dispatch('api/setLoading', true);
+
+                    // TODO: remove in production; simulates API loading and errors
+                    await sleep(Math.random() * 1000);
+                    if (Math.random() < 0.1)
+                        return Promise.reject("API mock rejection (no real error)");
+
+                    return config;
+                });
+
+                axios.interceptors.response.use(async response => {
+                    await this.$store.dispatch('api/setLoading', false);
+
+                    return response;
+                }, async error => {
+                    await this.$store.dispatch('api/setLoading', false);
+
+                    return Promise.reject(error);
+                });
             }
         },
 
