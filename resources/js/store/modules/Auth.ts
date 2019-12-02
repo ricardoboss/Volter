@@ -1,4 +1,4 @@
-import {ActionContext, StoreOptions} from "vuex";
+import {ActionContext, Commit, StoreOptions} from "vuex";
 import {RootState} from "../states/RootState";
 import {AuthState} from "../states/AuthState";
 import {JsonWebToken} from "../../types/JsonWebToken";
@@ -6,14 +6,39 @@ import {User} from "../../types/User";
 import Vue from "vue";
 import auth from "../../api/auth";
 
+const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User | null> => {
+    commit('setLoadingUser', true);
+
+    try {
+        // request user data using token
+        let user = await auth.me(token);
+
+        // store token in state
+        commit('setUser', user);
+
+        return user;
+    } catch (e) {
+        console.error("Error while getting user with local token.");
+        console.error(e);
+
+        // remove token because no user information could be retrieved using it
+        commit('unsetToken');
+
+        return null;
+    } finally {
+        commit('setLoadingUser', false);
+    }
+};
+
 const state = {
+    loadingUser: false,
     token: null,
     user: null,
 } as AuthState;
 
 const getters = {
     isAuthenticated() {
-        return getters.getTokenFromStorage() !== null && state.user !== null;
+        return state.token !== null && state.user !== null;
     },
 
     getTokenFromStorage(): JsonWebToken | null {
@@ -28,33 +53,50 @@ const getters = {
 };
 
 const actions = {
-    async login({dispatch}: ActionContext<AuthState, RootState>, payload: { email: string, password: string }): Promise<{ user: User, token: JsonWebToken } | null> {
+    async login({dispatch, commit}: ActionContext<AuthState, RootState>, payload: { email: string, password: string }): Promise<{ user: User, token: JsonWebToken } | null> {
+        // TODO: check if already authenticated and maybe refresh token
+
         // try to get a token using the provided credentials
-        let token = await auth.login(payload.email, payload.password);
+        let token: JsonWebToken | null = null;
+        try {
+            token = await auth.login(payload.email, payload.password);
+        } catch (e) {
+            console.error("Error while trying to get token with provided login information.");
+            console.error(e);
+        }
+
         if (token === null)
             return null;
 
         // store the token in local storage
         window.localStorage.setItem('token', JSON.stringify(token));
 
-        // call next action to log in using the stored token
-        return await dispatch('loginFromStorage');
-    },
+        // store token in state
+        commit('setToken', token);
 
-    async loginFromStorage(context: ActionContext<AuthState, RootState>): Promise<{ user: User, token: JsonWebToken } | null> {
-        // get token from local storage
-        let token = context.getters.getTokenFromStorage;
-        if (token === null)
-            return null;
-
-        // request user information
-        let user = await auth.me(token);
+        // get user
+        let user = await requestUser(commit, token);
         if (user === null)
             return null;
 
-        // commit values to state
-        context.commit('setToken', token);
-        context.commit('setUser', user);
+        // request user information using the token
+
+        return {user, token};
+    },
+
+    async loginFromStorage({commit, getters}: ActionContext<AuthState, RootState>): Promise<{ user: User, token: JsonWebToken } | null> {
+        // get token from local storage
+        let token = getters.getTokenFromStorage;
+        if (token === null)
+            return null;
+
+        // commit token to state
+        commit('setToken', token);
+
+        // request user information
+        let user = await requestUser(commit, token);
+        if (user === null)
+            return null;
 
         return {user, token};
     },
@@ -65,8 +107,12 @@ const actions = {
         if (token === null)
             return;
 
-        // logout from the api
-        await auth.logout(token);
+        try {
+            // logout from the api
+            await auth.logout(token);
+        } catch (e) {
+            console.warn("Unable to invalidate token.");
+        }
 
         // remove token from local storage
         window.localStorage.removeItem('token');
@@ -78,6 +124,10 @@ const actions = {
 };
 
 const mutations = {
+    setLoadingUser(state: AuthState, loading: boolean) {
+        state.loadingUser = loading;
+    },
+
     unsetToken(state: AuthState) {
         console.log("Resetting token");
 

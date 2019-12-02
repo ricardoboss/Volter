@@ -1,54 +1,67 @@
 <template>
-    <div :class="[bodyBgTheme, bodyTextTheme, 'vh-100']">
-        <navbar/>
-
+    <div :class="['vh-100']">
         <main class="container pt-3">
-            <router-view/>
+            <login-form v-if="!isAuthenticated && !api.loading"/>
+            <div class="vh-100 vw-100 d-flex flex-column justify-content-center align-items-center"
+                 v-else-if="api.loading">
+                <p>
+                    Loading...
+                </p>
+                <div class="spinner-border"></div>
+            </div>
+            <router-view v-else/>
         </main>
     </div>
 </template>
 
 <script>
-    import Navbar from "../components/Navbar";
-    import {mapGetters} from "vuex";
+    import {mapGetters, mapState} from "vuex";
+    import LoginForm from "../components/LoginForm";
+    import axios from "axios";
 
     export default {
-        components: {Navbar},
+        components: {LoginForm},
 
-        mounted() {
-            if (!this.$store.state['auth/isAuthenticated']) {
-                // attempt to log in from a stored token
-                this.$store.dispatch('auth/loginFromStorage');
-                this.$router.replace({name: 'home'});
+        async created() {
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms))
+            }
+
+            // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
+            axios.interceptors.request.use(async config => {
+                await this.$store.dispatch('api/setLoading', true);
+
+                await sleep(500);
+
+                return config;
+            });
+
+            axios.interceptors.response.use(async response => {
+                await this.$store.dispatch('api/setLoading', false);
+
+                return response;
+            }, async error => {
+                await this.$store.dispatch('api/setLoading', false);
+
+                return Promise.reject(error);
+            });
+
+            if (!this.isAuthenticated) {
+                try {
+                    // attempt to log in from a stored token
+                    await this.$store.dispatch('auth/loginFromStorage');
+                } catch (e) {
+                    console.log("Error while mounting app: " + e);
+                }
             }
         },
 
         computed: {
-            ...mapGetters('settings', {
-                theme: 'getTheme'
-            }),
+            ...mapState(['api']),
 
-            bodyTextTheme() {
-                switch (this.theme) {
-                    case 'light':
-                        return 'text-body';
-                    case 'dark':
-                        return 'text-white';
-                }
-
-                return 'text-' + this.theme;
-            },
-
-            bodyBgTheme() {
-                switch (this.theme) {
-                    case 'light':
-                        return 'bg-transparent';
-                    case 'dark':
-                        return 'bg-dark';
-                }
-
-                return 'bg-' + this.theme;
-            }
+            ...mapGetters('auth', [
+                'isAuthenticated',
+            ])
         }
     }
 </script>

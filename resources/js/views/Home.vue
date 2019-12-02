@@ -1,27 +1,40 @@
 <template>
     <div>
-        <h1>Volter</h1>
+        <h1>Home</h1>
 
-        <p class="lead">In-House Password Vault</p>
-
-        <p v-if="isAuthenticated">
-            Welcome, {{ this.user.name }}!
+        <p>
+            {{ auth.user.name }}
         </p>
+
+        <button @click="logout" class="btn btn-outline-danger">Logout</button>
     </div>
 </template>
 
 <script>
-    import {mapGetters, mapState} from "vuex";
+    import {mapState} from "vuex";
 
     export default {
-        computed: {
-            ...mapState('auth', [
-                'user'
-            ]),
+        methods: {
+            logout() {
+                this.$store.dispatch('auth/logout');
 
-            ...mapGetters('auth', {
-                isAuthenticated: 'isAuthenticated'
-            }),
+                this.$swal({
+                    toast: true,
+                    text: "Goodbye!",
+                    timer: 3000,
+                    type: "info",
+                    showConfirmButton: false,
+                    position: "top"
+                });
+            }
+        },
+
+        computed: {
+            ...mapState(['auth'])
         }
     }
 </script>
+
+<style scoped>
+
+</style>

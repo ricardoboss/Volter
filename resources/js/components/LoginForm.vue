@@ -1,15 +1,19 @@
 <template>
-    <form>
+    <form @submit.prevent="doLogin">
+        <p>
+            Please log in to view this page:
+        </p>
+
         <div class="form-group">
-            <label for="login_modal_email">E-Mail Address</label>
-            <input class="form-control" id="login_modal_email" type="email" v-model="form_email">
+            <label for="login-email">E-Mail Address</label>
+            <input class="form-control" id="login-email" type="email" v-model="form_email">
         </div>
         <div class="form-group">
-            <label for="login_modal_password">E-Mail Address</label>
-            <input class="form-control" id="login_modal_password" type="password" v-model="form_password">
+            <label for="login-password">Password</label>
+            <input class="form-control" id="login-password" type="password" v-model="form_password">
         </div>
 
-        <button @click.prevent="doLogin" class="btn btn-primary" type="submit">Login</button>
+        <button class="btn btn-primary" type="submit">Login</button>
     </form>
 </template>
 
@@ -36,29 +40,37 @@
 
         methods: {
             async doLogin() {
-                await this.$store.dispatch('auth/login',
-                    {
-                        email: this.form_email,
-                        password: this.form_password
-                    })
-                    .then(async () => await this.$router.push({name: 'home'}))
-                    .then(async () => await this.$swal({
-                        toast: true,
-                        position: 'top',
-                        showConfirmButton: false,
-                        text: "You are now logged in.",
-                        type: "success",
-                        timer: 2000
-                    }))
-                    .catch(err => {
-                        console.error("Error while performing login:", err);
+                try {
+                    let userToken = await this.$store.dispatch('auth/login',
+                        {
+                            email: this.form_email,
+                            password: this.form_password
+                        });
 
+                    if (userToken === null)
                         this.$swal({
                             title: "Error",
-                            text: "An error occurred while logging you in.",
+                            text: "Please check your login credentials.",
                             type: "error"
                         });
-                    })
+                    else
+                        this.$swal({
+                            toast: true,
+                            text: "Welcome back!",
+                            timer: 3000,
+                            type: "success",
+                            showConfirmButton: false,
+                            position: "top"
+                        });
+                } catch (err) {
+                    console.error("Error while performing login:", err);
+
+                    this.$swal({
+                        title: "Error",
+                        text: "An error occurred while logging you in.",
+                        type: "error"
+                    });
+                }
             }
         }
     }
