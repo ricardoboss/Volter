@@ -13,3 +13,6 @@
 
 !runConfigurations/
 !runConfigurations/*
+
+!scopes/
+!scopes/*

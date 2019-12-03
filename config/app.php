@@ -179,6 +179,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ResponseMacroServiceProvider::class,
+        \App\Providers\ObserverServiceProvider::class,
+        \App\Providers\ResourceServiceProvider::class,
 
     ],
 
