@@ -22,7 +22,7 @@
                     toast: true,
                     text: "Goodbye!",
                     timer: 3000,
-                    type: "info",
+                    type: "success",
                     showConfirmButton: false,
                     position: "top"
                 });
