@@ -27,16 +27,13 @@ class ResponseMacroServiceProvider extends ServiceProvider
          *
          * @param mixed $result The result which should be included in the response.
          * @param array $messages (optional) Any messages to be sent with the response.
-         * @param array $errors (optional) Any errors to be sent with the response.
          * @instantiated
          */
-        Response::macro('success', function ($result, array $messages = [], array $errors = []) {
+        Response::macro('success', function ($result, array $messages = []) {
             /** @var Response $this */
             return $this->json([
                 'success' => true,
                 'result' => $result,
-                'messages' => $messages,
-                'errors' => $errors,
             ]);
         });
 
@@ -44,18 +41,17 @@ class ResponseMacroServiceProvider extends ServiceProvider
          * Returns a failed api response.
          *
          * @param ApiErrorCodes $code The error which should be included in the response.
-         * @param array $errors (optional) Any errors to be sent with the response.
          * @param int $status (optional) The response status code.
          * @param array $messages (optional) Any messages to be sent with the response.
          * @return JsonResponse
          */
-        Response::macro('failed', function (ApiErrorCodes $code, array $errors = [], int $status = 403, array $messages = []) {
+        Response::macro('failed', function (ApiErrorCodes $code, int $status = 403, array $messages = []) {
             /** @var Response $this */
             return $this->json([
                 'success' => false,
                 'result' => null,
                 'messages' => $messages,
-                'errors' => array_merge($errors, ['code' => $code->getValue()]),
+                'error' => $code,
             ], $status);
         });
 
@@ -66,13 +62,12 @@ class ResponseMacroServiceProvider extends ServiceProvider
          * @param array $errors (optional) Any errors to be sent with the response.
          * @return JsonResponse
          */
-        Response::macro('empty', function (array $messages = [], array $errors = []) {
+        Response::macro('empty', function (array $messages = []) {
             /** @var Response $this */
             return $this->json([
                 'success' => true,
                 'result' => null,
                 'messages' => $messages,
-                'errors' => $errors,
             ]);
         });
 
@@ -82,7 +77,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
          * @param string $token The access token to include in the response.
          * @return JsonResponse
          */
-        Response::macro('access_token', function (string $token) {
+        Response::macro('access_token', function (string $token, array $messages = []) {
             /** @var Response $this */
             return $this->json([
                 'success' => true,
@@ -91,8 +86,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
                     'token_type' => 'bearer',
                     'expires_in' => auth()->factory()->getTTL() * 60,
                 ],
-                'messages' => [],
-                'errors' => [],
+                'messages' => $messages,
             ]);
         });
     }

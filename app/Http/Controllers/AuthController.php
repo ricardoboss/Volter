@@ -21,6 +21,7 @@ class AuthController extends Controller
             ->only([
                 'logout',
                 'me',
+                'refresh',
             ]);
     }
 
@@ -36,9 +37,9 @@ class AuthController extends Controller
 
         if (!$token) {
             return response()->failed(
-                ApiErrorCodes::invalidCredentials(),
-                ["Invalid login credentials."],
-                401
+                ApiErrorCodes::invalid_credentials(),
+                401,
+                ["Invalid login credentials."]
             );
         }
 
@@ -70,6 +71,6 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return response()->access_token(auth()->refresh());
+        return response()->access_token(auth()->refresh(), ["Access token refreshed."]);
     }
 }

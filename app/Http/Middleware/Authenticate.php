@@ -30,6 +30,7 @@ class Authenticate extends Middleware
         } catch (AuthenticationException $e) {
             return response()->failed(
                 ApiErrorCodes::unauthorized(),
+                403,
                 ["Unauthorized."]
             );
         }
