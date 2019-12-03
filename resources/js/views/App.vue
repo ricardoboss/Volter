@@ -2,8 +2,9 @@
     <div :class="['vh-100']">
         <main class="container pt-3">
             <loading-overlay v-if="api.loading"/>
-            <login-form v-else-if="!isAuthenticated"/>
-            <router-view v-else/>
+
+            <router-view v-if="isAuthenticated"/>
+            <login-form v-else-if="!api.loading"/>
         </main>
     </div>
 </template>
@@ -18,7 +19,6 @@
         components: {LoadingOverlay, LoginForm},
 
         async created() {
-            // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
             this.setupAxiosInterceptors();
 
             if (!this.isAuthenticated) {
@@ -26,25 +26,17 @@
                     // attempt to log in from a stored token
                     await this.$store.dispatch('auth/loginFromStorage');
                 } catch (e) {
-                    console.warn("Error while logging in via storage: " + e);
+                    console.log("Error while logging in via storage: ", e);
                 }
             }
         },
 
         methods: {
             setupAxiosInterceptors() {
-                // for simulating api loading delay
-                function sleep(ms) {
-                    return new Promise(resolve => setTimeout(resolve, ms))
-                }
+                // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
 
                 axios.interceptors.request.use(async config => {
                     await this.$store.dispatch('api/setLoading', true);
-
-                    // TODO: remove in production; simulates API loading and errors
-                    await sleep(Math.random() * 1000);
-                    if (Math.random() < 0.1)
-                        return Promise.reject("API mock rejection (no real error)");
 
                     return config;
                 });
@@ -56,8 +48,31 @@
                 }, async error => {
                     await this.$store.dispatch('api/setLoading', false);
 
-                    return Promise.reject(error);
+                    throw error;
                 });
+
+
+                /**
+                 * == /!\ ==================================================================== /!\ ==
+                 *
+                 * Only added for debugging environments. Do not attach interceptor in production!
+                 *
+                 * Simulates random request loading delays and random request fails.
+                 *
+                 * == /!\ =================================================================== /!\ ==
+                 */
+                if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+                    console.log("Attaching random API scrambler interceptor.");
+
+                    axios.interceptors.request.use(async config => {
+                        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 900));
+
+                        if (Math.random() < 0.1)
+                            throw "Random debug API request rejection.";
+
+                        return config;
+                    });
+                }
             }
         },
 

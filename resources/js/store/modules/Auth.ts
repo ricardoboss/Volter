@@ -6,23 +6,20 @@ import {User} from "../../types/User";
 import Vue from "vue";
 import auth from "../../api/auth";
 
-const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User | null> => {
+const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User> => {
     try {
         // request user data using token
         let user = await auth.me(token);
 
-        // store token in state
+        // store user in state
         commit('setUser', user);
 
         return user;
     } catch (e) {
-        console.error("Error while getting user with local token.");
-        console.error(e);
-
         // remove token because no user information could be retrieved using it
         commit('unsetToken');
 
-        return null;
+        throw e;
     }
 };
 
@@ -52,16 +49,7 @@ const actions = {
         // TODO: check if already authenticated and maybe refresh token
 
         // try to get a token using the provided credentials
-        let token: JsonWebToken | null = null;
-        try {
-            token = await auth.login(payload.email, payload.password);
-        } catch (e) {
-            console.error("Error while trying to get token with provided login information.");
-            console.error(e);
-        }
-
-        if (token === null)
-            return null;
+        let token = await auth.login(payload.email, payload.password);
 
         // store the token in local storage
         window.localStorage.setItem('token', JSON.stringify(token));
@@ -102,19 +90,19 @@ const actions = {
         if (token === null)
             return;
 
-        try {
-            // logout from the api
-            await auth.logout(token);
-        } catch (e) {
-            console.warn("Unable to invalidate token.");
-        }
-
         // remove token from local storage
         window.localStorage.removeItem('token');
 
         // unset the values
         context.commit('unsetToken');
         context.commit('unsetUser');
+
+        // logout from the api
+        try {
+            await auth.logout(token);
+        } catch (e) {
+            console.warn("Unable to invalidate token.", e);
+        }
     }
 };
 
