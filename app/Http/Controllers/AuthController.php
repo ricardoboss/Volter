@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         if (!$token) {
             return response()->failed(
-                ApiErrorCodes::InvalidCredentials,
+                ApiErrorCodes::invalidCredentials(),
                 ["Invalid login credentials."],
                 401
             );

@@ -1,14 +1,50 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
+use Spatie\Enum\Enum;
 
 /**
- * @method static static Unauthorized()
+ * Class ApiErrorCodes
+ *
+ * @package App\Enums
  */
-final class ApiErrorCodes extends Enum
+class ApiErrorCodes extends Enum
 {
-    const Unauthorized = 0;
-    const InvalidCredentials = 1;
+    /**
+     * @return ApiErrorCodes
+     */
+    public static function unauthorized(): ApiErrorCodes
+    {
+        return new class() extends ApiErrorCodes {
+            /**
+             * Get the current value.
+             *
+             * @return string
+             */
+            public function getValue(): string
+            {
+                return "api.error.unauthorized";
+            }
+        };
+    }
+
+    /**
+     * @return ApiErrorCodes
+     */
+    public static function invalidCredentials(): ApiErrorCodes
+    {
+        return new class() extends ApiErrorCodes {
+            /**
+             * Get the current value.
+             *
+             * @return string
+             */
+            public function getValue(): string
+            {
+                return "api.error.invalid_credentials";
+            }
+        };
+    }
 }

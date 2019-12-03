@@ -29,7 +29,7 @@ class Authenticate extends Middleware
             $this->authenticate($request, $guards);
         } catch (AuthenticationException $e) {
             return response()->failed(
-                ApiErrorCodes::Unauthorized,
+                ApiErrorCodes::unauthorized(),
                 ["Unauthorized."]
             );
         }
