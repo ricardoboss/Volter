@@ -13,6 +13,6 @@ use Spatie\Enum\Enum;
  * @method static self unauthorized()
  * @method static self invalid_credentials()
  */
-class ApiErrorCodes extends Enum
+class ApiErrorCode extends Enum
 {
 }

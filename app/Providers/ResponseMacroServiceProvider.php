@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Enums\ApiErrorCodes;
+use App\Enums\ApiErrorCode;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
@@ -40,12 +40,12 @@ class ResponseMacroServiceProvider extends ServiceProvider
         /**
          * Returns a failed api response.
          *
-         * @param ApiErrorCodes $code The error which should be included in the response.
+         * @param ApiErrorCode $code The error which should be included in the response.
          * @param int $status (optional) The response status code.
          * @param array $messages (optional) Any messages to be sent with the response.
          * @return JsonResponse
          */
-        Response::macro('failed', function (ApiErrorCodes $code, int $status = 403, array $messages = []) {
+        Response::macro('failed', function (ApiErrorCode $code, int $status = 403, array $messages = []) {
             /** @var Response $this */
             return $this->json([
                 'success' => false,

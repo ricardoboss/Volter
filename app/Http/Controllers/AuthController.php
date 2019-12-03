@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\ApiErrorCodes;
+use App\Enums\ApiErrorCode;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -37,7 +37,7 @@ class AuthController extends Controller
 
         if (!$token) {
             return response()->failed(
-                ApiErrorCodes::invalid_credentials(),
+                ApiErrorCode::invalid_credentials(),
                 401,
                 ["Invalid login credentials."]
             );

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\ApiErrorCodes;
+use App\Enums\ApiErrorCode;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
@@ -29,7 +29,7 @@ class Authenticate extends Middleware
             $this->authenticate($request, $guards);
         } catch (AuthenticationException $e) {
             return response()->failed(
-                ApiErrorCodes::unauthorized(),
+                ApiErrorCode::unauthorized(),
                 403,
                 ["Unauthorized."]
             );
