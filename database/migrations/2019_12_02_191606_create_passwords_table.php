@@ -27,9 +27,9 @@ class CreatePasswordsTable extends Migration
             $table->timestamp('deleted_at')->nullable();
             $table->bigInteger('deleted_by')->unsigned()->nullable();
 
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('SET NULL');
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('SET NULL');
-            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('SET NULL');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 
