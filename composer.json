@@ -1,21 +1,24 @@
 {
-    "name": "synteclabs/holo",
+    "name": "synteclabs/volter",
     "type": "project",
-    "description": "Image board by SyntecLabs",
+    "description": "Password Vault for your enterprise.",
     "keywords": [
         "synteclabs",
-        "holo"
+        "password",
+        "vault",
+        "management",
+        "system"
     ],
     "license": "MIT",
     "require": {
         "php": "^7.3",
         "fideloper/proxy": "^4.0",
+        "jeremykenedy/laravel-roles": "^2.3",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.1",
         "spatie/enum": "^2.3",
         "spatie/laravel-activitylog": "^3.9",
-        "spatie/laravel-permission": "^3.3",
         "tymon/jwt-auth": "1.0.0-rc.5"
     },
     "require-dev": {
