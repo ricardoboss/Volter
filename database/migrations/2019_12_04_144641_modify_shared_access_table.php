@@ -19,7 +19,9 @@ class ModifySharedAccessTable extends Migration
 
         Schema::table('shared_access', function (Blueprint $table) {
             $table->string('password_id', 36)->change();
-            $table->morphs('model');
+
+            $table->string('model_type')->after('password_id');
+            $table->unsignedBigInteger('model_id')->after('model_type');
 
             $table->string('key')->unique()->change();
             $table->boolean('can_edit')->default(false)->change();
@@ -48,8 +50,8 @@ class ModifySharedAccessTable extends Migration
         });
 
         Schema::table('shared_access', function (Blueprint $table) {
-            $table->unsignedBigInteger('password_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('password_id')->first();
+            $table->unsignedBigInteger('user_id')->after('password_id');
         });
     }
 }
