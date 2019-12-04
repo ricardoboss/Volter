@@ -51,9 +51,6 @@ const actions = {
         // try to get a token using the provided credentials
         let token = await auth.login(payload.email, payload.password);
 
-        // store the token in local storage
-        window.localStorage.setItem('token', JSON.stringify(token));
-
         // store token in state
         commit('setToken', token);
 
@@ -90,9 +87,6 @@ const actions = {
         if (token === null)
             return;
 
-        // remove token from local storage
-        window.localStorage.removeItem('token');
-
         // unset the values
         context.commit('unsetToken');
         context.commit('unsetUser');
@@ -108,8 +102,10 @@ const actions = {
 
 const mutations = {
     unsetToken(state: AuthState) {
-        console.log("Resetting token");
+        // remove token from local storage
+        window.localStorage.removeItem('token');
 
+        // reset default authorization header for requests
         Vue.axios.defaults.headers.common['Authorization'] = null;
 
         state.token = null;
@@ -119,24 +115,22 @@ const mutations = {
         if (token === null)
             throw new Error("Cannot set token to null. Use unsetToken for this.");
 
-        console.log("Setting token");
+        // store the token in local storage
+        window.localStorage.setItem('token', JSON.stringify(token));
 
+        // set default authorization header for requests
         Vue.axios.defaults.headers.common['Authorization'] = token.token_type + ' ' + token.access_token;
 
         state.token = token;
     },
 
     unsetUser(state: AuthState) {
-        console.log("Resetting user");
-
         state.user = null;
     },
 
     setUser(state: AuthState, user: User) {
         if (user === null)
             throw new Error("Cannot set user to null. Use unsetUser for this.");
-
-        console.log("Setting user");
 
         state.user = user;
     },
