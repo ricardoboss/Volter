@@ -6,20 +6,13 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 
 /**
- * Class PasswordCollection
+ * Class PasswordResource
  * @package App\Http\Resources
  */
-class PasswordCollection extends ApiJsonResource
+class PasswordResource extends ApiJsonResource
 {
     /**
-     * The resource that this resource collects.
-     *
-     * @var string
-     */
-    public $collects = PasswordResource::class;
-
-    /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param Request $request
      * @return array

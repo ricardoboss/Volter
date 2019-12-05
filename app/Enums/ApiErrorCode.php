@@ -12,6 +12,7 @@ use Spatie\Enum\Enum;
  *
  * @method static self unauthorized()
  * @method static self invalid_credentials()
+ * @method static self delete_failed()
  */
 class ApiErrorCode extends Enum
 {

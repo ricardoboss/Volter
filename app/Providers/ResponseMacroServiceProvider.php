@@ -26,15 +26,20 @@ class ResponseMacroServiceProvider extends ServiceProvider
          * Returns a successful api response.
          *
          * @param mixed $result The result which should be included in the response.
-         * @param array $messages (optional) Any messages to be sent with the response.
+         * @param array|null $messages (optional) Any messages to be sent with the response.
          * @instantiated
          */
-        Response::macro('success', function ($result, array $messages = []) {
-            /** @var Response $this */
-            return $this->json([
+        Response::macro('success', function ($result, ?array $messages = null) {
+            $data = [
                 'success' => true,
                 'result' => $result,
-            ]);
+            ];
+
+            if ($messages)
+                $data['messages'] = $messages;
+
+            /** @var Response $this */
+            return $this->json($data);
         });
 
         /**
@@ -42,33 +47,39 @@ class ResponseMacroServiceProvider extends ServiceProvider
          *
          * @param ApiErrorCode $code The error which should be included in the response.
          * @param int $status (optional) The response status code.
-         * @param array $messages (optional) Any messages to be sent with the response.
+         * @param array|null $messages (optional) Any messages to be sent with the response.
          * @return JsonResponse
          */
-        Response::macro('failed', function (ApiErrorCode $code, int $status = 403, array $messages = []) {
-            /** @var Response $this */
-            return $this->json([
+        Response::macro('failed', function (ApiErrorCode $code, int $status = 403, ?array $messages = null) {
+            $data = [
                 'success' => false,
                 'result' => null,
-                'messages' => $messages,
                 'error' => $code,
-            ], $status);
+            ];
+
+            if ($messages)
+                $data['messages'] = $messages;
+
+            /** @var Response $this */
+            return $this->json($data, $status);
         });
 
         /**
          * Returns an empty api response.
          *
-         * @param array $messages (optional) Any messages to be sent with the response.
-         * @param array $errors (optional) Any errors to be sent with the response.
+         * @param array|null $messages (optional) Any messages to be sent with the response.
          * @return JsonResponse
          */
-        Response::macro('empty', function (array $messages = []) {
-            /** @var Response $this */
-            return $this->json([
+        Response::macro('empty', function (?array $messages = null) {
+            $data = [
                 'success' => true,
-                'result' => null,
-                'messages' => $messages,
-            ]);
+            ];
+
+            if ($messages)
+                $data['messages'] = $messages;
+
+            /** @var Response $this */
+            return $this->json($data);
         });
 
         /**

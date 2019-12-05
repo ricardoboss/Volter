@@ -19,3 +19,14 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
 });
+
+Route::group(['prefix' => 'passwords'], function () {
+    Route::post('', 'PasswordController@create')->middleware('can:create,App\Models\Post');
+
+    Route::get('{password}', 'PasswordController@view')->middleware('can:view,password');
+    Route::put('{password}', 'PasswordController@edit')->middleware('can:edit,password');
+    Route::delete('{password}', 'PasswordController@delete')->middleware('can:delete,password');
+    Route::delete('{password}/destroy', 'PasswordController@destroy')->middleware('can:destroy,password');
+
+    Route::put('{password}/share', 'PasswordController@share')->middleware('can:share,password');
+});
