@@ -1,9 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Password;
+use App\Models\User;
+use App\Policies\PasswordPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+/**
+ * Class AuthServiceProvider
+ * @package App\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -13,6 +22,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        Password::class => PasswordPolicy::class,
+        User::class => UserPolicy::class
     ];
 
     /**
