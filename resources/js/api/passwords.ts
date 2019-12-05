@@ -14,21 +14,26 @@ const endpoints = {
     share: '/api/passwords/{password}/share',
 };
 
-function inject(url: string, queryParams: Record<string, string>) {
-    Object.keys(queryParams).forEach()
-
-    if (Object.keys(queryParams).length == 0)
+function inject(url: string, queryParams: Record<string, string> | null) {
+    if (queryParams === null)
         return url;
 
-    let params = new URLSearchParams(queryParams);
+    let params = new URLSearchParams();
 
-    return url + '?' + params.toString();
+    Object.keys(queryParams).forEach(key => {
+        if (url.indexOf("{" + key + "}") >= 0)
+            url.replace("{" + key + "}", queryParams[key]);
+        else
+            params.append(key, queryParams[key]);
+    });
+
+    if (params.toString().length > 0)
+        url += "?" + params.toString();
+
+    return url;
 }
 
 async function list(data: PaginationData<Password> | Record<string, string> | null): Promise<PaginationData<Password>> {
-    if (data === null)
-        data = {};
-
     let response: AxiosResponse<PaginationResponse<Password>> = await Vue.axios.get(inject(endpoints.list, data));
 
     return response.data.result;
@@ -51,7 +56,7 @@ async function create(name: string, notes: string, value: string): Promise<Passw
     return response.data.result;
 }
 
-async function view(id: string): Promise<Password> {
+async function get(id: string): Promise<Password> {
     if (id === null)
         throw new Error("id cannot be null!");
 
@@ -67,19 +72,23 @@ async function edit(password: Password): Promise<Password> {
         throw new Error("password cannot be null!");
 
     let response: AxiosResponse<ApiResponse<Password>> = await Vue.axios.put(
-        endpoints.edit,
+        inject(endpoints.edit, {
+            password: password.id
+        }),
         password
     );
 
     return response.data.result;
 }
 
-async function _delete(password: Password): Promise<boolean> {
-    if (password === null)
-        throw new Error("password cannot be null!");
+async function _delete(id: string): Promise<boolean> {
+    if (id === null)
+        throw new Error("id cannot be null!");
 
     let response: AxiosResponse<ApiResponse<boolean>> = await Vue.axios.delete(
-        endpoints.delete,
+        inject(endpoints.delete, {
+            password: id
+        })
     );
 
     return response.data.result;
@@ -88,17 +97,33 @@ async function _delete(password: Password): Promise<boolean> {
 async function destroy(password: Password): Promise<boolean> {
     if (password === null)
         throw new Error("password cannot be null!");
+
+    let response: AxiosResponse<ApiResponse<boolean>> = await Vue.axios.delete(
+        inject(endpoints.destroy, {
+            password: password.id
+        })
+    );
+
+    return response.data.result;
 }
 
 async function share(password: Password): Promise<any> {
     if (password === null)
         throw new Error("password cannot be null!");
+
+    let response: AxiosResponse<ApiResponse<any>> = await Vue.axios.post(
+        inject(endpoints.share, {
+            password: password.id
+        })
+    );
+
+    return response.data.result;
 }
 
 export default {
     list,
     create,
-    view,
+    get,
     edit,
     delete: _delete,
     destroy,
