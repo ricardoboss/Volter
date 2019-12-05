@@ -16,3 +16,6 @@
 
 !scopes/
 !scopes/*
+
+!inspectionProfiles/
+!inspectionProfiles/*
