@@ -20,7 +20,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('me', 'AuthController@me');
 });
 
-Route::group(['prefix' => 'passwords'], function () {
+Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function () {
+    Route::get('', 'PasswordController@index');
     Route::post('', 'PasswordController@create')->middleware('can:create,App\Models\Post');
 
     Route::get('{password}', 'PasswordController@view')->middleware('can:view,password');

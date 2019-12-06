@@ -22,6 +22,7 @@ class PasswordController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
+        // TODO: only list passwords which the authenticated user has access to
         return PasswordCollection::collection(Password::all());
     }
 
