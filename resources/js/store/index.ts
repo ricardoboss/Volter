@@ -4,6 +4,7 @@ import {RootState} from "./states/RootState";
 
 import api from "./modules/Api";
 import auth from "./modules/Auth";
+import passwords from "./modules/Passwords";
 
 Vue.use(Vuex);
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     modules: {
         api,
         auth,
+        passwords,
     }
 } as StoreOptions<RootState>)
