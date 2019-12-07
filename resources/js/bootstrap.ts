@@ -4,6 +4,7 @@ import Octicon from "vue-octicon/components/Octicon.vue"
 import axios from "axios"
 import VueAxios from "vue-axios";
 import VueSweetalert2 from "vue-sweetalert2";
+import VueObserveVisibilityPlugin from "vue-observe-visibility";
 /**
  * Octicon icons
  */
@@ -34,3 +35,8 @@ Vue.use(VueAxios, axios);
  * Initialize Sweetalert
  */
 Vue.use(VueSweetalert2);
+
+/**
+ * Initialize vue-observe-visibility
+ */
+Vue.use(VueObserveVisibilityPlugin);
