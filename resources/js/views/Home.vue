@@ -11,7 +11,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="password in Object.values(passwords.fetched)">
+                <tr v-for="password in passwords.fetched">
                     <td>
                         <pre>{{ password.id }}</pre>
                     </td>
