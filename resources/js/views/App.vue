@@ -33,8 +33,29 @@
 
         methods: {
             setupAxiosInterceptors() {
-                // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
+                /**
+                 * == /!\ ======================================================================= /!\ ==
+                 *
+                 * Only added for debugging environments. Do not attach this interceptor in production!
+                 *
+                 * Simulates random request loading delays and random request fails.
+                 *
+                 * == /!\ ======================================================================= /!\ ==
+                 */
+                if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+                    console.warn("Attaching random API scrambler interceptor.");
 
+                    axios.interceptors.request.use(async config => {
+                        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 900));
+
+                        if (Math.random() < 0.1)
+                            throw "Random debug API request rejection.";
+
+                        return config;
+                    });
+                }
+
+                // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
                 axios.interceptors.request.use(async config => {
                     await this.$store.dispatch('api/setLoading', true);
 
@@ -50,29 +71,6 @@
 
                     throw error;
                 });
-
-
-                /**
-                 * == /!\ ==================================================================== /!\ ==
-                 *
-                 * Only added for debugging environments. Do not attach interceptor in production!
-                 *
-                 * Simulates random request loading delays and random request fails.
-                 *
-                 * == /!\ =================================================================== /!\ ==
-                 */
-                if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
-                    console.log("Attaching random API scrambler interceptor.");
-
-                    axios.interceptors.request.use(async config => {
-                        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 900));
-
-                        if (Math.random() < 0.1)
-                            throw "Random debug API request rejection.";
-
-                        return config;
-                    });
-                }
             }
         },
 
