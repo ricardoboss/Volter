@@ -1,14 +1,36 @@
 <template>
     <div>
-        <ul class="list-group" v-for="password in passwords">
-            <li class="list-group-item">
-                <strong>{{ password.name }}</strong>
-                <pre>{{ password.value }}</pre>
-                <textarea>{{ password.notes }}</textarea>
-            </li>
-        </ul>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="password in Object.values(passwords.fetched)">
+                    <td>
+                        <pre>{{ password.id }}</pre>
+                    </td>
+                    <td>{{ password.name }}</td>
+                    <td>{{ password.value }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button @click.prevent="edit(password)" class="btn btn-link">edit</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <button @click="logout" class="btn btn-outline-danger">Logout</button>
+        <div class="btn-group">
+            <button @click.prevent="loadMore" class="btn btn-outline-secondary">Load more</button>
+            <button @click="logout" class="btn btn-outline-danger">Logout</button>
+        </div>
     </div>
 </template>
 
@@ -17,9 +39,7 @@
 
     export default {
         async created() {
-            await this.$store.dispatch('passwords/fetch', {
-                count: 10,
-            });
+            await this.loadMore();
         },
 
         methods: {
@@ -34,11 +54,19 @@
                     showConfirmButton: false,
                     position: "top"
                 });
+            },
+
+            async loadMore() {
+                await this.$store.dispatch('passwords/fetchNextPage');
+            },
+
+            edit(password) {
+                // TODO: show edit modal
             }
         },
 
         computed: {
-            ...mapState(['auth', 'passwords']),
+            ...mapState(['passwords'])
         }
     }
 </script>
