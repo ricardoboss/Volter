@@ -4,12 +4,12 @@ import {AuthState} from "../states/AuthState";
 import {JsonWebToken} from "../../types/JsonWebToken";
 import {User} from "../../types/User";
 import Vue from "vue";
-import auth from "../../api/auth";
+import api from "../../api";
 
 const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User> => {
     try {
         // request user data using token
-        let user = await auth.me(token);
+        let user = await api.auth.me(token);
 
         // store user in state
         commit('setUser', user);
@@ -49,7 +49,7 @@ const actions = {
         // TODO: check if already authenticated and maybe refresh token
 
         // try to get a token using the provided credentials
-        let token = await auth.login(payload.email, payload.password);
+        let token = await api.auth.login(payload.email, payload.password);
 
         // store token in state
         commit('setToken', token);
@@ -81,19 +81,21 @@ const actions = {
         return {user, token};
     },
 
-    async logout(context: ActionContext<AuthState, RootState>): Promise<void> {
+    async logout({commit, getters}: ActionContext<AuthState, RootState>): Promise<void> {
         // get token from local storage
-        let token = context.getters.getTokenFromStorage;
+        let token = getters.getTokenFromStorage;
         if (token === null)
             return;
 
         // unset the values
-        context.commit('unsetToken');
-        context.commit('unsetUser');
+        commit('unsetToken');
+        commit('unsetUser');
+
+        // TODO: clear storage
 
         // logout from the api
         try {
-            await auth.logout(token);
+            await api.auth.logout(token);
         } catch (e) {
             console.warn("Unable to invalidate token.", e);
         }
