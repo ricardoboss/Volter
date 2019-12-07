@@ -1,7 +1,8 @@
 import {Password} from "../../types/Password";
-import {PaginationData} from "../../types/PaginationData";
+import {PaginationLinks, PaginationMeta} from "../../types/Pagination";
 
 export interface PasswordsState {
-    passwords: Map<string, Password>,
-    latestPagination: PaginationData<Password> | null,
+    fetched: { [id: string]: Password; },
+    meta: PaginationMeta | null,
+    links: PaginationLinks | null,
 }

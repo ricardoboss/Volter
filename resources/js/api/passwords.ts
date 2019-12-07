@@ -2,8 +2,7 @@ import {Password} from "../types/Password";
 import {AxiosResponse} from "axios";
 import {ApiResponse} from "../types/ApiResponse";
 import Vue from "vue";
-import {PaginationResponse} from "../types/PaginationResponse";
-import {PaginationData} from "../types/PaginationData";
+import {Pagination, PaginationLinks} from "../types/Pagination";
 
 const endpoints = {
     list: '/api/passwords',
@@ -34,14 +33,14 @@ function inject(url: string, queryParams: any) {
     return url;
 }
 
-async function list(data: PaginationData<Password> | Record<string, string> | null): Promise<PaginationData<Password>> {
-    let response: AxiosResponse<PaginationResponse<Password>> = await Vue.axios.get(inject(endpoints.list, {
-        count: data === null ? 15 : data.count
-    }));
+async function list(data: PaginationLinks | null = null): Promise<Pagination<Password>> {
+    let url: string = endpoints.list;
+    if (data !== null && data.next !== null)
+        url = data.next;
 
-    console.log(response);
+    let response: AxiosResponse<Pagination<Password>> = await Vue.axios.get(url);
 
-    return response.data.result;
+    return response.data;
 }
 
 async function create(name: string, notes: string, value: string): Promise<Password> {

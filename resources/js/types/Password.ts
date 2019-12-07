@@ -5,7 +5,7 @@ export interface Password {
     version: number,
     name: string,
     notes: string,
-    value: string,
+    value?: string,
     created_at: Date,
     created_by: number | User,
     updated_at: Date,
