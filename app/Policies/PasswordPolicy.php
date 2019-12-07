@@ -72,11 +72,19 @@ class PasswordPolicy
     }
 
     /**
-     * Whether a user can view a password.
+     * Whether a user can list all passwords.
+     */
+    public function viewAll(User $user): bool
+    {
+        return $user->hasPermission('password.view.any');
+    }
+
+    /**
+     * Whether a user can view a specific password.
      */
     public function view(User $user, Password $password): bool
     {
-        if ($user->hasPermission('password.view.any'))
+        if ($user->can('viewAll', Password::class))
             return true;
 
         if ($user->hasPermission('password.view.self') &&

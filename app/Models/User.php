@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use jeremykenedy\LaravelRoles\Contracts\HasRoleAndPermission as HasRoleAndPermissionInterface;
 use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission as HasRoleAndPermissionTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -62,5 +63,26 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * The passwords the user has access to.
+     */
+    public function getPasswordsAttribute()
+    {
+        if ($this->can('viewAll', Password::class))
+            return Password::all();
+
+        /** @var Password $this */
+        $builder = Password::where('created_by', $this->id);
+
+        $shared_access_passwords = DB::table('shared_access')
+            ->where('model_type', self::class)
+            ->where('model_id', $this->getKey())
+            ->get(['password_id']);
+
+        $builder->orWhereIn('id', $shared_access_passwords);
+
+        return $builder->get();
     }
 }

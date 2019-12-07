@@ -4,12 +4,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\ApiErrorCode;
-use App\Http\Resources\PasswordCollection;
 use App\Http\Resources\PasswordResource;
 use App\Models\Password;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * Class PasswordController
@@ -20,10 +19,12 @@ class PasswordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
-        // TODO: only list passwords which the authenticated user has access to
-        return PasswordCollection::collection(Password::all());
+        /** @var User $user */
+        $user = auth()->user();
+
+        return PasswordResource::collection($user->passwords->paginate(15));
     }
 
     /**

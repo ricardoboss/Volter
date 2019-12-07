@@ -5,6 +5,8 @@ namespace App\Observers;
 
 use App\Models\Password;
 use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Log;
 
@@ -15,68 +17,89 @@ use Log;
 class PasswordObserver
 {
     /**
-     * Handle the password "creating" event.
+     * Get the currently authenticated user.
+     *
+     * @throws AuthenticationException
      */
-    public function creating(Password $password): void
+    private function getUser(): User
     {
         /** @var User $user */
         $user = auth()->user();
 
+        if (!$user && !App::runningInConsole())
+            throw new AuthenticationException();
+        else if (App::runningInConsole())
+            $user = User::firstOrFail();
+
+        return $user;
+    }
+
+    /**
+     * Handle the password "creating" event.
+     *
+     * @throws AuthenticationException
+     */
+    public function creating(Password $password): void
+    {
+        $user = $this->getUser();
+
         $password->{$password->getKeyName()} = Str::uuid()->toString();
-        $password->created_by = $user->id;
+        $password->creator()->associate($user);
 
         Log::info("User {$user->name} created password \"{$password->name}\" ({$password->id}).");
     }
 
     /**
      * Handle the password "updating" event.
+     *
+     * @throws AuthenticationException
      */
     public function updating(Password $password): void
     {
-        /** @var User $user */
-        $user = auth()->user();
+        $user = $this->getUser();
 
         // TODO: create backup of previous value
 
         $password->version++;
-        $password->updated_by = $user->id;
+        $password->editor()->associate($user);
 
         Log::info("User {$user->name} updated password \"{$password->name}\" ({$password->id}) to version {$password->version}.");
     }
 
     /**
      * Handle the password "deleting" event.
+     *
+     * @throws AuthenticationException
      */
     public function deleting(Password $password): void
     {
-        /** @var User $user */
-        $user = auth()->user();
+        $user = $this->getUser();
 
-        $password->deleted_by = $user->id;
+        $password->deleter()->associate($user);
 
         Log::notice("User {$user->name} deleted password \"{$password->name}\" ({$password->id}).");
     }
 
     /**
      * Handle the password "restoring" event.
+     *
+     * @throws AuthenticationException
      */
     public function restoring(Password $password): void
     {
-        $password->deleted_by = null;
-
-        /** @var User $user */
-        $user = auth()->user();
+        $user = $this->getUser();
 
         Log::notice("User {$user->name} restored password \"{$password->name}\" ({$password->id}).");
     }
 
     /**
      * Handle the password "force deleted" event.
+     *
+     * @throws AuthenticationException
      */
     public function forceDeleted(Password $password): void
     {
-        /** @var User $user */
-        $user = auth()->user();
+        $user = $this->getUser();
 
         Log::warning("User {$user->name} destroyed password \"{$password->name}\" ({$password->id}) permanently.");
     }
