@@ -11,7 +11,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="password in passwords.fetched">
+                <tr v-for="password in this.all">
                     <td>
                         <pre>{{ password.id }}</pre>
                     </td>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-    import {mapState} from "vuex";
+    import {mapGetters} from "vuex";
 
     export default {
         async created() {
@@ -66,7 +66,7 @@
         },
 
         computed: {
-            ...mapState(['passwords'])
+            ...mapGetters('passwords', ['all'])
         }
     }
 </script>

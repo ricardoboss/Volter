@@ -4,6 +4,7 @@ import {ActionContext, StoreOptions} from "vuex";
 import {RootState} from "../states/RootState";
 import {Pagination, PaginationLinks, PaginationMeta} from "../../types/Pagination";
 import api from "../../api";
+import Vue from "vue";
 
 const state = {
     fetched: {},
@@ -13,7 +14,7 @@ const state = {
 
 const getters = {
     all(state: PasswordsState): Password[] {
-        return Object.values(state.fetched);
+        return Object.keys(state.fetched).map(id => state.fetched[id]);
     },
 
     byId(state: PasswordsState, id: string): Password | null {
@@ -70,21 +71,21 @@ const mutations = {
         if (password === null)
             throw new Error("password cannot be null!");
 
-        state.fetched[password.id] = password;
+        Vue.set(state.fetched, password.id, password);
     },
 
     storeAll(state: PasswordsState, passwords: Password[]) {
         if (passwords === null)
             throw new Error("passwords cannot be null!");
 
-        passwords.forEach(p => state.fetched[p.id] = p);
+        passwords.forEach(p => Vue.set(state.fetched, p.id, p));
     },
 
     removePassword(state: PasswordsState, id: string) {
         if (id === null)
             throw new Error("id cannot be null!");
 
-        delete state.fetched[id];
+        Vue.delete(state.fetched, id);
     },
 
     storeMeta(state: PasswordsState, meta: PaginationMeta | null) {
