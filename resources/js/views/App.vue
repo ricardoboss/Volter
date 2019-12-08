@@ -46,7 +46,7 @@
                     console.warn("Attaching random API scrambler interceptor.");
 
                     axios.interceptors.request.use(async config => {
-                        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 900));
+                        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 1900));
 
                         if (Math.random() < 0.1)
                             throw "Random debug API request rejection.";
