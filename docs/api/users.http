@@ -1,0 +1,6 @@
+### List all users visible to the user
+GET http://{{host}}/api/users
+Accept: application/json
+Authorization: bearer {{access_token}}
+
+###

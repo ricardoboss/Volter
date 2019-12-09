@@ -31,3 +31,12 @@ Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function () {
 
     Route::put('{password}/share', 'PasswordController@share')->middleware('can:share,password');
 });
+
+Route::group(['prefix' => 'users', 'middleware' => 'auth'], function () {
+    Route::get('', 'UserController@index');
+    Route::post('', 'UserController@create')->middleware('can:create,App\Models\User');
+
+    Route::get('{user}', 'UserController@view')->middleware('can:view,user');
+    Route::put('{user}', 'UserController@edit')->middleware('can:edit,user');
+    Route::delete('{user}', 'UserController@delete')->middleware('can:delete,user');
+});
