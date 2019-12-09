@@ -29,14 +29,14 @@ request such as JSON or a query string.
 
 #### Responses
 
-Responses are typically in JSON. Every JSON response has the same markup. Here is an example of a response:
+Responses are typically in JSON. Every JSON response can contains the following fields:
 
 ```json
 {
   "success": false,
   "result": null,
-  "messages": [],
-  "errors": [
+  "error": "invalid_credentials",
+  "messages": [
     "Invalid login credentials."
   ]
 }
@@ -45,9 +45,10 @@ Responses are typically in JSON. Every JSON response has the same markup. Here i
 * `success`: whether or not the request was successfully processed.
 * `result`: not-null for requests which return data. If `success` is `false`, this is `null` most of the time.
 * `messages`: status messages, usually meant for reporting information to the user.
-* `errors`: error messages to help debug what went wrong.
+* `error`: (optional) error type to help debug what went wrong.
 
-The response code is also important for handling errors. The response above for example has response code `401 Unauthorized`.
+The response code is also important for handling errors.
+The response above for example has response code `401 Unauthorized`.
 
 #### Variables
 
