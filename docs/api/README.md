@@ -154,7 +154,7 @@ Result:
 
 ## Users
 
-You can manage users using the API.
+See file `users.http`. You can manage users using the API.
 
 ### List Users
 
@@ -166,7 +166,7 @@ You can manage users using the API.
 
 ## Passwords
 
-Passwords can be managed using the API.
+See file `passwords.http`. Passwords can be managed using the API.
 
 ### List Passwords
 
