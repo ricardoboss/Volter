@@ -6,11 +6,22 @@
         2. [Responses](#responses)
         3. [Variables](#variables)
     2. [Testing](#testing)
-3. [Authentication](#authentication)
+2. [Authentication](#authentication)
     1. [Login](#login)
     2. [Logout](#logout)
     3. [Refresh](#refresh)
     4. [Authenticated User Information](#authenticated-user-information)
+3. [Users](#users)
+    1. [List](#list-users)
+    2. [Create](#create-users)
+    3. [Modify](#modify-users)
+    4. [Delete](#delete-users)
+4. [Passwords](#passwords)
+    1. [List](#list-passwords)
+    2. [Create](#create-passwords)
+    3. [Modify](#modify-passwords)
+    4. [Delete](#delete-passwords)
+    5. [Force Delete](#force-delete-passwords)
 
 ## Overview
 
@@ -140,3 +151,71 @@ Result:
     "updated_at": "2019-11-27 22:55:22"
 }
 ```
+
+## Users
+
+You can manage users using the API.
+
+### List Users
+
+### Create Users
+
+### Modify Users
+
+### Delete Users
+
+## Passwords
+
+Passwords can be managed using the API.
+
+### List Passwords
+
+```http request
+GET /api/passwords
+Accept: application/json
+Authorization: bearer {{access_token}}
+```
+
+Result:
+```json
+{
+    "data": [
+        {
+            "id": "0063465f-a0e8-4dab-9383-98e33cd982a3",
+            "version": 0,
+            "name": "Server ABC",
+            "notes": "",
+            "created_at": "2019-12-06 10:05:46",
+            "created_by": 1,
+            "updated_at": "2019-12-18 12:35:20",
+            "updated_by": 3,
+            "deleted_at": null,
+            "deleted_by": null
+        },
+        ...
+    ],
+    "links": {
+        "first": "host/api/passwords?page=1",
+        "last": "host/api/passwords?page=4",
+        "prev": null,
+        "next": "host/api/passwords?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 4,
+        "path": "host/api/passwords",
+        "per_page": 15,
+        "to": 15,
+        "total": 50
+    }
+}
+```
+
+### Create Passwords
+
+### Modify Passwords
+
+### Delete Passwords
+
+### Force Delete Passwords
