@@ -9,6 +9,7 @@ use App\Models\Password;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
  * Class PasswordController
@@ -19,12 +20,12 @@ class PasswordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         /** @var User $user */
         $user = auth()->user();
 
-        return PasswordResource::collection($user->passwords->paginate(15));
+        return PasswordResource::collection($user->passwords->paginate(20));
     }
 
     /**
