@@ -32,13 +32,13 @@
         <main class="container pt-4">
             <loading-overlay v-if="api.loading"/>
 
-            <router-view/>
+            <router-view id="content"/>
         </main>
     </div>
 </template>
 
 <script>
-    import {mapGetters, mapState} from "vuex";
+    import {mapState} from "vuex";
     import axios from "axios";
     import LoadingOverlay from "../components/LoadingOverlay";
     import {homeRoute, loginRoute} from "../router";
@@ -54,7 +54,8 @@
                     // attempt to log in from a stored token
                     await this.$store.dispatch('auth/loginFromStorage');
 
-                    if (this.isAuthenticated)
+                    // check if authenticated now and redirect to home router afterwards
+                    if (this.$store.getters['auth/isAuthenticated'])
                         await this.$router.push(homeRoute);
                 } catch (e) {
                     console.log("Error while logging in via storage: ", e);
@@ -129,3 +130,9 @@
         }
     }
 </script>
+
+<style>
+    #content {
+        height: 100%;
+    }
+</style>
