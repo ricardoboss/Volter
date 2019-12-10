@@ -18,7 +18,6 @@
 </template>
 
 <script>
-
     export default {
         props: {
             email: {
@@ -41,19 +40,25 @@
         methods: {
             async doLogin() {
                 try {
+                    this.$emit('login-pending');
+
                     let userToken = await this.$store.dispatch('auth/login',
                         {
                             email: this.form_email,
                             password: this.form_password
                         });
 
-                    if (userToken === null)
+                    if (userToken === null) {
+                        this.$emit('login-fail', null);
+
                         this.$swal({
                             title: "Error",
                             text: "Please check your login credentials.",
                             type: "error"
                         });
-                    else
+                    } else {
+                        this.$emit('login-success');
+
                         this.$swal({
                             toast: true,
                             text: "Welcome back!",
@@ -62,8 +67,11 @@
                             showConfirmButton: false,
                             position: "top"
                         });
+                    }
                 } catch (err) {
                     console.error("Error while performing login:", err);
+
+                    this.$emit('login-fail', err);
 
                     this.$swal({
                         title: "Error",
