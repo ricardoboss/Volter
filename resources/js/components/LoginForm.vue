@@ -1,9 +1,5 @@
 <template>
     <form @submit.prevent="doLogin">
-        <p>
-            Please log in to view this page:
-        </p>
-
         <div class="form-group">
             <label for="login-email">E-Mail Address</label>
             <input class="form-control" id="login-email" type="email" v-model="form_email">
@@ -13,7 +9,7 @@
             <input class="form-control" id="login-password" type="password" v-model="form_password">
         </div>
 
-        <button class="btn btn-primary" type="submit">Login</button>
+        <button class="btn btn-primary float-right" type="submit">Login</button>
     </form>
 </template>
 
