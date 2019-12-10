@@ -3,20 +3,18 @@
         <main class="container pt-3">
             <loading-overlay v-if="api.loading"/>
 
-            <router-view v-if="isAuthenticated"/>
-            <login-form v-else-if="!api.loading"/>
+            <router-view/>
         </main>
     </div>
 </template>
 
 <script>
     import {mapGetters, mapState} from "vuex";
-    import LoginForm from "../components/LoginForm";
     import axios from "axios";
     import LoadingOverlay from "../components/LoadingOverlay";
 
     export default {
-        components: {LoadingOverlay, LoginForm},
+        components: {LoadingOverlay},
 
         async created() {
             this.setupAxiosInterceptors();
