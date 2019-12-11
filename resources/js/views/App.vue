@@ -1,6 +1,35 @@
 <template>
-    <div :class="['vh-100']">
-        <main class="container pt-3">
+    <div class="vh-100">
+        <b-navbar class="shadow" fixed="top" sticky toggleable="sm" type="light" variant="light">
+            <b-navbar-brand target="nav-collapse">Volter</b-navbar-brand>
+
+            <b-collapse id="nav-collapse" is-nav>
+                <template v-if="isAuthenticated">
+                    <b-navbar-nav>
+                        <b-nav-item href="#">Home</b-nav-item>
+                    </b-navbar-nav>
+
+                    <b-navbar-nav class="ml-auto">
+                        <b-nav-item-dropdown right>
+                            <template v-slot:button-content>
+                                {{ auth.user.name }}
+                            </template>
+
+                            <b-dropdown-item href="#">Account</b-dropdown-item>
+                            <b-dropdown-divider/>
+                            <b-dropdown-item @click.prevent="logout">Logout</b-dropdown-item>
+                        </b-nav-item-dropdown>
+                    </b-navbar-nav>
+                </template>
+                <template v-else>
+                    <b-navbar-nav>
+                        <b-nav-item href="#">Login</b-nav-item>
+                    </b-navbar-nav>
+                </template>
+            </b-collapse>
+        </b-navbar>
+
+        <main class="container pt-4">
             <loading-overlay v-if="api.loading"/>
 
             <router-view/>
@@ -12,6 +41,7 @@
     import {mapGetters, mapState} from "vuex";
     import axios from "axios";
     import LoadingOverlay from "../components/LoadingOverlay";
+    import {homeRoute, loginRoute} from "../router";
 
     export default {
         components: {LoadingOverlay},
@@ -23,6 +53,9 @@
                 try {
                     // attempt to log in from a stored token
                     await this.$store.dispatch('auth/loginFromStorage');
+
+                    if (this.isAuthenticated)
+                        await this.$router.push(homeRoute);
                 } catch (e) {
                     console.log("Error while logging in via storage: ", e);
                 }
@@ -69,11 +102,26 @@
 
                     throw error;
                 });
-            }
+            },
+
+            async logout() {
+                await this.$store.dispatch('auth/logout');
+
+                await this.$router.push(loginRoute);
+
+                this.$swal({
+                    toast: true,
+                    text: "Goodbye!",
+                    timer: 3000,
+                    type: "success",
+                    showConfirmButton: false,
+                    position: "top"
+                });
+            },
         },
 
         computed: {
-            ...mapState(['api']),
+            ...mapState(['api', 'auth']),
 
             ...mapGetters('auth', [
                 'isAuthenticated',
