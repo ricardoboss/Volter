@@ -1,10 +1,9 @@
-import "bootstrap/dist/js/bootstrap"
 import Vue from "vue"
 import Octicon from "vue-octicon/components/Octicon.vue"
 import axios from "axios"
 import VueAxios from "vue-axios";
 import VueSweetalert2 from "vue-sweetalert2";
-import VueObserveVisibilityPlugin from "vue-observe-visibility";
+import BootstrapVue from "bootstrap-vue";
 /**
  * Octicon icons
  */
@@ -37,6 +36,6 @@ Vue.use(VueAxios, axios);
 Vue.use(VueSweetalert2);
 
 /**
- * Initialize vue-observe-visibility
+ * Initialize BootstrapVue
  */
-Vue.use(VueObserveVisibilityPlugin);
+Vue.use(BootstrapVue);
