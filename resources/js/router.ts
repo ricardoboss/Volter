@@ -31,8 +31,8 @@ const router = new VueRouter({
     ],
 });
 
-const loginRoute = {name: 'login'} as RawLocation;
-const homeRoute = {name: 'home'} as RawLocation;
+export const loginRoute = {name: 'login'} as RawLocation;
+export const homeRoute = {name: 'home'} as RawLocation;
 
 router.beforeEach(((to, from, next) => {
     const authenticated = store.getters['auth/isAuthenticated'];
