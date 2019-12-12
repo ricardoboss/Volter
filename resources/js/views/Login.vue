@@ -25,6 +25,7 @@
                     toast: true,
                     text: "Welcome back!",
                     type: "success",
+                    timer: 3000,
                     showConfirmButton: false,
                     position: "top"
                 });
