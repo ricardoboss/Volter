@@ -2,7 +2,7 @@ import {PasswordsState} from "../states/PasswordsState";
 import {Password} from "../../types/Password";
 import {ActionContext, StoreOptions} from "vuex";
 import {RootState} from "../states/RootState";
-import {Pagination, PaginationLinks, PaginationMeta} from "../../types/Pagination";
+import {Pagination} from "../../types/Pagination";
 import api from "../../api";
 import Vue from "vue";
 
@@ -27,15 +27,13 @@ const actions = {
         // get next page from api
         let pagination = await api.passwords.list(state.links);
 
-        commit('storeMeta', pagination.meta);
-        commit('storeLinks', pagination.links);
-        commit('storeAll', pagination.data);
+        commit('storeData', pagination);
 
         return pagination;
     },
 
     async get({state, getters, commit}: ActionContext<PasswordsState, RootState>, payload: { id: string }): Promise<Password | null> {
-        let password = getters.byId(payload.id);
+        let password = getters['byId'](payload.id);
         if (password !== null)
             return password;
 
@@ -74,11 +72,11 @@ const mutations = {
         Vue.set(state.fetched, password.id, password);
     },
 
-    storeAll(state: PasswordsState, passwords: Password[]) {
-        if (passwords === null)
-            throw new Error("passwords cannot be null!");
+    storeData(state: PasswordsState, pagination: Pagination<Password>) {
+        pagination.data.forEach(p => Vue.set(state.fetched, p.id, p));
 
-        passwords.forEach(p => Vue.set(state.fetched, p.id, p));
+        state.meta = pagination.meta;
+        state.links = pagination.links;
     },
 
     removePassword(state: PasswordsState, id: string) {
@@ -87,14 +85,6 @@ const mutations = {
 
         Vue.delete(state.fetched, id);
     },
-
-    storeMeta(state: PasswordsState, meta: PaginationMeta | null) {
-        state.meta = meta;
-    },
-
-    storeLinks(state: PasswordsState, links: PaginationLinks | null) {
-        state.links = links;
-    }
 };
 
 export default {
