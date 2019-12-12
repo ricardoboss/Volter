@@ -111,6 +111,8 @@
                 try {
                     await this.$store.dispatch('auth/logout');
 
+                    await this.$router.push(loginRoute);
+
                     this.$swal({
                         toast: true,
                         text: "Goodbye!",
@@ -120,10 +122,7 @@
                         position: "top"
                     });
                 } catch (e) {
-                    console.log("Error while logging out: " + e);
-                } finally {
-                    if (!this.isAuthenticated)
-                        await this.$router.push(loginRoute);
+                    console.warn("Error while logging out: " + e);
                 }
             },
         },
