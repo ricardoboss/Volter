@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import {mapState} from "vuex";
+    import {mapGetters, mapState} from "vuex";
     import axios from "axios";
     import LoadingOverlay from "../components/LoadingOverlay";
     import {homeRoute, loginRoute} from "../router";
