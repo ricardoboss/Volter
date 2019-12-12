@@ -2,6 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="SyntecLabs" />
     <inspection_tool class="ClassNameCollisionInspection" enabled="true" level="UNUSED ENTRY" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigPartialOverride" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="HtmlPresentationalElement" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="MessDetectorValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="MethodShouldBeFinalInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
