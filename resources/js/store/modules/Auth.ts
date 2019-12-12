@@ -87,17 +87,17 @@ const actions = {
         if (token === null)
             return;
 
-        // unset the values
-        commit('unsetToken');
-        commit('unsetUser');
-
         // TODO: clear storage
 
-        // logout from the api
         try {
+            // logout from the api
             await api.auth.logout(token);
         } catch (e) {
-            console.warn("Unable to invalidate token.", e);
+            throw new Error("Token invalidation failed. Assuming they are already invalid.");
+        } finally {
+            // unset the values
+            commit('unsetToken');
+            commit('unsetUser');
         }
     }
 };
