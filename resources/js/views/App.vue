@@ -82,7 +82,7 @@
                     axios.interceptors.request.use(async config => {
                         await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 1900));
 
-                        if (Math.random() < 0.1)
+                        if (Math.random() < 0.05)
                             throw "Random debug API request rejection.";
 
                         return config;
