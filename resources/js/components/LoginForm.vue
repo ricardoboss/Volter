@@ -2,11 +2,12 @@
     <form @submit.prevent="doLogin">
         <div class="form-group">
             <label for="login-email">E-Mail Address</label>
-            <input class="form-control" id="login-email" type="email" v-model="form_email">
+            <input class="form-control" id="login-email" type="email" autocomplete="username" v-model="form_email">
         </div>
         <div class="form-group">
             <label for="login-password">Password</label>
-            <input class="form-control" id="login-password" type="password" v-model="form_password">
+            <input class="form-control" id="login-password" type="password" autocomplete="current-password"
+                   v-model="form_password">
         </div>
 
         <button class="btn btn-primary float-right" type="submit">Login</button>
