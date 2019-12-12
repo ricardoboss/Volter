@@ -32,7 +32,7 @@
         <main class="container pt-4">
             <loading-overlay v-if="api.loading"/>
 
-            <router-view id="content"/>
+            <router-view/>
         </main>
     </div>
 </template>
@@ -130,9 +130,3 @@
         }
     }
 </script>
-
-<style>
-    #content {
-        height: 100%;
-    }
-</style>
