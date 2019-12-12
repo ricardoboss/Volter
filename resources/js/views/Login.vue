@@ -4,7 +4,7 @@
 
         <div class="card shadow-lg mx-auto" id="login-form-container">
             <div class="card-body">
-                <login-form v-on:login-success="onLogin"/>
+                <login-form v-on:login-success="onLoginSuccess" v-on:login-fail="onLoginFail"/>
             </div>
         </div>
     </div>
@@ -18,8 +18,24 @@
         name: "Login",
         components: {LoginForm},
         methods: {
-            async onLogin() {
+            async onLoginSuccess() {
                 await this.$router.push(homeRoute);
+
+                this.$swal({
+                    toast: true,
+                    text: "Welcome back!",
+                    type: "success",
+                    showConfirmButton: false,
+                    position: "top"
+                });
+            },
+
+            onLoginFail(error) {
+                this.$swal({
+                    title: "Error",
+                    text: error != null ? error : "Please check your login credentials.",
+                    type: "error"
+                });
             }
         }
     }

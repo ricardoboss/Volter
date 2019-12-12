@@ -46,34 +46,13 @@
 
                     if (userToken === null) {
                         this.$emit('login-fail', null);
-
-                        this.$swal({
-                            title: "Error",
-                            text: "Please check your login credentials.",
-                            type: "error"
-                        });
                     } else {
                         this.$emit('login-success');
-
-                        this.$swal({
-                            toast: true,
-                            text: "Welcome back!",
-                            timer: 3000,
-                            type: "success",
-                            showConfirmButton: false,
-                            position: "top"
-                        });
                     }
                 } catch (err) {
                     console.error("Error while performing login:", err);
 
                     this.$emit('login-fail', err);
-
-                    this.$swal({
-                        title: "Error",
-                        text: "An error occurred while logging you in.",
-                        type: "error"
-                    });
                 }
             }
         }
