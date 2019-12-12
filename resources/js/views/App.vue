@@ -3,6 +3,8 @@
         <b-navbar class="shadow" fixed="top" sticky toggleable="sm" type="light" variant="light">
             <b-navbar-brand target="nav-collapse">Volter</b-navbar-brand>
 
+            <b-navbar-toggle target="nav-collapse"/>
+
             <b-collapse id="nav-collapse" is-nav>
                 <template v-if="isAuthenticated">
                     <b-navbar-nav>
