@@ -108,18 +108,23 @@
             },
 
             async logout() {
-                await this.$store.dispatch('auth/logout');
+                try {
+                    await this.$store.dispatch('auth/logout');
 
-                await this.$router.push(loginRoute);
-
-                this.$swal({
-                    toast: true,
-                    text: "Goodbye!",
-                    timer: 3000,
-                    type: "success",
-                    showConfirmButton: false,
-                    position: "top"
-                });
+                    this.$swal({
+                        toast: true,
+                        text: "Goodbye!",
+                        timer: 3000,
+                        type: "success",
+                        showConfirmButton: false,
+                        position: "top"
+                    });
+                } catch (e) {
+                    console.log("Error while logging out: " + e);
+                } finally {
+                    if (!this.isAuthenticated)
+                        await this.$router.push(loginRoute);
+                }
             },
         },
 
