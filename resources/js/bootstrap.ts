@@ -1,5 +1,3 @@
-import "./objects.prototypes"
-
 import Vue from "vue"
 import Octicon from "vue-octicon/components/Octicon.vue"
 import axios from "axios"
@@ -41,3 +39,11 @@ Vue.use(VueSweetalert2);
  * Initialize BootstrapVue
  */
 Vue.use(BootstrapVue);
+
+// helpers
+Vue.prototype.$pick = function (obj: { [key: string]: any }, keys: any[]): Object {
+    return Object.keys(obj)
+        .filter(k => keys.includes(k))
+        .map(k => Object.assign({}, {[k]: obj[k]}))
+        .reduce((res, o) => Object.assign(res, o), {})
+};

@@ -60,7 +60,7 @@
         computed: {
             table_data() {
                 return this.passwords.map(password => {
-                    return password.pick(this.fields);
+                    return this.$pick(password, this.fields);
                 });
             },
 
