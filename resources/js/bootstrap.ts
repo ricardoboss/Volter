@@ -1,3 +1,5 @@
+import "./objects.prototypes"
+
 import Vue from "vue"
 import Octicon from "vue-octicon/components/Octicon.vue"
 import axios from "axios"
