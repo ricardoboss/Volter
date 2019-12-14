@@ -28,8 +28,11 @@ class PasswordObserver
 
         if (!$user && !App::runningInConsole())
             throw new AuthenticationException();
-        else if (App::runningInConsole())
-            $user = User::firstOrFail();
+        else if (App::runningInConsole()) {
+            $user = User::first();
+
+            assert($user != null, "Must have at least one user available.");
+        }
 
         return $user;
     }
@@ -44,7 +47,13 @@ class PasswordObserver
         $user = $this->getUser();
 
         $password->{$password->getKeyName()} = Str::uuid()->toString();
-        $password->creator()->associate($user);
+
+        // check if creator was already set
+        if ($password->created_by == null)
+            $password->creator()->associate($user);
+
+        if ($password->updated_by == null)
+            $password->editor()->associate($user);
 
         Log::info("User {$user->name} created password \"{$password->name}\" ({$password->id}).");
     }

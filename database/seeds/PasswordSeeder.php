@@ -14,7 +14,7 @@ class PasswordSeeder extends Seeder
     public function run()
     {
         factory(Password::class, 50)->create()->each(function (Password $password) {
-            $password->created_by = User::all()->random()->id;
+            $password->creator()->associate(User::all()->random());
         });
     }
 }
