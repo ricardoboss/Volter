@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enums\ApiErrorCode;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -37,7 +38,7 @@ class AuthController extends Controller
 
         if (!$token) {
             return response()->failed(
-                ApiErrorCode::invalid_credentials(),
+                ApiErrorCode::unauthenticated(),
                 401,
                 ["Invalid login credentials."]
             );
@@ -61,7 +62,7 @@ class AuthController extends Controller
      */
     public function me(): JsonResponse
     {
-        return response()->success(auth()->user());
+        return response()->success(new UserResource(auth()->user()));
     }
 
     /**

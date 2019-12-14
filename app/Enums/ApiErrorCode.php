@@ -11,8 +11,12 @@ use Spatie\Enum\Enum;
  * @package App\Enums
  *
  * @method static self unauthorized()
- * @method static self invalid_credentials()
+ * @method static self unauthenticated()
  * @method static self delete_failed()
+ * @method static self not_found()
+ * @method static self too_many_requests()
+ * @method static self server_error()
+ * @method static self exception()
  */
 class ApiErrorCode extends Enum
 {

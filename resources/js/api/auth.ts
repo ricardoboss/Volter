@@ -24,7 +24,7 @@ async function login(email: String, password: String): Promise<JsonWebToken> {
             password
         });
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function logout(token: JsonWebToken): Promise<boolean> {
@@ -40,7 +40,7 @@ async function logout(token: JsonWebToken): Promise<boolean> {
             }
         });
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function me(token: JsonWebToken): Promise<User> {
@@ -55,7 +55,7 @@ async function me(token: JsonWebToken): Promise<User> {
             }
         });
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function refresh(token: JsonWebToken): Promise<JsonWebToken> {
@@ -70,7 +70,7 @@ async function refresh(token: JsonWebToken): Promise<JsonWebToken> {
             }
         });
 
-    return response.data.result;
+    return response.data.data;
 }
 
 export default {

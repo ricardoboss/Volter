@@ -57,7 +57,7 @@ async function create(name: string, notes: string, value: string): Promise<Passw
             value
         });
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function get(id: string): Promise<Password> {
@@ -68,7 +68,7 @@ async function get(id: string): Promise<Password> {
         password: id
     }));
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function edit(password: Password): Promise<Password> {
@@ -82,7 +82,7 @@ async function edit(password: Password): Promise<Password> {
         password
     );
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function _delete(id: string): Promise<boolean> {
@@ -95,7 +95,7 @@ async function _delete(id: string): Promise<boolean> {
         })
     );
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function destroy(password: Password): Promise<boolean> {
@@ -108,7 +108,7 @@ async function destroy(password: Password): Promise<boolean> {
         })
     );
 
-    return response.data.result;
+    return response.data.data;
 }
 
 async function share(password: Password): Promise<any> {
@@ -121,7 +121,7 @@ async function share(password: Password): Promise<any> {
         })
     );
 
-    return response.data.result;
+    return response.data.data;
 }
 
 export default {

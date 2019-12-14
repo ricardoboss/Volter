@@ -1,3 +1,5 @@
+import {ApiResponse} from "./ApiResponse";
+
 export interface PaginationLinks {
     first: string,
     last: string,
@@ -19,8 +21,7 @@ export interface PaginationMeta {
     path: string,
 }
 
-export interface Pagination<T> {
-    data: T[],
+export interface Pagination<T> extends ApiResponse<T[]> {
     links: PaginationLinks,
     meta: PaginationMeta,
 }

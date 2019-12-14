@@ -7,9 +7,9 @@ export interface Password {
     notes: string,
     value?: string,
     created_at: Date,
-    created_by: number | User,
+    created_by: User | null,
     updated_at: Date,
-    updated_by: number | User,
+    updated_by: User | null,
     deleted_at: Date,
-    deleted_by: number | User,
+    deleted_by: User | null,
 }
