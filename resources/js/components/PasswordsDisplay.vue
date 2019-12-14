@@ -2,7 +2,8 @@
     <div v-if="fields.length === 0">
         No fields selected.
     </div>
-    <b-table-simple v-else-if="type === 'table'" hover sticky-header="100%">
+
+    <b-table-simple v-else-if="type === 'table'" bordered hover :responsive="true">
         <b-thead>
             <b-tr>
                 <b-th v-show="fields.includes('id')">ID</b-th>
@@ -17,35 +18,42 @@
         </b-thead>
         <b-tbody>
             <b-tr v-for="password in passwords" v-bind:key="password.id">
-                <b-th v-show="fields.includes('id')">{{ password.id }}</b-th>
+                <b-th v-show="fields.includes('id')" class="nobr"><code>{{ password.id }}</code></b-th>
                 <b-td v-show="fields.includes('version')">{{ password.version }}</b-td>
-                <b-td v-show="fields.includes('name')">{{ password.name }}</b-td>
+                <b-td v-show="fields.includes('name')" class="nobr">{{ password.name }}</b-td>
                 <b-td v-show="fields.includes('notes')">{{ password.notes }}</b-td>
                 <b-td v-show="fields.includes('value')">{{ password.value }}</b-td>
 
                 <template v-if="fields.includes('created_at') && fields.includes('created_by')">
-                    <b-td>{{ password.created_at }}</b-td>
-                    <b-td>{{ password.created_by.name }}</b-td>
+                    <b-td class="nobr">{{ password.created_at }}</b-td>
+                    <b-td class="nobr">{{ password.created_by !== null ? password.created_by.name : '' }}</b-td>
                 </template>
-                <b-td v-else-if="fields.includes('created_at')">{{ password.created_at }}</b-td>
-                <b-td v-else-if="fields.includes('created_by')">{{ password.created_by.name }}</b-td>
+                <b-td v-else-if="fields.includes('created_at')" class="nobr">{{ password.created_at }}</b-td>
+                <b-td v-else-if="fields.includes('created_by')" class="nobr">{{ password.created_by !== null ?
+                    password.created_by.name : '' }}
+                </b-td>
 
                 <template v-if="fields.includes('updated_at') && fields.includes('updated_by')">
-                    <b-td>{{ password.updated_at }}</b-td>
-                    <b-td>{{ password.updated_by.name }}</b-td>
+                    <b-td class="nobr">{{ password.updated_at }}</b-td>
+                    <b-td class="nobr">{{ password.updated_by !== null ? password.updated_by.name : '' }}</b-td>
                 </template>
-                <b-td v-else-if="fields.includes('updated_at')">{{ password.updated_at }}</b-td>
-                <b-td v-else-if="fields.includes('updated_by')">{{ password.updated_by.name }}</b-td>
+                <b-td v-else-if="fields.includes('updated_at')" class="nobr">{{ password.updated_at }}</b-td>
+                <b-td v-else-if="fields.includes('updated_by')" class="nobr">{{ password.updated_by !== null ?
+                    password.updated_by.name : '' }}
+                </b-td>
 
                 <template v-if="fields.includes('deleted_at') && fields.includes('deleted_by')">
-                    <b-td>{{ password.deleted_at }}</b-td>
-                    <b-td>{{ password.deleted_by.name }}</b-td>
+                    <b-td class="nobr">{{ password.deleted_at }}</b-td>
+                    <b-td class="nobr">{{ password.deleted_by !== null ? password.deleted_by.name : '' }}</b-td>
                 </template>
-                <b-td v-else-if="fields.includes('deleted_at')">{{ password.deleted_at }}</b-td>
-                <b-td v-else-if="fields.includes('deleted_by')">{{ password.deleted_by.name }}</b-td>
+                <b-td v-else-if="fields.includes('deleted_at')" class="nobr">{{ password.deleted_at }}</b-td>
+                <b-td v-else-if="fields.includes('deleted_by')" class="nobr">{{ password.deleted_by !== null ?
+                    password.deleted_by.name : '' }}
+                </b-td>
             </b-tr>
         </b-tbody>
     </b-table-simple>
+
     <div v-else-if="type === 'list'">
         <ul>
             <li v-for="password in passwords" v-bind:key="password.id">
