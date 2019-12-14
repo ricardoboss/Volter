@@ -6,6 +6,7 @@ namespace App\Policies;
 use App\Models\Password;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class PasswordPolicy
@@ -38,7 +39,14 @@ class PasswordPolicy
             $password->created_by === $user->id)
             return true;
 
-        return false;
+        return DB::table('shared_access')
+            ->where([
+                'password_id' => $password->id,
+                'model_type' => User::class,
+                'model_id' => $user->id,
+                'can_edit' => true,
+            ])
+            ->exists();
     }
 
     /**
