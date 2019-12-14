@@ -21,7 +21,8 @@
         "ricardoboss/laravel-roles-migrations": "^1.0",
         "spatie/enum": "^2.3",
         "spatie/laravel-activitylog": "^3.9",
-        "tymon/jwt-auth": "1.0.0-rc.5"
+        "tymon/jwt-auth": "1.0.0-rc.5",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
