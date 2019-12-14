@@ -1,7 +1,19 @@
 <template>
     <div>
         <passwords-display :passwords="this.all"
-                           :fields="['id', 'name', 'value', 'created_at', 'created_by']"/>
+                           :fields="[
+                    'id',
+                    'version',
+                    'name',
+                    'notes',
+                    'value',
+                    'created_at',
+                    'created_by',
+                    'updated_at',
+                    'updated_by',
+                    'deleted_at',
+                    'deleted_by',
+                ]"/>
     </div>
 </template>
 
