@@ -1,6 +1,6 @@
 <template>
-    <div class="vh-100">
-        <b-navbar class="shadow" fixed="top" sticky toggleable="sm" type="light" variant="light">
+    <div class="vh-100 pt-5">
+        <b-navbar class="shadow" fixed="top" toggleable="sm" type="light" variant="light">
             <b-navbar-brand target="nav-collapse">Volter</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"/>
@@ -32,7 +32,7 @@
             </b-collapse>
         </b-navbar>
 
-        <main class="container pt-4">
+        <main class="container mt-4">
             <loading-overlay v-if="api.loading"/>
 
             <router-view/>
