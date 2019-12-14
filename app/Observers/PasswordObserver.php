@@ -46,16 +46,17 @@ class PasswordObserver
     {
         $user = $this->getUser();
 
-        $password->{$password->getKeyName()} = Str::uuid()->toString();
+        $password->id = Str::uuid()->toString();
 
         // check if creator was already set
         if ($password->created_by == null)
             $password->creator()->associate($user);
 
+        // check if editor was already set
         if ($password->updated_by == null)
             $password->editor()->associate($user);
 
-        Log::info("User {$user->name} created password \"{$password->name}\" ({$password->id}).");
+        Log::info("User $user->name ($user->id) created password \"$password->name\" ($password->id).");
     }
 
     /**
@@ -72,7 +73,7 @@ class PasswordObserver
         $password->version++;
         $password->editor()->associate($user);
 
-        Log::info("User {$user->name} updated password \"{$password->name}\" ({$password->id}) to version {$password->version}.");
+        Log::info("User $user->name ($user->id) updated password \"$password->name\" ($password->id) to version $password->version.");
     }
 
     /**
@@ -86,7 +87,7 @@ class PasswordObserver
 
         $password->deleter()->associate($user);
 
-        Log::notice("User {$user->name} deleted password \"{$password->name}\" ({$password->id}).");
+        Log::notice("User $user->name ($user->id) deleted password \"$password->name\" ($password->id).");
     }
 
     /**
@@ -98,7 +99,7 @@ class PasswordObserver
     {
         $user = $this->getUser();
 
-        Log::notice("User {$user->name} restored password \"{$password->name}\" ({$password->id}).");
+        Log::notice("User $user->name ($user->id) restored password \"$password->name\" ($password->id).");
     }
 
     /**
@@ -110,6 +111,6 @@ class PasswordObserver
     {
         $user = $this->getUser();
 
-        Log::warning("User {$user->name} destroyed password \"{$password->name}\" ({$password->id}) permanently.");
+        Log::warning("User $user->name ($user->id) destroyed password \"$password->name\" ($password->id) permanently.");
     }
 }
