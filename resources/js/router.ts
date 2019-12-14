@@ -4,6 +4,7 @@ import store from "./store";
 
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
+import Passwords from "./views/Passwords.vue";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,14 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home,
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: '/passwords',
+            name: 'passwords',
+            component: Passwords,
             meta: {
                 requiresAuth: true,
             }

@@ -1,29 +1,25 @@
 <template>
     <div>
-        <passwords-display :passwords="this.all"/>
+        <h1 class="display-3 mb-4">Dashboard</h1>
+
+        <h2 class="mb-3">Manage</h2>
+
+        <b-card-group deck>
+            <b-card align="center" bg-variant="primary">
+                <b-card-text>
+                    <router-link :to="{ name: 'passwords' }" class="btn btn-link text-light">Manage Passwords
+                    </router-link>
+                </b-card-text>
+            </b-card>
+            <b-card align="center" bg-variant="warning">
+                <a href="#" class="btn btn-link text-dark">Manage Users</a>
+            </b-card>
+        </b-card-group>
     </div>
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
-    import PasswordsDisplay from "../components/PasswordsDisplay";
-
     export default {
-        components: {PasswordsDisplay},
-
-        async created() {
-            await this.loadMore();
-        },
-
-        methods: {
-            async loadMore() {
-                await this.$store.dispatch('passwords/fetchNextPage');
-            },
-        },
-
-        computed: {
-            ...mapGetters('passwords', ['all'])
-        }
     }
 </script>
 

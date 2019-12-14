@@ -8,7 +8,8 @@
             <b-collapse id="nav-collapse" is-nav>
                 <template v-if="isAuthenticated">
                     <b-navbar-nav>
-                        <b-nav-item href="#">Home</b-nav-item>
+                        <b-nav-item :to="{ name: 'home' }">Home</b-nav-item>
+                        <b-nav-item :to="{ name: 'passwords' }">Passwords</b-nav-item>
                     </b-navbar-nav>
 
                     <b-navbar-nav class="ml-auto">
