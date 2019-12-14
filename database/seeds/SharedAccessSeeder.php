@@ -1,10 +1,15 @@
 <?php
+declare(strict_types=1);
 
 use App\Models\Password;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
+/**
+ * Class SharedAccessSeeder
+ *
+ */
 class SharedAccessSeeder extends Seeder
 {
     /**
@@ -19,10 +24,13 @@ class SharedAccessSeeder extends Seeder
 
         $accesses = [];
         for ($i = 0; $i < 10; $i++) {
+            $user = $users->random();
+            $password = $passwords->where('created_by', '!=', $user->id)->random();
+
             $accesses[] = [
-                'password_id' => $passwords->random()->id,
+                'password_id' => $password->id,
                 'model_type' => User::class,
-                'model_id' => $users->random()->id,
+                'model_id' => $user->id,
                 'key' => Str::random(12),
                 'can_edit' => rand() > 0.5,
             ];
