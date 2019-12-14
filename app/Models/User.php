@@ -79,7 +79,9 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
         $shared_access_passwords = DB::table('shared_access')
             ->where('model_type', self::class)
             ->where('model_id', $this->getKey())
-            ->get(['password_id']);
+            ->distinct()
+            ->pluck('password_id')
+            ->toArray();
 
         $builder->orWhereIn('id', $shared_access_passwords);
 
