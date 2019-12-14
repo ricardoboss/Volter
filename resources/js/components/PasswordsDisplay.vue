@@ -3,7 +3,7 @@
         No fields selected.
     </div>
 
-    <b-table-simple v-else-if="type === 'table'" bordered hover :responsive="true">
+    <b-table-simple v-else-if="type === 'table'" bordered hover :responsive="responsive" :sticky-header="max_height">
         <b-thead>
             <b-tr>
                 <b-th v-show="fields.includes('id')">ID</b-th>
@@ -28,8 +28,10 @@
                     <b-td class="nobr">{{ password.created_at }}</b-td>
                     <b-td class="nobr">{{ password.created_by !== null ? password.created_by.name : '' }}</b-td>
                 </template>
-                <b-td v-else-if="fields.includes('created_at')" class="nobr">{{ password.created_at }}</b-td>
-                <b-td v-else-if="fields.includes('created_by')" class="nobr">{{ password.created_by !== null ?
+                <b-td colspan="2" v-else-if="fields.includes('created_at')" class="nobr">{{ password.created_at }}
+                </b-td>
+                <b-td colspan="2" v-else-if="fields.includes('created_by')" class="nobr">{{ password.created_by !== null
+                    ?
                     password.created_by.name : '' }}
                 </b-td>
 
@@ -37,8 +39,10 @@
                     <b-td class="nobr">{{ password.updated_at }}</b-td>
                     <b-td class="nobr">{{ password.updated_by !== null ? password.updated_by.name : '' }}</b-td>
                 </template>
-                <b-td v-else-if="fields.includes('updated_at')" class="nobr">{{ password.updated_at }}</b-td>
-                <b-td v-else-if="fields.includes('updated_by')" class="nobr">{{ password.updated_by !== null ?
+                <b-td colspan="2" v-else-if="fields.includes('updated_at')" class="nobr">{{ password.updated_at }}
+                </b-td>
+                <b-td colspan="2" v-else-if="fields.includes('updated_by')" class="nobr">{{ password.updated_by !== null
+                    ?
                     password.updated_by.name : '' }}
                 </b-td>
 
@@ -46,15 +50,18 @@
                     <b-td class="nobr">{{ password.deleted_at }}</b-td>
                     <b-td class="nobr">{{ password.deleted_by !== null ? password.deleted_by.name : '' }}</b-td>
                 </template>
-                <b-td v-else-if="fields.includes('deleted_at')" class="nobr">{{ password.deleted_at }}</b-td>
-                <b-td v-else-if="fields.includes('deleted_by')" class="nobr">{{ password.deleted_by !== null ?
+                <b-td colspan="2" v-else-if="fields.includes('deleted_at')" class="nobr">{{ password.deleted_at }}
+                </b-td>
+                <b-td colspan="2" v-else-if="fields.includes('deleted_by')" class="nobr">{{ password.deleted_by !== null
+                    ?
                     password.deleted_by.name : '' }}
                 </b-td>
             </b-tr>
         </b-tbody>
     </b-table-simple>
 
-    <div v-else-if="type === 'list'">
+    <div v-else-if="type === 'list'" :class="max_height !== null ? 'border' : ''"
+         :style="'overflow-y: auto; max-height: ' + max_height">
         <ul>
             <li v-for="password in passwords" v-bind:key="password.id">
                 <code v-show="fields.includes('id')">{{ password.id }}</code><br>
@@ -87,9 +94,14 @@
                 type: Boolean,
                 default: true,
             },
+            max_height: {
+                type: String | null,
+                default: null,
+                optional: true,
+            },
             fields: {
                 type: Array,
-                default: () => ['id', 'name', 'notes', 'value', 'created_at'],
+                default: () => ['id', 'version', 'name', 'created_at', 'created_by'],
                 validator: (val) => val.every(field => [
                     'id',
                     'version',
