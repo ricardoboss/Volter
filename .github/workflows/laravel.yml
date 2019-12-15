@@ -3,30 +3,49 @@ name: Laravel
 on: [push]
 
 jobs:
-  laravel-tests:
+  phpunit-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-    - name: Generate key
-      run: php artisan key:generate --no-interaction --force
-    - name: Generate JWT secret
-      run: php artisan jwt:secret --no-interaction --force
-    - name: Create Database
-      run: |
-        mkdir -p database
-        touch database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
-    - name: Upload logs
+      - uses: actions/checkout@v1
+          -
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install PHP Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Install NPM Dependencies
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: Generate key
+        run: php artisan key:generate --no-interaction --force
+
+      - name: Generate JWT secret
+        run: php artisan jwt:secret --no-interaction --force
+
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Migrate Database
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan migrate --force
+
+      - name: Build Frontend Scaffolding
+        run: yarn run production --non-interactive
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: vendor/bin/phpunit
+
+      - name: Upload logs
       if: always()
-      uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v1
       with:
         name: logs
         path: storage/logs/
