@@ -44,8 +44,8 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: Upload logs
-      if: always()
+        if: always()
         uses: actions/upload-artifact@v1
-      with:
-        name: logs
-        path: storage/logs/
+        with:
+          name: logs
+          path: storage/logs/
