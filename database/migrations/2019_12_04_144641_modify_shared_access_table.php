@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ class ModifySharedAccessTable extends Migration
         Schema::table('shared_access', function (Blueprint $table) {
             $table->string('password_id', 36)->change();
 
-            $table->string('model_type')->after('password_id');
+            $table->string('model_type')->default(User::class)->after('password_id');
             $table->unsignedBigInteger('model_id')->after('model_type');
 
             $table->string('key')->unique()->change();
