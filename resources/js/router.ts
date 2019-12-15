@@ -60,7 +60,7 @@ router.beforeEach((to, from, next) => {
             next();
     } else {
         if (requiresAuth) {
-            next({name: loginRoute.name, query: {continue_with: window.location.pathname}});
+            next({name: loginRoute.name, replace: true, query: {continue_with: to.path}});
         } else
             next();
     }
