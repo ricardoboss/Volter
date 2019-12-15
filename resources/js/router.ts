@@ -5,8 +5,12 @@ import store from "./store";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Passwords from "./views/Passwords.vue";
+import NotFound from "./views/NotFound.vue";
 
 Vue.use(VueRouter);
+
+export const loginRoute = {name: 'login', path: '/login'};
+export const homeRoute = {name: 'home', path: '/'};
 
 const router = new VueRouter({
     mode: 'history',
@@ -14,11 +18,19 @@ const router = new VueRouter({
 
     routes: [
         {
-            path: '/',
-            name: 'home',
+            path: homeRoute.path,
+            name: homeRoute.name,
             component: Home,
             meta: {
                 requiresAuth: true,
+            }
+        },
+        {
+            path: loginRoute.path,
+            name: loginRoute.name,
+            component: Login,
+            meta: {
+                requiresGuest: true,
             }
         },
         {
@@ -30,20 +42,13 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/login',
-            name: 'login',
-            component: Login,
-            meta: {
-                requiresGuest: true,
-            }
+            path: '*',
+            component: NotFound
         }
     ],
 });
 
-export const loginRoute = {name: 'login'};
-export const homeRoute = {name: 'home'};
-
-router.beforeEach(((to, from, next) => {
+router.beforeEach((to, from, next) => {
     const authenticated = store.getters['auth/isAuthenticated'];
     const requiresGuest = to.matched.some(record => record.meta.requiresGuest);
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
@@ -59,6 +64,6 @@ router.beforeEach(((to, from, next) => {
         } else
             next();
     }
-}));
+});
 
 export default router;
