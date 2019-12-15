@@ -6,13 +6,25 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Passwords from "./views/Passwords.vue";
 import NotFound from "./views/NotFound.vue";
+import {Route} from "vue-router/types/router";
 
 Vue.use(VueRouter);
 
 export const loginRoute = {name: 'login', path: '/login'};
 export const homeRoute = {name: 'home', path: '/'};
 
-const router = new VueRouter({
+class VueRouterExtended extends VueRouter {
+    async continue(fallback: Route): Promise<void> {
+        const continue_with: string = this.currentRoute.query.continue_with as string;
+
+        if (continue_with !== undefined && continue_with !== null)
+            await this.replace({path: continue_with}); // redirect to intended route (if given)
+        else if (this.currentRoute.meta.requiresGuest)
+            await this.push(fallback); // redirect to fallback route
+    }
+}
+
+const router = new VueRouterExtended({
     mode: 'history',
     linkExactActiveClass: "active",
 

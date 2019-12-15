@@ -26,7 +26,7 @@
                 </template>
                 <template v-else>
                     <b-navbar-nav>
-                        <b-nav-item href="#">Login</b-nav-item>
+                        <b-nav-item :to="continueRoute">Login</b-nav-item>
                     </b-navbar-nav>
                 </template>
             </b-collapse>
@@ -52,17 +52,20 @@
         async created() {
             this.setupAxiosInterceptors();
 
-            if (!this.isAuthenticated) {
-                try {
-                    // attempt to log in from a stored token
-                    await this.$store.dispatch('auth/loginFromStorage');
+            if (this.isAuthenticated)
+                return;
 
-                    // check if authenticated now and redirect to home router afterwards
-                    if (this.$store.getters['auth/isAuthenticated'])
-                        await this.$router.push(homeRoute);
-                } catch (e) {
-                    console.log("Error while logging in via storage: ", e);
-                }
+            try {
+                // attempt to log in from a stored token
+                await this.$store.dispatch('auth/loginFromStorage');
+
+                // check if authenticated now for redirection
+                if (!this.isAuthenticated)
+                    return;
+
+                await this.$router.continue(homeRoute);
+            } catch (e) {
+                console.log("Error while logging in via storage: ", e);
             }
         },
 
@@ -133,7 +136,17 @@
 
             ...mapGetters('auth', [
                 'isAuthenticated',
-            ])
-        }
+            ]),
+
+            continueRoute() {
+                let route = {name: 'login', query: {}};
+
+                // only add 'continue_with' query parameter it won't require guest
+                if (!this.$route.meta.requiresGuest)
+                    route.query.continue_with = this.$route.path;
+
+                return route;
+            }
+        },
     }
 </script>
