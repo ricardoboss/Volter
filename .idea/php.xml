@@ -114,6 +114,7 @@
       <path value="$PROJECT_DIR$/vendor/jeremykenedy/laravel-roles" />
       <path value="$PROJECT_DIR$/vendor/laravel/helpers" />
       <path value="$PROJECT_DIR$/vendor/ricardoboss/laravel-roles-migrations" />
+      <path value="$PROJECT_DIR$/vendor/ricardoboss/doctrine-dbal-timestamp-type" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef6b98ec90da3cd9579db7b5a52293d5",
+    "content-hash": "54223e40493adfb5fc00f325501341c5",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -2127,6 +2127,61 @@
                 "uuid"
             ],
             "time": "2019-12-01T04:55:27+00:00"
+        },
+        {
+            "name": "ricardoboss/doctrine-dbal-timestamp-type",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ricardoboss/doctrine-dbal-timestamp-type.git",
+                "reference": "977f3c2a9df0c9702f07b267907eded1fc6a7045"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ricardoboss/doctrine-dbal-timestamp-type/zipball/977f3c2a9df0c9702f07b267907eded1fc6a7045",
+                "reference": "977f3c2a9df0c9702f07b267907eded1fc6a7045",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.5",
+                "php": ">=5.6.4"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MarkTopper\\DoctrineDBALTimestampType\\LaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MarkTopper\\DoctrineDBALTimestampType\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "marktopper"
+                },
+                {
+                    "name": "ricardoboss",
+                    "email": "contact@ricardoboss.de"
+                }
+            ],
+            "description": "Add the timestamp type for Doctrine/DBAL",
+            "keywords": [
+                "database",
+                "dbal",
+                "doctrine",
+                "laravel",
+                "mysql",
+                "timestamp"
+            ],
+            "time": "2019-12-15T16:06:04+00:00"
         },
         {
             "name": "ricardoboss/laravel-roles-migrations",

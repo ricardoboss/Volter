@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Password;
+use App\Models\User;
 use App\Observers\PasswordObserver;
+use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -19,5 +21,6 @@ class ObserverServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Password::observe(PasswordObserver::class);
+        User::observe(UserObserver::class);
     }
 }

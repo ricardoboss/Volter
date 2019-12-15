@@ -33,9 +33,11 @@ class SharedAccessSeeder extends Seeder
                 'model_id' => $user->id,
                 'key' => Str::random(12),
                 'can_edit' => rand() > 0.5,
+                'created_at' => now(),
+                'updated_at' => now(),
             ];
         }
 
-        DB::table('shared_access')->insert($accesses);
+        DB::table('shared_access')->insertOrIgnore($accesses);
     }
 }
