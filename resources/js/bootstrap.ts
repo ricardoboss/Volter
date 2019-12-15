@@ -4,11 +4,11 @@ import axios from "axios"
 import VueAxios from "vue-axios";
 import VueSweetalert2 from "vue-sweetalert2";
 import BootstrapVue from "bootstrap-vue";
+import "vue-octicon/icons";
+
 /**
  * Octicon icons
  */
-import "vue-octicon/icons"
-
 Vue.component('octicon', Octicon);
 
 /**
@@ -39,11 +39,3 @@ Vue.use(VueSweetalert2);
  * Initialize BootstrapVue
  */
 Vue.use(BootstrapVue);
-
-// helpers
-Vue.prototype.$pick = function (obj: { [key: string]: any }, keys: any[]): Object {
-    return Object.keys(obj)
-        .filter(k => keys.includes(k))
-        .map(k => Object.assign({}, {[k]: obj[k]}))
-        .reduce((res, o) => Object.assign(res, o), {})
-};

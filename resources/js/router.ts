@@ -4,7 +4,8 @@ import store from "./store";
 
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
-import Passwords from "./views/Passwords.vue";
+import Passwords from "./views/passwords/Passwords.vue";
+import PasswordsOverview from "./views/passwords/PasswordsOverview.vue";
 import NotFound from "./views/NotFound.vue";
 import {Route} from "vue-router/types/router";
 
@@ -47,11 +48,17 @@ const router = new VueRouterExtended({
         },
         {
             path: '/passwords',
-            name: 'passwords',
             component: Passwords,
             meta: {
                 requiresAuth: true,
-            }
+            },
+            children: [
+                {
+                    path: '',
+                    name: 'passwords',
+                    component: PasswordsOverview,
+                }
+            ]
         },
         {
             path: '*',

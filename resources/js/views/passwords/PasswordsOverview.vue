@@ -1,20 +1,17 @@
 <template>
-    <div>
-        <h1>Passwords</h1>
-
-        <passwords-display :passwords="this.all"/>
-    </div>
+    <passwords-display :passwords="this.all" :fields="['created_by', 'id', 'version', 'value', 'updated_at']"/>
 </template>
 
 <script>
     import {mapGetters} from "vuex";
-    import PasswordsDisplay from "../components/PasswordsDisplay";
+    import PasswordsDisplay from "../../components/PasswordsDisplay";
 
     export default {
         components: {PasswordsDisplay},
 
         async created() {
-            await this.loadMore();
+            if (this.all.length === 0)
+                await this.loadMore();
         },
 
         methods: {
@@ -28,7 +25,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
