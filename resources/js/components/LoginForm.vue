@@ -52,15 +52,10 @@
                     } else {
                         this.$emit('login-success');
 
-                        // default next route is home
-                        let route = homeRoute;
-
-                        // check if next route is specified
-                        if (this.$route.query.continue_with !== undefined)
-                            route = {path: this.$route.query.continue_with};
-
-                        // replace login with next route
-                        await this.$router.replace(route);
+                        if (this.$route.query.continue_with !== undefined) // redirect to intended route (if given)
+                            await this.$router.replace({path: this.$route.query.continue_with});
+                        else if (this.$route.meta.requiresGuest) // or to home route if the current one requires guest
+                            await this.$router.push(homeRoute);
                     }
                 } catch (err) {
                     this.$emit('login-fail', err);
