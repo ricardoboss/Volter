@@ -89,7 +89,7 @@ See file `auth.http`. Use these endpoints to authenticate yourself with Volter.
 
 ### Login
 
-```http request
+```
 POST /api/auth/login
 Accept: application/json
 Content-Type: application/x-www-form-urlencoded
@@ -109,7 +109,7 @@ Result:
 
 ### Logout
 
-```http request
+```
 POST /api/auth/logout
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -123,7 +123,7 @@ true
 
 ### Refresh
 
-```http request
+```
 GET /api/auth/refresh
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -133,7 +133,7 @@ Result is the same as for the `/api/auth/login` request.
 
 ### Authenticated User Information
 
-```http request
+```
 GET /api/auth/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -170,7 +170,7 @@ See file `passwords.http`. Passwords can be managed using the API.
 
 ### List Passwords
 
-```http request
+```
 GET /api/passwords
 Accept: application/json
 Authorization: bearer {{access_token}}
