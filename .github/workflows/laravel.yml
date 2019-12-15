@@ -12,9 +12,9 @@ jobs:
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
     - name: Generate key
-      run: php artisan key:generate
+      run: php artisan key:generate --no-interaction --force
     - name: Generate JWT secret
-      run: php artisan jwt:secret
+      run: php artisan jwt:secret --no-interaction --force
     - name: Create Database
       run: |
         mkdir -p database
@@ -24,3 +24,8 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+    - name: Upload logs
+      uses: actions/upload-artifact@v1
+      with:
+        name: logs
+        path: storage/logs/
