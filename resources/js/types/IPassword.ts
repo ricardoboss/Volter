@@ -12,4 +12,5 @@ export default interface IPassword extends Object {
     updated_by: IUser | null,
     deleted_at: Date | null,
     deleted_by: IUser | null,
+    editable: boolean,
 }

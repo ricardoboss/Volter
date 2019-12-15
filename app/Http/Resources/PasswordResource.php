@@ -35,6 +35,7 @@ class PasswordResource extends JsonResource
             'updated_by' => new UserResource($this->editor),
             'deleted_at' => isset($this->deleted_at) ? $this->deleted_at->format($this->getDateFormat()) : null,
             'deleted_by' => new UserResource($this->deleter),
+            'editable' => auth()->user()->can('edit', $this->resource)
         ];
     }
 }
