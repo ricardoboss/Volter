@@ -14,8 +14,8 @@
     import LoginForm from "../components/LoginForm";
 
     export default {
-        name: "Login",
         components: {LoginForm},
+
         methods: {
             onLoginSuccess() {
                 this.$swal({
@@ -39,7 +39,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     #wrapper {
         position: fixed;
         top: 50%;
