@@ -24,6 +24,19 @@ const requestUser = async (commit: Commit, token: JsonWebToken): Promise<IUser> 
     }
 };
 
+const getTokenFromStorage = function (): JsonWebToken | null {
+    // check if token is set in localStorage
+    let json_token = window.localStorage.getItem('token');
+    if (json_token === null)
+        return null;
+
+    // parse token
+    let token = JSON.parse(json_token) as IJsonWebToken;
+
+    // create instance of class
+    return new JsonWebToken(token);
+};
+
 const state = {
     token: null,
     user: null,
@@ -32,16 +45,6 @@ const state = {
 const getters = {
     isAuthenticated() {
         return state.token !== null && state.user !== null;
-    },
-
-    getTokenFromStorage(): JsonWebToken | null {
-        // check if token is set in localStorage
-        let json_token = window.localStorage.getItem('token');
-        if (json_token === null)
-            return null;
-
-        // parse token as JsonWebToken
-        return JSON.parse(json_token) as JsonWebToken;
     },
 };
 
@@ -67,7 +70,7 @@ const actions = {
 
     async loginFromStorage({commit}: ActionContext<AuthState, RootState>): Promise<{ user: IUser, token: JsonWebToken } | null> {
         // get token from local storage
-        let token = getters.getTokenFromStorage;
+        let token = getTokenFromStorage();
         if (token === null)
             return null;
 
@@ -89,9 +92,9 @@ const actions = {
         return {user, token};
     },
 
-    async logout({commit, getters}: ActionContext<AuthState, RootState>): Promise<void> {
+    async logout({commit}: ActionContext<AuthState, RootState>): Promise<void> {
         // get token from local storage
-        let token = getters.getTokenFromStorage;
+        let token = getTokenFromStorage();
         if (token === null)
             return;
 

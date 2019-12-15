@@ -95,9 +95,13 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 'data' => [
                     'access_token' => $token,
                     'token_type' => 'bearer',
-                    'expires_in' => auth()->factory()->getTTL() * 60,
                 ],
             ];
+
+            // TTL can be infinite (null).
+            // CAUTION! Tokens must not have the 'exp' claim if TTL is set to null!
+            $ttl = auth()->factory()->getTTL();
+            $responseData['data']['expires_at'] = $ttl != null ? now()->addMinutes($ttl)->timestamp : null;
 
             if ($messages)
                 $responseData['messages'] = $messages;

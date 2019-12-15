@@ -38,7 +38,7 @@ email={{email}}&password={{password}}
     });
 
     client.test("Expire time", function () {
-        client.assert(response.body["data"]["expires_in"] === 3600, "Unexpected expire time returned");
+        client.assert(response.body["data"]["expires_at"] > 0, "Unexpected expire time returned");
     });
 
     client.test("Access token", function () {
@@ -84,7 +84,7 @@ Authorization: bearer {{access_token}}
     });
 
     client.test("Expire time", function () {
-        client.assert(response.body["data"]["expires_in"] === 3600, "Unexpected expire time returned");
+        client.assert(response.body["data"]["expires_at"] >= 0, "Unexpected expire time returned");
     });
 
     client.test("Access token", function () {
