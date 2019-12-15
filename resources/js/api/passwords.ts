@@ -1,8 +1,8 @@
-import {Password} from "../types/Password";
+import {IPassword} from "../types/IPassword";
 import {AxiosResponse} from "axios";
-import {ApiResponse} from "../types/ApiResponse";
+import {IApiResponse} from "../types/IApiResponse";
 import Vue from "vue";
-import {Pagination, PaginationLinks} from "../types/Pagination";
+import {IPagination, IPaginationLinks} from "../types/IPagination";
 
 const endpoints = {
     list: '/api/passwords',
@@ -33,23 +33,23 @@ function inject(url: string, queryParams: any) {
     return url;
 }
 
-async function list(data: PaginationLinks | null = null): Promise<Pagination<Password>> {
+async function list(data: IPaginationLinks | null = null): Promise<IPagination<IPassword>> {
     let url: string = endpoints.list;
     if (data !== null && data.next !== null)
         url = data.next;
 
-    let response: AxiosResponse<Pagination<Password>> = await Vue.axios.get(url);
+    let response: AxiosResponse<IPagination<IPassword>> = await Vue.axios.get(url);
 
     return response.data;
 }
 
-async function create(name: string, notes: string, value: string): Promise<Password> {
+async function create(name: string, notes: string, value: string): Promise<IPassword> {
     if (name === null || value === null)
         throw new Error("name nor value can be null!");
 
     // TODO: encrypt value before transmission
 
-    let response: AxiosResponse<ApiResponse<Password>> = await Vue.axios.post(
+    let response: AxiosResponse<IApiResponse<IPassword>> = await Vue.axios.post(
         endpoints.create,
         {
             name,
@@ -60,22 +60,22 @@ async function create(name: string, notes: string, value: string): Promise<Passw
     return response.data.data;
 }
 
-async function get(id: string): Promise<Password> {
+async function get(id: string): Promise<IPassword> {
     if (id === null)
         throw new Error("id cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<Password>> = await Vue.axios.get(inject(endpoints.view, {
+    let response: AxiosResponse<IApiResponse<IPassword>> = await Vue.axios.get(inject(endpoints.view, {
         password: id
     }));
 
     return response.data.data;
 }
 
-async function edit(password: Password): Promise<Password> {
+async function edit(password: IPassword): Promise<IPassword> {
     if (password === null)
         throw new Error("password cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<Password>> = await Vue.axios.put(
+    let response: AxiosResponse<IApiResponse<IPassword>> = await Vue.axios.put(
         inject(endpoints.edit, {
             password: password.id
         }),
@@ -89,7 +89,7 @@ async function _delete(id: string): Promise<boolean> {
     if (id === null)
         throw new Error("id cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<boolean>> = await Vue.axios.delete(
+    let response: AxiosResponse<IApiResponse<boolean>> = await Vue.axios.delete(
         inject(endpoints.delete, {
             password: id
         })
@@ -98,11 +98,11 @@ async function _delete(id: string): Promise<boolean> {
     return response.data.data;
 }
 
-async function destroy(password: Password): Promise<boolean> {
+async function destroy(password: IPassword): Promise<boolean> {
     if (password === null)
         throw new Error("password cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<boolean>> = await Vue.axios.delete(
+    let response: AxiosResponse<IApiResponse<boolean>> = await Vue.axios.delete(
         inject(endpoints.destroy, {
             password: password.id
         })
@@ -111,11 +111,11 @@ async function destroy(password: Password): Promise<boolean> {
     return response.data.data;
 }
 
-async function share(password: Password): Promise<any> {
+async function share(password: IPassword): Promise<any> {
     if (password === null)
         throw new Error("password cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<any>> = await Vue.axios.post(
+    let response: AxiosResponse<IApiResponse<any>> = await Vue.axios.post(
         inject(endpoints.share, {
             password: password.id
         })

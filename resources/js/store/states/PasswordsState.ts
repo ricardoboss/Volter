@@ -1,8 +1,8 @@
-import {Password} from "../../types/Password";
-import {PaginationLinks, PaginationMeta} from "../../types/Pagination";
+import {IPassword} from "../../types/IPassword";
+import {IPaginationLinks, IPaginationMeta} from "../../types/IPagination";
 
 export interface PasswordsState {
-    fetched: { [id: string]: Password; },
-    meta: PaginationMeta | null,
-    links: PaginationLinks | null,
+    fetched: { [id: string]: IPassword; },
+    meta: IPaginationMeta | null,
+    links: IPaginationLinks | null,
 }

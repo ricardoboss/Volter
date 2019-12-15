@@ -1,15 +1,15 @@
-import {User} from "./User";
+import {IUser} from "./IUser";
 
-export interface Password {
+export interface IPassword {
     id: string,
     version: number,
     name: string,
     notes: string,
     value?: string,
     created_at: Date,
-    created_by: User | null,
+    created_by: IUser | null,
     updated_at: Date,
-    updated_by: User | null,
+    updated_by: IUser | null,
     deleted_at: Date,
-    deleted_by: User | null,
+    deleted_by: IUser | null,
 }

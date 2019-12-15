@@ -1,8 +1,8 @@
 import Vue from "vue";
-import {JsonWebToken} from "../types/JsonWebToken";
-import {User} from "../types/User";
-import {ApiResponse} from "../types/ApiResponse";
+import {IUser} from "../types/IUser";
+import {IApiResponse} from "../types/IApiResponse";
 import {AxiosResponse} from "axios";
+import {JsonWebToken} from "../types/JsonWebToken";
 
 const endpoints = {
     login: '/api/auth/login',
@@ -17,7 +17,7 @@ async function login(email: String, password: String): Promise<JsonWebToken> {
     if (email === null || password === null)
         throw new Error("email nor password can be null!");
 
-    let response: AxiosResponse<ApiResponse<JsonWebToken>> = await Vue.axios.post(
+    let response: AxiosResponse<IApiResponse<JsonWebToken>> = await Vue.axios.post(
         endpoints.login,
         {
             email,
@@ -31,7 +31,7 @@ async function logout(token: JsonWebToken): Promise<boolean> {
     if (token === null)
         throw new Error("token cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<boolean>> = await Vue.axios.post(
+    let response: AxiosResponse<IApiResponse<boolean>> = await Vue.axios.post(
         endpoints.logout,
         {},
         {
@@ -43,11 +43,11 @@ async function logout(token: JsonWebToken): Promise<boolean> {
     return response.data.data;
 }
 
-async function me(token: JsonWebToken): Promise<User> {
+async function me(token: JsonWebToken): Promise<IUser> {
     if (token === null)
         throw new Error("token cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<User>> = await Vue.axios.get(
+    let response: AxiosResponse<IApiResponse<IUser>> = await Vue.axios.get(
         endpoints.me,
         {
             headers: {
@@ -62,7 +62,7 @@ async function refresh(token: JsonWebToken): Promise<JsonWebToken> {
     if (token === null)
         throw new Error("token cannot be null!");
 
-    let response: AxiosResponse<ApiResponse<JsonWebToken>> = await Vue.axios.get(
+    let response: AxiosResponse<IApiResponse<JsonWebToken>> = await Vue.axios.get(
         endpoints.refresh,
         {
             headers: {

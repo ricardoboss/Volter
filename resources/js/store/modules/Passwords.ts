@@ -1,8 +1,8 @@
 import {PasswordsState} from "../states/PasswordsState";
-import {Password} from "../../types/Password";
+import {IPassword} from "../../types/IPassword";
 import {ActionContext, StoreOptions} from "vuex";
 import {RootState} from "../states/RootState";
-import {Pagination} from "../../types/Pagination";
+import {IPagination} from "../../types/IPagination";
 import api from "../../api";
 import Vue from "vue";
 
@@ -13,17 +13,17 @@ const state = {
 } as PasswordsState;
 
 const getters = {
-    all(state: PasswordsState): Password[] {
+    all(state: PasswordsState): IPassword[] {
         return Object.keys(state.fetched).map(id => state.fetched[id]);
     },
 
-    byId(state: PasswordsState, id: string): Password | null {
+    byId(state: PasswordsState, id: string): IPassword | null {
         return state.fetched[id];
     }
 };
 
 const actions = {
-    async fetchNextPage({state, commit}: ActionContext<PasswordsState, RootState>): Promise<Pagination<Password>> {
+    async fetchNextPage({state, commit}: ActionContext<PasswordsState, RootState>): Promise<IPagination<IPassword>> {
         // get next page from api
         let pagination = await api.passwords.list(state.links);
 
@@ -32,7 +32,7 @@ const actions = {
         return pagination;
     },
 
-    async get({state, getters, commit}: ActionContext<PasswordsState, RootState>, payload: { id: string }): Promise<Password | null> {
+    async get({state, getters, commit}: ActionContext<PasswordsState, RootState>, payload: { id: string }): Promise<IPassword | null> {
         let password = getters['byId'](payload.id);
         if (password !== null)
             return password;
@@ -54,7 +54,7 @@ const actions = {
         return success;
     },
 
-    async update({commit}: ActionContext<PasswordsState, RootState>, payload: { password: Password }): Promise<Password> {
+    async update({commit}: ActionContext<PasswordsState, RootState>, payload: { password: IPassword }): Promise<IPassword> {
         // update password in api
         let updatedPassword = await api.passwords.edit(payload.password);
 
@@ -65,14 +65,14 @@ const actions = {
 };
 
 const mutations = {
-    storePassword(state: PasswordsState, password: Password) {
+    storePassword(state: PasswordsState, password: IPassword) {
         if (password === null)
             throw new Error("password cannot be null!");
 
         Vue.set(state.fetched, password.id, password);
     },
 
-    storeData(state: PasswordsState, pagination: Pagination<Password>) {
+    storeData(state: PasswordsState, pagination: IPagination<IPassword>) {
         pagination.data.forEach(p => Vue.set(state.fetched, p.id, p));
 
         state.meta = pagination.meta;

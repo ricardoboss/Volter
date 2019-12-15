@@ -1,6 +1,6 @@
-import {ApiResponse} from "./ApiResponse";
+import {IApiResponse} from "./IApiResponse";
 
-export interface PaginationLinks {
+export interface IPaginationLinks {
     first: string,
     last: string,
 
@@ -8,7 +8,7 @@ export interface PaginationLinks {
     next: string | null,
 }
 
-export interface PaginationMeta {
+export interface IPaginationMeta {
     current_page: number,
     last_page: number,
 
@@ -21,7 +21,7 @@ export interface PaginationMeta {
     path: string,
 }
 
-export interface Pagination<T> extends ApiResponse<T[]> {
-    links: PaginationLinks,
-    meta: PaginationMeta,
+export interface IPagination<T> extends IApiResponse<T[]> {
+    links: IPaginationLinks,
+    meta: IPaginationMeta,
 }

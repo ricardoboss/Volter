@@ -1,12 +1,13 @@
 import {ActionContext, Commit, StoreOptions} from "vuex";
 import {RootState} from "../states/RootState";
 import {AuthState} from "../states/AuthState";
-import {JsonWebToken} from "../../types/JsonWebToken";
-import {User} from "../../types/User";
+import {IUser} from "../../types/IUser";
 import Vue from "vue";
 import api from "../../api";
+import {JsonWebToken} from "../../types/JsonWebToken";
+import {IJsonWebToken} from "../../types/IJsonWebToken";
 
-const requestUser = async (commit: Commit, token: JsonWebToken): Promise<User> => {
+const requestUser = async (commit: Commit, token: JsonWebToken): Promise<IUser> => {
     try {
         // request user data using token
         let user = await api.auth.me(token);
@@ -45,7 +46,7 @@ const getters = {
 };
 
 const actions = {
-    async login({dispatch, commit}: ActionContext<AuthState, RootState>, payload: { email: string, password: string }): Promise<{ user: User, token: JsonWebToken } | null> {
+    async login({dispatch, commit}: ActionContext<AuthState, RootState>, payload: { email: string, password: string }): Promise<{ user: IUser, token: JsonWebToken } | null> {
         // TODO: check if already authenticated and maybe refresh token
 
         // try to get a token using the provided credentials
@@ -64,7 +65,7 @@ const actions = {
         return {user, token};
     },
 
-    async loginFromStorage({commit, getters}: ActionContext<AuthState, RootState>): Promise<{ user: User, token: JsonWebToken } | null> {
+    async loginFromStorage({commit}: ActionContext<AuthState, RootState>): Promise<{ user: IUser, token: JsonWebToken } | null> {
         // get token from local storage
         let token = getters.getTokenFromStorage;
         if (token === null)
@@ -78,6 +79,13 @@ const actions = {
         if (user === null)
             return null;
 
+        if (token.is_expired()) {
+            let refreshedToken = await api.auth.refresh(token);
+            commit('setToken', refreshedToken);
+
+            token = refreshedToken;
+        }
+
         return {user, token};
     },
 
@@ -87,19 +95,17 @@ const actions = {
         if (token === null)
             return;
 
-        const concreteToken = {...token};
-
         // TODO: clear storage
 
         // unset the values
-        commit('unsetToken');
         commit('unsetUser');
+        commit('unsetToken');
 
         try {
             // logout from the api
-            await api.auth.logout(concreteToken);
+            await api.auth.logout(token);
         } catch (e) {
-            throw new Error("Token invalidation failed. Assuming it is already invalid. Error: " + e.message);
+            throw new Error("Token invalidation failed. Assuming it is already invalid. Error: " + e);
         }
     }
 };
@@ -132,7 +138,7 @@ const mutations = {
         state.user = null;
     },
 
-    setUser(state: AuthState, user: User) {
+    setUser(state: AuthState, user: IUser) {
         if (user === null)
             throw new Error("Cannot set user to null. Use unsetUser for this.");
 
@@ -146,5 +152,5 @@ export default {
     state,
     getters,
     actions,
-    mutations
+    mutations,
 } as StoreOptions<AuthState>;

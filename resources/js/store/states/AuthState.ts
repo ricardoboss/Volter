@@ -1,7 +1,7 @@
-import {User} from "../../types/User";
-import {JsonWebToken} from "../../types/JsonWebToken";
+import {IUser} from "../../types/IUser";
+import {IJsonWebToken} from "../../types/IJsonWebToken";
 
 export interface AuthState {
-    token: JsonWebToken | null,
-    user: User | null,
+    token: IJsonWebToken | null,
+    user: IUser | null,
 }
