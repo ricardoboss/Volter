@@ -26,7 +26,7 @@
                 </template>
                 <template v-else>
                     <b-navbar-nav>
-                        <b-nav-item :to="continueRoute">Login</b-nav-item>
+                        <b-nav-item :to="{ name: 'login' }">Login</b-nav-item>
                     </b-navbar-nav>
                 </template>
             </b-collapse>
@@ -81,10 +81,10 @@
                  * == /!\ ======================================================================= /!\ ==
                  */
                 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
-                    console.warn("Attaching random API scrambler interceptor.");
+                    console.warn("Attaching random API scrambler interceptor. (env: " + process.env.NODE_ENV + ")");
 
                     axios.interceptors.request.use(async config => {
-                        await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 1900));
+                        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 1000));
 
                         if (Math.random() < 0.05)
                             throw "Random debug API request rejection.";
@@ -137,16 +137,6 @@
             ...mapGetters('auth', [
                 'isAuthenticated',
             ]),
-
-            continueRoute() {
-                let route = {name: 'login', query: {}};
-
-                // only add 'continue_with' query parameter it won't require guest
-                if (!this.$route.meta.requiresGuest)
-                    route.query.continue_with = this.$route.path;
-
-                return route;
-            }
         },
     }
 </script>
