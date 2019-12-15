@@ -87,17 +87,19 @@ const actions = {
         if (token === null)
             return;
 
+        const concreteToken = {...token};
+
         // TODO: clear storage
+
+        // unset the values
+        commit('unsetToken');
+        commit('unsetUser');
 
         try {
             // logout from the api
-            await api.auth.logout(token);
+            await api.auth.logout(concreteToken);
         } catch (e) {
-            throw new Error("Token invalidation failed. Assuming it is already invalid.");
-        } finally {
-            // unset the values
-            commit('unsetToken');
-            commit('unsetUser');
+            throw new Error("Token invalidation failed. Assuming it is already invalid. Error: " + e.message);
         }
     }
 };
