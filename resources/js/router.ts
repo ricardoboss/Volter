@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter, {RawLocation} from "vue-router";
+import VueRouter from "vue-router";
 import store from "./store";
 
 import Home from "./views/Home.vue";
@@ -40,8 +40,8 @@ const router = new VueRouter({
     ],
 });
 
-export const loginRoute = {name: 'login'} as RawLocation;
-export const homeRoute = {name: 'home'} as RawLocation;
+export const loginRoute = {name: 'login'};
+export const homeRoute = {name: 'home'};
 
 router.beforeEach(((to, from, next) => {
     const authenticated = store.getters['auth/isAuthenticated'];
@@ -54,9 +54,9 @@ router.beforeEach(((to, from, next) => {
         else
             next();
     } else {
-        if (requiresAuth)
-            next(loginRoute);
-        else
+        if (requiresAuth) {
+            next({name: loginRoute.name, query: {continue_with: window.location.pathname}});
+        } else
             next();
     }
 }));

@@ -12,15 +12,12 @@
 
 <script>
     import LoginForm from "../components/LoginForm";
-    import {homeRoute} from "../router";
 
     export default {
         name: "Login",
         components: {LoginForm},
         methods: {
-            async onLoginSuccess() {
-                await this.$router.push(homeRoute);
-
+            onLoginSuccess() {
                 this.$swal({
                     toast: true,
                     text: "Welcome back!",

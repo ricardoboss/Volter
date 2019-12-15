@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import {homeRoute} from "../router";
+
     export default {
         props: {
             email: {
@@ -49,10 +51,18 @@
                         this.$emit('login-fail', null);
                     } else {
                         this.$emit('login-success');
+
+                        // default next route is home
+                        let route = homeRoute;
+
+                        // check if next route is specified
+                        if (this.$route.query.continue_with !== null)
+                            route = {path: this.$route.query.continue_with};
+
+                        // replace login with next route
+                        await this.$router.replace(route);
                     }
                 } catch (err) {
-                    console.error("Error while performing login:", err);
-
                     this.$emit('login-fail', err);
                 }
             }
