@@ -93,7 +93,7 @@ const actions = {
             // logout from the api
             await api.auth.logout(token);
         } catch (e) {
-            throw new Error("Token invalidation failed. Assuming they are already invalid.");
+            throw new Error("Token invalidation failed. Assuming it is already invalid.");
         } finally {
             // unset the values
             commit('unsetToken');
