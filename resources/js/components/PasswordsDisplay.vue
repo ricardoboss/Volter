@@ -72,7 +72,7 @@
                     if (password.deleted_at !== null)
                         data._rowVariant = 'danger';
 
-                    if (password.created_by?.id !== this.auth.user.id)
+                    if (password.created_by?.id !== this.auth.user?.id)
                         data._cellVariants = {created_by: 'secondary'};
 
                     data.created_by = password.created_by.name;
