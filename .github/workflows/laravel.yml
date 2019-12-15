@@ -25,7 +25,7 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
     - name: Upload logs
-      if: true
+      if: always()
       uses: actions/upload-artifact@v1
       with:
         name: logs
