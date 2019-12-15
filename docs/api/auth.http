@@ -30,22 +30,22 @@ email={{email}}&password={{password}}
     });
 
     client.test("Success", function () {
-        client.assert(response.body["success"], "Request was not successful");
+        client.assert(response.body["data"], "Request was not successful");
     });
 
     client.test("Token Type", function () {
-        client.assert(response.body["result"]["token_type"] === "bearer", "Invalid token type returned");
+        client.assert(response.body["data"]["token_type"] === "bearer", "Invalid token type returned");
     });
 
     client.test("Expire time", function () {
-        client.assert(response.body["result"]["expires_in"] === 3600, "Unexpected expire time returned");
+        client.assert(response.body["data"]["expires_in"] === 3600, "Unexpected expire time returned");
     });
 
     client.test("Access token", function () {
-        client.assert(response.body["result"]["access_token"], "Invalid access token returned");
+        client.assert(response.body["data"]["access_token"], "Invalid access token returned");
     });
 
-    client.global.set("access_token", response.body["result"]["access_token"]);
+    client.global.set("access_token", response.body["data"]["access_token"]);
  %}
 
 ### authenticated user information
@@ -80,18 +80,18 @@ Authorization: bearer {{access_token}}
     });
 
     client.test("Token Type", function () {
-        client.assert(response.body["result"]["token_type"] === "bearer", "Invalid token type returned");
+        client.assert(response.body["data"]["token_type"] === "bearer", "Invalid token type returned");
     });
 
     client.test("Expire time", function () {
-        client.assert(response.body["result"]["expires_in"] === 3600, "Unexpected expire time returned");
+        client.assert(response.body["data"]["expires_in"] === 3600, "Unexpected expire time returned");
     });
 
     client.test("Access token", function () {
-        client.assert(response.body["result"]["access_token"], "Invalid access token returned");
+        client.assert(response.body["data"]["access_token"], "Invalid access token returned");
     });
 
-    client.global.set("access_token", response.body["result"]["access_token"]);
+    client.global.set("access_token", response.body["data"]["access_token"]);
  %}
 
 ### logout
