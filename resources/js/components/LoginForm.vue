@@ -56,7 +56,7 @@
                         let route = homeRoute;
 
                         // check if next route is specified
-                        if (this.$route.query.continue_with !== null)
+                        if (this.$route.query.continue_with !== undefined)
                             route = {path: this.$route.query.continue_with};
 
                         // replace login with next route
