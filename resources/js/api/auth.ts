@@ -1,8 +1,8 @@
 import Vue from "vue";
-import {IUser} from "../types/IUser";
-import {IApiResponse} from "../types/IApiResponse";
+import IUser from "../types/IUser";
+import IApiResponse from "../types/IApiResponse";
 import {AxiosResponse} from "axios";
-import {JsonWebToken} from "../types/JsonWebToken";
+import JsonWebToken from "../types/JsonWebToken";
 
 const endpoints = {
     login: '/api/auth/login',

@@ -1,8 +1,8 @@
-import {PasswordsState} from "../states/PasswordsState";
-import {IPassword} from "../../types/IPassword";
+import PasswordsState from "../states/PasswordsState";
+import IPassword from "../../types/IPassword";
 import {ActionContext, StoreOptions} from "vuex";
-import {RootState} from "../states/RootState";
-import {IPagination} from "../../types/IPagination";
+import RootState from "../states/RootState";
+import IPagination from "../../types/IPagination";
 import api from "../../api";
 import Vue from "vue";
 

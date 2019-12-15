@@ -1,6 +1,6 @@
 import Vue from "vue"
 import Vuex, {StoreOptions} from "vuex"
-import {RootState} from "./states/RootState";
+import RootState from "./states/RootState";
 
 import api from "./modules/Api";
 import auth from "./modules/Auth";

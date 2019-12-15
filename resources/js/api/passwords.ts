@@ -1,8 +1,8 @@
-import {IPassword} from "../types/IPassword";
+import IPassword from "../types/IPassword";
 import {AxiosResponse} from "axios";
-import {IApiResponse} from "../types/IApiResponse";
+import IApiResponse from "../types/IApiResponse";
 import Vue from "vue";
-import {IPagination, IPaginationLinks} from "../types/IPagination";
+import IPagination, {IPaginationLinks} from "../types/IPagination";
 
 const endpoints = {
     list: '/api/passwords',

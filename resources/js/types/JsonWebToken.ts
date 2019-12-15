@@ -1,6 +1,6 @@
-import {IJsonWebToken} from "./IJsonWebToken";
+import IJsonWebToken from "./IJsonWebToken";
 
-export class JsonWebToken implements IJsonWebToken {
+export default class JsonWebToken implements IJsonWebToken {
     access_token: string;
     expires_at: number;
     token_type: string;

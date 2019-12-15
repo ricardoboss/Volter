@@ -1,11 +1,11 @@
 import {ActionContext, Commit, StoreOptions} from "vuex";
-import {RootState} from "../states/RootState";
-import {AuthState} from "../states/AuthState";
-import {IUser} from "../../types/IUser";
+import RootState from "../states/RootState";
+import AuthState from "../states/AuthState";
+import IUser from "../../types/IUser";
 import Vue from "vue";
 import api from "../../api";
-import {JsonWebToken} from "../../types/JsonWebToken";
-import {IJsonWebToken} from "../../types/IJsonWebToken";
+import JsonWebToken from "../../types/JsonWebToken";
+import IJsonWebToken from "../../types/IJsonWebToken";
 
 const requestUser = async (commit: Commit, token: JsonWebToken): Promise<IUser> => {
     try {

@@ -1,3 +1,3 @@
-export interface ApiState {
+export default interface ApiState {
     loading: boolean
 }

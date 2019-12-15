@@ -1,6 +1,6 @@
-import {ApiState} from "../states/ApiState";
+import ApiState from "../states/ApiState";
 import {ActionContext, StoreOptions} from "vuex";
-import {RootState} from "../states/RootState";
+import RootState from "../states/RootState";
 
 // TODO: add nested api request support (semaphore which counts how many requests are waiting to finish) and set loading appropriately
 const state = {
