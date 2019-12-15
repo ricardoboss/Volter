@@ -22,7 +22,7 @@ class ModifySharedAccessTable extends Migration
             $table->string('password_id', 36)->change();
 
             $table->string('model_type')->default(User::class)->after('password_id');
-            $table->unsignedBigInteger('model_id')->after('model_type');
+            $table->unsignedBigInteger('model_id')->default(0)->after('model_type');
 
             $table->string('key')->unique()->change();
             $table->boolean('can_edit')->default(false)->change();
