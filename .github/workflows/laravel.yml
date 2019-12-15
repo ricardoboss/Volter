@@ -20,12 +20,12 @@ jobs:
         mkdir -p database
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
-      continue-on-error: true
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
     - name: Upload logs
+      if: true
       uses: actions/upload-artifact@v1
       with:
         name: logs
