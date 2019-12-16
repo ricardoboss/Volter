@@ -11,19 +11,19 @@
 </template>
 
 <script>
-    import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/LoginForm';
 
-    export default {
-        components: {LoginForm},
+export default {
+    components: { LoginForm },
 
-        methods: {
-            onLoginSuccess() {
-                this.$swal({
-                    toast: true,
-                    text: 'Welcome back!',
-                    type: 'success',
-                    timer: 3000,
-                    showConfirmButton: false,
+    methods: {
+        onLoginSuccess() {
+            this.$swal({
+                toast: true,
+                text: 'Welcome back!',
+                type: 'success',
+                timer: 3000,
+                showConfirmButton: false,
                 position: 'top',
             });
         },
