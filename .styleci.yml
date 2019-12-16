@@ -1,7 +1,9 @@
 php:
   preset: laravel
+  enabled:
+    - linebreak_after_opening_tag
   disabled:
-    - unused_use
+    - blank_line_after_opening_tag
   finder:
     not-name:
       - index.php
@@ -11,3 +13,4 @@ js:
     not-name:
       - webpack.mix.js
 css: true
+vue: true
