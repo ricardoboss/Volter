@@ -17,14 +17,28 @@ async function login(email: String, password: String): Promise<JsonWebToken> {
     if (email === null || password === null)
         throw new Error("email nor password can be null!");
 
-    let response: AxiosResponse<IApiResponse<JsonWebToken>> = await Vue.axios.post(
-        endpoints.login,
-        {
-            email,
-            password
-        });
+    let response: AxiosResponse<IApiResponse<JsonWebToken>>;
+    try {
+        response = await Vue.axios.post(
+            endpoints.login,
+            {
+                email,
+                password
+            });
 
-    return response.data.data;
+        return response.data.data;
+    } catch (e) {
+        if (
+            e.hasOwnProperty("data") &&
+            e.data.hasOwnProperty("messages") &&
+            Array.isArray(e.data.messages) &&
+            e.data.messages.length > 0
+        ) {
+            throw e.data.messages[0];
+        }
+
+        throw e;
+    }
 }
 
 async function logout(token: JsonWebToken): Promise<boolean> {

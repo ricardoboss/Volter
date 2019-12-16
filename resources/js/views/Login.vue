@@ -11,27 +11,27 @@
 </template>
 
 <script>
-import LoginForm from '../components/LoginForm';
+    import LoginForm from '../components/LoginForm';
 
-export default {
-    components: { LoginForm },
+    export default {
+        components: {LoginForm},
 
-    methods: {
-        onLoginSuccess() {
-            this.$swal({
-                toast: true,
-                text: 'Welcome back!',
-                type: 'success',
-                timer: 3000,
-                showConfirmButton: false,
+        methods: {
+            onLoginSuccess() {
+                this.$swal({
+                    toast: true,
+                    text: 'Welcome back!',
+                    type: 'success',
+                    timer: 3000,
+                    showConfirmButton: false,
                 position: 'top',
             });
         },
 
         onLoginFail(error) {
             this.$swal({
-                title: 'Error',
-                text: error != null ? error : 'Please check your login credentials.',
+                title: 'Login failed',
+                text: error ?? 'Please check your login credentials.',
                 type: 'error',
             });
         },
