@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -8,8 +9,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Class AuthController
- * @package App\Http\Controllers
+ * Class AuthController.
  */
 class AuthController extends Controller
 {
@@ -36,11 +36,11 @@ class AuthController extends Controller
         /** @var string|bool $token */
         $token = auth()->attempt($credentials);
 
-        if (!$token) {
+        if (! $token) {
             return response()->failed(
                 ApiErrorCode::unauthenticated(),
                 401,
-                ["Invalid login credentials."]
+                ['Invalid login credentials.']
             );
         }
 
@@ -54,7 +54,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->success(true, ["Logout successful."]);
+        return response()->success(true, ['Logout successful.']);
     }
 
     /**
@@ -72,6 +72,6 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return response()->access_token(auth()->refresh(), ["Access token refreshed."]);
+        return response()->access_token(auth()->refresh(), ['Access token refreshed.']);
     }
 }

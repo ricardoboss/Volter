@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Enums;
@@ -6,9 +7,8 @@ namespace App\Enums;
 use Spatie\Enum\Enum;
 
 /**
- * Class ApiErrorCodes
+ * Class ApiErrorCodes.
  *
- * @package App\Enums
  *
  * @method static self unauthorized()
  * @method static self unauthenticated()

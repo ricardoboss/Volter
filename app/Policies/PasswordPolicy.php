@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Policies;
@@ -9,9 +10,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class PasswordPolicy
- *
- * @package App\Policies
+ * Class PasswordPolicy.
  */
 class PasswordPolicy
 {
@@ -32,12 +31,14 @@ class PasswordPolicy
      */
     public function edit(User $user, Password $password): bool
     {
-        if ($user->hasPermission('password.edit.any'))
+        if ($user->hasPermission('password.edit.any')) {
             return true;
+        }
 
         if ($user->hasPermission('password.edit.self') &&
-            $password->created_by === $user->id)
+            $password->created_by === $user->id) {
             return true;
+        }
 
         return DB::table('shared_access')
             ->where([
@@ -54,12 +55,14 @@ class PasswordPolicy
      */
     public function delete(User $user, Password $password): bool
     {
-        if ($user->hasPermission('password.delete.any'))
+        if ($user->hasPermission('password.delete.any')) {
             return true;
+        }
 
         if ($user->hasPermission('password.delete.self') &&
-            $password->created_by === $user->id)
+            $password->created_by === $user->id) {
             return true;
+        }
 
         return false;
     }
@@ -69,12 +72,14 @@ class PasswordPolicy
      */
     public function destroy(User $user, Password $password): bool
     {
-        if ($user->hasPermission('password.destroy.any'))
+        if ($user->hasPermission('password.destroy.any')) {
             return true;
+        }
 
         if ($user->hasPermission('password.destroy.self') &&
-            $password->created_by === $user->id)
+            $password->created_by === $user->id) {
             return true;
+        }
 
         return false;
     }
@@ -92,12 +97,14 @@ class PasswordPolicy
      */
     public function view(User $user, Password $password): bool
     {
-        if ($user->can('viewAll', Password::class))
+        if ($user->can('viewAll', Password::class)) {
             return true;
+        }
 
         if ($user->hasPermission('password.view.self') &&
-            $password->created_by === $user->id)
+            $password->created_by === $user->id) {
             return true;
+        }
 
         return false;
     }
@@ -107,12 +114,14 @@ class PasswordPolicy
      */
     public function share(User $user, Password $password): bool
     {
-        if ($user->hasPermission('password.share.any'))
+        if ($user->hasPermission('password.share.any')) {
             return true;
+        }
 
         if ($user->hasPermission('password.share.self') &&
-            $password->created_by === $user->id)
+            $password->created_by === $user->id) {
             return true;
+        }
 
         return false;
     }
