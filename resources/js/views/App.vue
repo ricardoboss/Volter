@@ -3,7 +3,7 @@
         <b-navbar class="shadow" fixed="top" toggleable="sm" type="light" variant="light">
             <b-navbar-brand target="nav-collapse">Volter</b-navbar-brand>
 
-            <b-navbar-toggle target="nav-collapse"/>
+            <b-navbar-toggle target="nav-collapse" />
 
             <b-collapse id="nav-collapse" is-nav>
                 <template v-if="isAuthenticated">
@@ -19,7 +19,7 @@
                             </template>
 
                             <b-dropdown-item href="#">Account</b-dropdown-item>
-                            <b-dropdown-divider/>
+                            <b-dropdown-divider />
                             <b-dropdown-item @click.prevent="logout">Logout</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </b-navbar-nav>
@@ -33,110 +33,108 @@
         </b-navbar>
 
         <main class="container mt-4">
-            <loading-overlay v-if="api.loading"/>
+            <loading-overlay v-if="api.loading" />
 
-            <router-view/>
+            <router-view />
         </main>
     </div>
 </template>
 
 <script>
-    import {mapGetters, mapState} from "vuex";
-    import axios from "axios";
-    import LoadingOverlay from "../components/LoadingOverlay";
-    import {homeRoute, loginRoute} from "../router";
+import { mapGetters, mapState } from 'vuex';
+import axios from 'axios';
+import LoadingOverlay from '../components/LoadingOverlay';
+import { homeRoute, loginRoute } from '../router';
 
-    export default {
-        components: {LoadingOverlay},
+export default {
+    components: { LoadingOverlay },
 
-        async created() {
-            this.setupAxiosInterceptors();
+    async created() {
+        this.setupAxiosInterceptors();
 
-            if (this.isAuthenticated)
-                return;
+        if (this.isAuthenticated) return;
 
-            try {
-                // attempt to log in from a stored token
-                await this.$store.dispatch('auth/loginFromStorage');
+        try {
+            // attempt to log in from a stored token
+            await this.$store.dispatch('auth/loginFromStorage');
 
-                // check if authenticated now for redirection
-                if (!this.isAuthenticated)
-                    return;
+            // check if authenticated now for redirection
+            if (!this.isAuthenticated) return;
 
-                await this.$router.continue(homeRoute);
-            } catch (e) {
-                console.log("Error while logging in via storage: ", e);
-            }
-        },
+            await this.$router.continue(homeRoute);
+        } catch (e) {
+            console.log('Error while logging in via storage: ', e);
+        }
+    },
 
-        methods: {
-            setupAxiosInterceptors() {
-                /**
-                 * == /!\ ======================================================================= /!\ ==
-                 *
-                 * Only added for debugging environments. Do not attach this interceptor in production!
-                 *
-                 * Simulates random request loading delays and random request fails.
-                 *
-                 * == /!\ ======================================================================= /!\ ==
-                 */
-                if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
-                    console.warn("Attaching random API scrambler interceptor. (env: " + process.env.NODE_ENV + ")");
+    methods: {
+        setupAxiosInterceptors() {
+            /**
+             * == /!\ ======================================================================= /!\ ==
+             *
+             * Only added for debugging environments. Do not attach this interceptor in production!
+             *
+             * Simulates random request loading delays and random request fails.
+             *
+             * == /!\ ======================================================================= /!\ ==
+             */
+            if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'testing') {
+                console.warn('Attaching random API scrambler interceptor. (env: ' + process.env.NODE_ENV + ')');
 
-                    axios.interceptors.request.use(async config => {
-                        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 1000));
-
-                        if (Math.random() < 0.05)
-                            throw "Random debug API request rejection.";
-
-                        return config;
-                    });
-                }
-
-                // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
                 axios.interceptors.request.use(async config => {
-                    await this.$store.dispatch('api/setLoading', true);
+                    await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 1000));
+
+                    if (Math.random() < 0.05) throw 'Random debug API request rejection.';
 
                     return config;
                 });
+            }
 
-                axios.interceptors.response.use(async response => {
+            // TODO: move axios interceptors to a more appropriate place (only here for access to this.$store)
+            axios.interceptors.request.use(async config => {
+                await this.$store.dispatch('api/setLoading', true);
+
+                return config;
+            });
+
+            axios.interceptors.response.use(
+                async response => {
                     await this.$store.dispatch('api/setLoading', false);
 
                     return response;
-                }, async error => {
+                },
+                async error => {
                     await this.$store.dispatch('api/setLoading', false);
 
                     throw error;
-                });
-            },
-
-            async logout() {
-                try {
-                    await this.$store.dispatch('auth/logout');
-
-                    await this.$router.push(loginRoute);
-
-                    this.$swal({
-                        toast: true,
-                        text: "Goodbye!",
-                        timer: 3000,
-                        type: "success",
-                        showConfirmButton: false,
-                        position: "top"
-                    });
-                } catch (e) {
-                    console.warn("Error while logging out: " + e);
                 }
-            },
+            );
         },
 
-        computed: {
-            ...mapState(['api', 'auth']),
+        async logout() {
+            try {
+                await this.$store.dispatch('auth/logout');
 
-            ...mapGetters('auth', [
-                'isAuthenticated',
-            ]),
+                await this.$router.push(loginRoute);
+
+                this.$swal({
+                    toast: true,
+                    text: 'Goodbye!',
+                    timer: 3000,
+                    type: 'success',
+                    showConfirmButton: false,
+                    position: 'top',
+                });
+            } catch (e) {
+                console.warn('Error while logging out: ' + e);
+            }
         },
-    }
+    },
+
+    computed: {
+        ...mapState(['api', 'auth']),
+
+        ...mapGetters('auth', ['isAuthenticated']),
+    },
+};
 </script>
