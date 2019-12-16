@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Policies;
@@ -7,8 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 /**
- * Class UserPolicy
- * @package App\Policies
+ * Class UserPolicy.
  */
 class UserPolicy
 {
@@ -36,12 +36,14 @@ class UserPolicy
      */
     public function delete(User $user, User $subject): bool
     {
-        if ($user->hasPermission('user.delete.any'))
+        if ($user->hasPermission('user.delete.any')) {
             return true;
+        }
 
         if ($user->hasPermission('user.delete.self') &&
-            $user->id === $subject->id)
+            $user->id === $subject->id) {
             return true;
+        }
 
         return false;
     }
@@ -51,12 +53,14 @@ class UserPolicy
      */
     public function edit(User $user, User $subject): bool
     {
-        if ($user->hasPermission('user.edit.any'))
+        if ($user->hasPermission('user.edit.any')) {
             return true;
+        }
 
         if ($user->hasPermission('user.edit.self') &&
-            $user->id === $subject->id)
+            $user->id === $subject->id) {
             return true;
+        }
 
         return false;
     }
@@ -66,7 +70,7 @@ class UserPolicy
      */
     public function promote(User $user, User $subject): bool
     {
-        return $user->hasPermission('user.promote') && !$subject->hasRole('admin');
+        return $user->hasPermission('user.promote') && ! $subject->hasRole('admin');
     }
 
     /**

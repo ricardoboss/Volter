@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Observers;
@@ -11,8 +12,7 @@ use Illuminate\Support\Str;
 use Log;
 
 /**
- * Class PasswordObserver
- * @package App\Observers
+ * Class PasswordObserver.
  */
 class PasswordObserver
 {
@@ -26,12 +26,12 @@ class PasswordObserver
         /** @var User $user */
         $user = auth()->user();
 
-        if (!$user && !App::runningInConsole())
+        if (! $user && ! App::runningInConsole()) {
             throw new AuthenticationException();
-        else if (App::runningInConsole()) {
+        } elseif (App::runningInConsole()) {
             $user = User::first();
 
-            assert($user != null, "Must have at least one user available.");
+            assert($user != null, 'Must have at least one user available.');
         }
 
         return $user;
@@ -49,12 +49,14 @@ class PasswordObserver
         $password->id = Str::uuid()->toString();
 
         // check if creator was already set
-        if ($password->created_by == null)
+        if ($password->created_by == null) {
             $password->creator()->associate($user);
+        }
 
         // check if editor was already set
-        if ($password->updated_by == null)
+        if ($password->updated_by == null) {
             $password->editor()->associate($user);
+        }
 
         Log::info("User $user->name ($user->id) created password \"$password->name\" ($password->id).");
     }

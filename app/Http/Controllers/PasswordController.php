@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -12,8 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
- * Class PasswordController
- * @package App\Http\Controllers
+ * Class PasswordController.
  */
 class PasswordController extends Controller
 {
@@ -58,8 +58,9 @@ class PasswordController extends Controller
     public function delete(Password $password)
     {
         try {
-            if ($password->delete())
+            if ($password->delete()) {
                 return response()->empty();
+            }
         } catch (Exception $ignored) { /* Only occurs if the primary key is not defined in the model. */
         }
 
@@ -79,8 +80,9 @@ class PasswordController extends Controller
      */
     public function destroy(Password $password): JsonResponse
     {
-        if ($password->forceDelete())
+        if ($password->forceDelete()) {
             return response()->empty();
+        }
 
         return response()->failed(ApiErrorCode::delete_failed());
     }

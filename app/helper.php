@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
-if (!function_exists("get_table_cols")) {
+if (! function_exists('get_table_cols')) {
     /**
      * Get model attributes from database columns.
      *
@@ -21,7 +22,7 @@ if (!function_exists("get_table_cols")) {
     }
 }
 
-if (!function_exists("get_model_attrs")) {
+if (! function_exists('get_model_attrs')) {
     /**
      * Get model attributes from database columns.
      *

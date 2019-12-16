@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Exceptions;
@@ -11,9 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
- * Class Handler
- *
- * @package App\Exceptions
+ * Class Handler.
  */
 class Handler extends ExceptionHandler
 {
@@ -68,16 +67,17 @@ class Handler extends ExceptionHandler
     {
         $status = $this->isHttpException($e) ? $e->getStatusCode() : 500;
         $error = ApiErrorCode::exception();
-        if ($status == 401)
+        if ($status == 401) {
             $error = ApiErrorCode::unauthenticated();
-        else if ($status == 403)
+        } elseif ($status == 403) {
             $error = ApiErrorCode::unauthorized();
-        else if ($status == 404)
+        } elseif ($status == 404) {
             $error = ApiErrorCode::not_found();
-        else if ($status == 429)
+        } elseif ($status == 429) {
             $error = ApiErrorCode::too_many_requests();
-        else if ($status >= 500)
+        } elseif ($status >= 500) {
             $error = ApiErrorCode::server_error();
+        }
 
         return new JsonResponse(
             [

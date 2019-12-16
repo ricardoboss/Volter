@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Providers;
@@ -10,8 +11,7 @@ use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class ObserverServiceProvider
- * @package App\Providers
+ * Class ObserverServiceProvider.
  */
 class ObserverServiceProvider extends ServiceProvider
 {
