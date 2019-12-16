@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Models\Password;
@@ -7,8 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 /**
- * Class SharedAccessSeeder
- *
+ * Class SharedAccessSeeder.
  */
 class SharedAccessSeeder extends Seeder
 {

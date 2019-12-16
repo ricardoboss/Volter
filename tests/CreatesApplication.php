@@ -12,9 +12,9 @@ trait CreatesApplication
      *
      * @return Application
      */
-    public final function createApplication(): Application
+    final public function createApplication(): Application
     {
-        $app = require __DIR__ . '/../bootstrap/app.php';
+        $app = require __DIR__.'/../bootstrap/app.php';
 
         assert($app instanceof Application);
 

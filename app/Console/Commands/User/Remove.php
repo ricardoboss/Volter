@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Console\Commands\User;
@@ -8,9 +9,7 @@ use App\Models\User;
 use Illuminate\Console\Command;
 
 /**
- * Class Remove
- *
- * @package App\Console\Commands\User
+ * Class Remove.
  */
 class Remove extends Command
 {
@@ -41,10 +40,10 @@ class Remove extends Command
         $u = User::where($this->argument('attribute'), $this->argument('value'))->first();
 
         while ($u == null) {
-            $this->error("No user found!");
+            $this->error('No user found!');
 
-            $attribute = $this->choice("Select one of these attributes", $availableAttrs);
-            $value = $this->ask("Value of attribute");
+            $attribute = $this->choice('Select one of these attributes', $availableAttrs);
+            $value = $this->ask('Value of attribute');
 
             $u = User::where($attribute, $value)->first();
         }
@@ -52,7 +51,7 @@ class Remove extends Command
         $id = $u->id;
 
         $this->show($u, ['id', 'name', 'email', 'created_at']);
-        if (!$this->confirm("Do you really want to delete this user (irreversible)?")) {
+        if (! $this->confirm('Do you really want to delete this user (irreversible)?')) {
             return 0;
         }
 

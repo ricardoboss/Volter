@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Providers;
@@ -9,9 +10,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class ResponseMacroServiceProvider
- *
- * @package App\Providers
+ * Class ResponseMacroServiceProvider.
  */
 class ResponseMacroServiceProvider extends ServiceProvider
 {
@@ -22,7 +21,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /**
+        /*
          * Returns a successful api response.
          *
          * @param mixed $data The data which should be included in the response.
@@ -35,14 +34,15 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 'data' => $data,
             ];
 
-            if ($messages)
+            if ($messages) {
                 $responseData['messages'] = $messages;
+            }
 
-            /** @var Response $this */
+            /* @var Response $this */
             return $this->json($responseData);
         });
 
-        /**
+        /*
          * Returns a failed api response.
          *
          * @param ApiErrorCode $code The error which should be included in the response.
@@ -58,14 +58,15 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 'error' => $code,
             ];
 
-            if ($messages)
+            if ($messages) {
                 $data['messages'] = $messages;
+            }
 
-            /** @var Response $this */
+            /* @var Response $this */
             return $this->json($data, $status);
         });
 
-        /**
+        /*
          * Returns an empty api response.
          *
          * @param array|null $messages (optional) Any messages to be sent with the response.
@@ -76,14 +77,15 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 'success' => true,
             ];
 
-            if ($messages)
+            if ($messages) {
                 $responseData['messages'] = $messages;
+            }
 
-            /** @var Response $this */
+            /* @var Response $this */
             return $this->json($responseData);
         });
 
-        /**
+        /*
          * Returns a response with an api access token.
          *
          * @param string $token The access token to include in the response.
@@ -103,10 +105,11 @@ class ResponseMacroServiceProvider extends ServiceProvider
             $ttl = auth()->factory()->getTTL();
             $responseData['data']['expires_at'] = $ttl != null ? now()->addMinutes($ttl)->timestamp : null;
 
-            if ($messages)
+            if ($messages) {
                 $responseData['messages'] = $messages;
+            }
 
-            /** @var Response $this */
+            /* @var Response $this */
             return $this->json($responseData);
         });
     }

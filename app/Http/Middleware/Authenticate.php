@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Middleware;
@@ -10,8 +11,7 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 
 /**
- * Class Authenticate
- * @package App\Http\Middleware
+ * Class Authenticate.
  */
 class Authenticate extends Middleware
 {
@@ -31,7 +31,7 @@ class Authenticate extends Middleware
             return response()->failed(
                 ApiErrorCode::unauthorized(),
                 403,
-                ["Unauthorized."]
+                ['Unauthorized.']
             );
         }
 

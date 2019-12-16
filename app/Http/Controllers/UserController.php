@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -10,9 +11,7 @@ use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
- * Class UserController
- *
- * @package App\Http\Controllers
+ * Class UserController.
  */
 class UserController extends Controller
 {
@@ -21,7 +20,7 @@ class UserController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        /** @var User $user */
+        /* @var User $user */
         //$user = auth()->user();
 
         // TODO: only return users visible to the authenticated users
@@ -58,8 +57,9 @@ class UserController extends Controller
     public function delete(User $user)
     {
         try {
-            if ($user->delete())
+            if ($user->delete()) {
                 return response()->empty();
+            }
         } catch (Exception $ignored) {
             /* Only occurs if the primary key is not defined in the model. */
         }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use App\Models\Password;
@@ -6,8 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 
 /**
- * Class PasswordSeeder
- *
+ * Class PasswordSeeder.
  */
 class PasswordSeeder extends Seeder
 {

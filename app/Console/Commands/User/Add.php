@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Console\Commands\User;
@@ -9,9 +10,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Class Add
- *
- * @package App\Console\Commands\User
+ * Class Add.
  */
 class Add extends Command
 {
@@ -41,9 +40,9 @@ class Add extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name') ?? $this->ask("Name");
-        $email = $this->argument('email') ?? $this->ask("E-Mail Address");
-        $password = $this->argument('pass') ?? $this->secret("Password (hidden)");
+        $name = $this->argument('name') ?? $this->ask('Name');
+        $email = $this->argument('email') ?? $this->ask('E-Mail Address');
+        $password = $this->argument('pass') ?? $this->secret('Password (hidden)');
 
         $user = new User();
         $user->name = $name;
@@ -53,7 +52,7 @@ class Add extends Command
         $user->save();
         $user->refresh();
 
-        $this->info("User created:");
+        $this->info('User created:');
         $this->show($user, ['id', 'name', 'email', 'created_at']);
 
         return 0;

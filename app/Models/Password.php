@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -8,8 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Password
- * @package App\Models
+ * Class Password.
  */
 class Password extends Model
 {
@@ -37,7 +37,7 @@ class Password extends Model
     protected $fillable = [
         'name',
         'notes',
-        'value'
+        'value',
     ];
 
     /**
@@ -46,7 +46,7 @@ class Password extends Model
      * @var array
      */
     protected $hidden = [
-        'value'
+        'value',
     ];
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Browser;
@@ -10,8 +11,7 @@ use Tests\DuskTestCase;
 use Throwable;
 
 /**
- * Class LoginTest
- * @package Tests\Browser
+ * Class LoginTest.
  */
 class LoginTest extends DuskTestCase
 {
@@ -22,7 +22,7 @@ class LoginTest extends DuskTestCase
      *
      * @throws Throwable
      */
-    public final function testLogin(): void
+    final public function testLogin(): void
     {
         $user = factory(User::class)->create([
             'email' => 'taylor@laravel.com',

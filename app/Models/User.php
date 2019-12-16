@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Models;
@@ -11,8 +12,7 @@ use jeremykenedy\LaravelRoles\Traits\HasRoleAndPermission as HasRoleAndPermissio
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- * Class User
- * @package App\Models
+ * Class User.
  */
 class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionInterface
 {
@@ -70,8 +70,9 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
      */
     public function getPasswordsAttribute()
     {
-        if ($this->can('viewAll', Password::class))
+        if ($this->can('viewAll', Password::class)) {
             return Password::all();
+        }
 
         /** @var Password $this */
         $builder = Password::where('created_by', $this->id);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Console\Commands;
@@ -6,9 +7,8 @@ namespace App\Console\Commands;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Trait PrintModel
+ * Trait PrintModel.
  *
- * @package App\Console\Commands
  *
  * @method void table($headers, $rows, $tableStyle = 'default', array $columnStyles = [])
  */

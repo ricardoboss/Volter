@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Console\Commands\User;
@@ -8,9 +9,7 @@ use App\Models\User;
 use Illuminate\Console\Command;
 
 /**
- * Class Modify
- *
- * @package App\Console\Commands\User
+ * Class Modify.
  */
 class Modify extends Command
 {
@@ -53,8 +52,8 @@ class Modify extends Command
 
         $this->show($u, collect($availableAttrs)->except(['password'])->toArray());
 
-        if (!$this->hasArgument('attribute') || !in_array($this->argument('attribute'), $availableAttrs)) {
-            $attribute = $this->choice("Please choose an attribute to set", $availableAttrs);
+        if (! $this->hasArgument('attribute') || ! in_array($this->argument('attribute'), $availableAttrs)) {
+            $attribute = $this->choice('Please choose an attribute to set', $availableAttrs);
         } else {
             $attribute = $this->argument('attribute');
         }
@@ -64,7 +63,7 @@ class Modify extends Command
         $u->{$attribute} = $value;
         $u->save();
 
-        $this->info("User saved:");
+        $this->info('User saved:');
         $this->show($u, collect($availableAttrs)->except('password')->toArray());
 
         return 0;
