@@ -16,8 +16,6 @@ class PasswordPolicy
 {
     use HandlesAuthorization;
 
-    // TODO: take shared access into account
-
     /**
      * Whether a user can create a new password.
      */
@@ -106,7 +104,13 @@ class PasswordPolicy
             return true;
         }
 
-        return false;
+        return DB::table('shared_access')
+            ->where([
+                'password_id' => $password->id,
+                'model_type' => User::class,
+                'model_id' => $user->id,
+            ])
+            ->exists();
     }
 
     /**
