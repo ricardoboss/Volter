@@ -78,8 +78,9 @@ class Password extends Model
      */
     public function getValueAttribute(string $value): ?string
     {
-        if ($value === null)
+        if ($value === null) {
             return null;
+        }
 
         return decrypt($value);
     }
