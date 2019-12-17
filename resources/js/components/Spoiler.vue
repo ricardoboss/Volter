@@ -1,8 +1,8 @@
 <template>
-    <b-badge :variant="variant" @click="toggle" class="spoiler p-2">
+    <b-badge :variant="shown_variant" @click="toggle" class="spoiler p-2">
         <span v-if="!shown">Click to reveal</span>
         <span v-else-if="shown && loading">Loading...</span>
-        <span v-else-if="shown && !loading" v-text="value" />
+        <span v-else-if="shown && !loading" v-text="value"/>
     </b-badge>
 </template>
 
@@ -18,8 +18,16 @@ export default {
         },
         variant: {
             type: String,
-            default: 'dark',
+            default: 'light',
         },
+        loading_variant: {
+            type: String,
+            default: 'secondary',
+        },
+        revealed_variant: {
+            type: String,
+            default: 'light',
+        }
     },
 
     data() {
@@ -45,6 +53,17 @@ export default {
 
             this.loading = false;
         },
+    },
+
+    computed: {
+        shown_variant() {
+            if (this.shown && !this.loading)
+                return this.revealed_variant;
+            else if (this.loading)
+                return this.loading_variant;
+            else
+                return this.variant;
+        }
     },
 };
 </script>
