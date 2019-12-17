@@ -25,31 +25,31 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex';
-    import Spoiler from './Spoiler';
-    import api from "../api";
+import { mapState } from 'vuex';
+import Spoiler from './Spoiler';
+import api from '../api';
 
-    export default {
-        components: {Spoiler},
-        props: {
-            passwords: Array,
-            autoload_more: {
-                type: Boolean,
-                default: true,
-            },
-            type: {
-                type: String,
-                default: 'table',
-                validator: val => ['table', 'list'].includes(val),
-            },
-            fields: {
-                type: Array,
-                default: () => ['id', 'version', 'name', 'created_at', 'created_by'],
-                validator: val =>
-                        val.every(field =>
-                                [
-                                    'id',
-                                    'version',
+export default {
+    components: { Spoiler },
+    props: {
+        passwords: Array,
+        autoload_more: {
+            type: Boolean,
+            default: true,
+        },
+        type: {
+            type: String,
+            default: 'table',
+            validator: val => ['table', 'list'].includes(val),
+        },
+        fields: {
+            type: Array,
+            default: () => ['id', 'version', 'name', 'created_at', 'created_by'],
+            validator: val =>
+                val.every(field =>
+                    [
+                        'id',
+                        'version',
                         'name',
                         'notes',
                         'value',
@@ -65,7 +65,7 @@
     },
 
     methods: {
-        fetchPassword: async (id) => (await api.passwords.get(id)).value,
+        fetchPassword: async id => (await api.passwords.get(id)).value,
     },
 
     computed: {

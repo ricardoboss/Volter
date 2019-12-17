@@ -30,7 +30,7 @@ use jeremykenedy\LaravelRoles\App\Http\Middleware\VerifyPermission;
 use jeremykenedy\LaravelRoles\App\Http\Middleware\VerifyRole;
 
 /**
- * Class Kernel
+ * Class Kernel.
  */
 class Kernel extends HttpKernel
 {
@@ -48,6 +48,7 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
     ];
+
     /**
      * The application's route middleware groups.
      *
@@ -69,6 +70,7 @@ class Kernel extends HttpKernel
             'bindings',
         ],
     ];
+
     /**
      * The application's route middleware.
      *
@@ -91,6 +93,7 @@ class Kernel extends HttpKernel
         'permission' => VerifyPermission::class,
         'level' => VerifyLevel::class,
     ];
+
     /**
      * The priority-sorted list of middleware.
      *

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 /**
- * Class Controller
+ * Class Controller.
  */
 class Controller extends BaseController
 {
