@@ -31,4 +31,5 @@ js:
     not-name:
       - webpack.mix.js
 css: true
-vue: true
+vue:
+  indent-script-and-style: true
