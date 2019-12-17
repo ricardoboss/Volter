@@ -22,7 +22,7 @@ function inject(url: string, queryParams: any) {
 
     Object.keys(queryParams).forEach(key => {
         if (url.indexOf("{" + key + "}") >= 0)
-            url.replace("{" + key + "}", queryParams[key]);
+            url = url.replace("{" + key + "}", queryParams[key]);
         else
             params.append(key, queryParams[key]);
     });
