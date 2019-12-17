@@ -41,7 +41,7 @@ class PasswordController extends Controller
      */
     public function view(Password $password): PasswordResource
     {
-        return new PasswordResource($password);
+        return new PasswordResource($password, true);
     }
 
     /**

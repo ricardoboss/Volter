@@ -11,11 +11,25 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Class PasswordResource.
  *
- *
  * @mixin Password
  */
 class PasswordResource extends JsonResource
 {
+    /** @var bool Whether or not to include the value in the resulting array. */
+    private $includeValue;
+
+    /**
+     * PasswordResource constructor.
+     *
+     * @param $resource
+     */
+    public function __construct($resource, bool $includeValue = false)
+    {
+        parent::__construct($resource);
+
+        $this->includeValue = $includeValue;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -27,6 +41,7 @@ class PasswordResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'value' => static::when($this->includeValue, $this->value),
             'notes' => $this->notes,
             'version' => $this->version,
             'created_at' => isset($this->created_at) ? $this->created_at->format($this->getDateFormat()) : null,

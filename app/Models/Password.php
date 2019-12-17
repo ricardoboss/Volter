@@ -72,4 +72,23 @@ class Password extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
+
+    /**
+     * Get the decrypted value of this password.
+     */
+    public function getValueAttribute(string $value): ?string
+    {
+        if ($value === null)
+            return null;
+
+        return decrypt($value);
+    }
+
+    /**
+     * Set the value of this password after.
+     */
+    public function setValueAttribute(string $value): void
+    {
+        $this->attributes['value'] = isset($value) ? encrypt($value) : null;
+    }
 }
