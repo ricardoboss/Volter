@@ -20,48 +20,48 @@
 </template>
 
 <script>
-import { homeRoute } from '../router';
+    import { homeRoute } from '../router';
 
-export default {
-    props: {
-        email: {
-            type: String,
-            default: '',
+    export default {
+        props: {
+            email: {
+                type: String,
+                default: '',
+            },
+            password: {
+                type: String,
+                default: '',
+            },
         },
-        password: {
-            type: String,
-            default: '',
+
+        data() {
+            return {
+                form_email: this.email,
+                form_password: this.password,
+            };
         },
-    },
 
-    data() {
-        return {
-            form_email: this.email,
-            form_password: this.password,
-        };
-    },
+        methods: {
+            async doLogin() {
+                try {
+                    this.$emit('login-pending');
 
-    methods: {
-        async doLogin() {
-            try {
-                this.$emit('login-pending');
+                    let userToken = await this.$store.dispatch('auth/login', {
+                        email: this.form_email,
+                        password: this.form_password,
+                    });
 
-                let userToken = await this.$store.dispatch('auth/login', {
-                    email: this.form_email,
-                    password: this.form_password,
-                });
+                    if (userToken === null) {
+                        this.$emit('login-fail', null);
+                    } else {
+                        this.$emit('login-success');
 
-                if (userToken === null) {
-                    this.$emit('login-fail', null);
-                } else {
-                    this.$emit('login-success');
-
-                    await this.$router.continue(homeRoute);
+                        await this.$router.continue(homeRoute);
+                    }
+                } catch (err) {
+                    this.$emit('login-fail', err);
                 }
-            } catch (err) {
-                this.$emit('login-fail', err);
-            }
+            },
         },
-    },
-};
+    };
 </script>

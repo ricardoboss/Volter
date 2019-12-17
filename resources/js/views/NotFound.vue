@@ -22,20 +22,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+    import { mapGetters } from 'vuex';
 
-export default {
-    computed: {
-        ...mapGetters('auth', ['isAuthenticated']),
-    },
-};
+    export default {
+        computed: {
+            ...mapGetters('auth', ['isAuthenticated']),
+        },
+    };
 </script>
 
 <style scoped>
-#wrapper {
-    position: fixed;
-    top: 30%;
-    left: 50%;
-    transform: translateY(-30%) translateX(-50%);
-}
+    #wrapper {
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translateY(-30%) translateX(-50%);
+    }
 </style>
