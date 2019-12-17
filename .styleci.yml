@@ -20,7 +20,7 @@ php:
   disabled:
     - blank_line_after_opening_tag
     - concat_without_spaces
-    - not_operator_with_space
+    - not_operator_with_successor_space
     - single_quote
   finder:
     not-name:
