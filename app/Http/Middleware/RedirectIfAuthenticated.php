@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class RedirectIfAuthenticated
+ * Class RedirectIfAuthenticated.
  */
 class RedirectIfAuthenticated
 {

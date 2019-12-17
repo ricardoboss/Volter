@@ -33,7 +33,7 @@
         </b-navbar>
 
         <main class="container mt-4">
-            <loading-overlay v-if="this.api.loading"/>
+            <loading-overlay v-if="this.api.loading" />
 
             <router-view />
         </main>
@@ -41,21 +41,21 @@
 </template>
 
 <script>
-    import {mapGetters, mapState} from 'vuex';
-    import LoadingOverlay from '../components/LoadingOverlay';
-    import {homeRoute, loginRoute} from '../router';
+import { mapGetters, mapState } from 'vuex';
+import LoadingOverlay from '../components/LoadingOverlay';
+import { homeRoute, loginRoute } from '../router';
 
-    export default {
-        components: {LoadingOverlay},
+export default {
+    components: { LoadingOverlay },
 
-        async created() {
-            if (this.isAuthenticated) return;
+    async created() {
+        if (this.isAuthenticated) return;
 
-            try {
-                // attempt to log in from a stored token
-                await this.$store.dispatch('auth/loginFromStorage');
+        try {
+            // attempt to log in from a stored token
+            await this.$store.dispatch('auth/loginFromStorage');
 
-                // check if authenticated now for redirection
+            // check if authenticated now for redirection
             if (!this.isAuthenticated) return;
 
             await this.$router.continue(homeRoute);

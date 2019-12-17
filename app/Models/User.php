@@ -18,6 +18,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionInterface
 {
     use Notifiable, HasRoleAndPermissionTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +27,7 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
     protected $fillable = [
         'name', 'email', 'password',
     ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -34,6 +36,7 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
     protected $hidden = [
         'password', 'remember_token',
     ];
+
     /**
      * The attributes that should be cast to native types.
      *
