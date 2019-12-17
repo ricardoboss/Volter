@@ -9,16 +9,14 @@ class ModifySharedAccessTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('shared_access', function (Blueprint $table) {
+        Schema::table('shared_access', function (Blueprint $table): void {
             $table->dropColumn('user_id');
         });
 
-        Schema::table('shared_access', function (Blueprint $table) {
+        Schema::table('shared_access', function (Blueprint $table): void {
             $table->string('password_id', 36)->change();
 
             $table->string('model_type')->default(User::class)->after('password_id');
@@ -35,12 +33,10 @@ class ModifySharedAccessTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('shared_access', function (Blueprint $table) {
+        Schema::table('shared_access', function (Blueprint $table): void {
             $table->dropForeign(['password_id']);
 
             $table->dropPrimary(['password_id', 'model_id', 'model_type']);
@@ -50,7 +46,7 @@ class ModifySharedAccessTable extends Migration
             $table->dropColumn('password_id');
         });
 
-        Schema::table('shared_access', function (Blueprint $table) {
+        Schema::table('shared_access', function (Blueprint $table): void {
             $table->unsignedBigInteger('password_id')->first();
             $table->unsignedBigInteger('user_id')->after('password_id');
         });

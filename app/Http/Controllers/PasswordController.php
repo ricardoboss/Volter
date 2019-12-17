@@ -31,7 +31,7 @@ class PasswordController extends Controller
     /**
      * Create a new password.
      */
-    public function create()
+    public function create(): void
     {
         // TODO: create password from request data
     }
@@ -47,7 +47,7 @@ class PasswordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Password $password)
+    public function edit(Password $password): void
     {
         // TODO: modify password
     }
@@ -70,7 +70,7 @@ class PasswordController extends Controller
     /**
      * Share access to a password.
      */
-    public function share(Password $password)
+    public function share(Password $password): void
     {
         // TODO: implement sharing of passwords
     }

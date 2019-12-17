@@ -15,10 +15,8 @@ class CollectionMacroServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         /*
          * Paginate a standard Laravel Collection.

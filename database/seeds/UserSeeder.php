@@ -8,16 +8,14 @@ class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (
             env('SEED_NAME') != null &&
             env('SEED_PASS') != null &&
             env('SEED_MAIL') != null &&
-            ! DB::table('users')->where(['email' => env('SEED_MAIL')])->exists()
+            !DB::table('users')->where(['email' => env('SEED_MAIL')])->exists()
         ) {
             factory(User::class)->create([
                 'name' => env('SEED_NAME'),
