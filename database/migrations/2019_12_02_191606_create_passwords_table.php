@@ -8,12 +8,10 @@ class CreatePasswordsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('passwords', function (Blueprint $table) {
+        Schema::create('passwords', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->bigInteger('version')->default(0);
             $table->string('name');
@@ -35,10 +33,8 @@ class CreatePasswordsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('passwords');
     }

@@ -52,7 +52,7 @@ class Modify extends Command
 
         $this->show($u, collect($availableAttrs)->except(['password'])->toArray());
 
-        if (! $this->hasArgument('attribute') || ! in_array($this->argument('attribute'), $availableAttrs)) {
+        if (!$this->hasArgument('attribute') || !in_array($this->argument('attribute'), $availableAttrs)) {
             $attribute = $this->choice('Please choose an attribute to set', $availableAttrs);
         } else {
             $attribute = $this->argument('attribute');

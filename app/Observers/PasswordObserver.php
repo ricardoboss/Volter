@@ -26,7 +26,7 @@ class PasswordObserver
         /** @var User $user */
         $user = auth()->user();
 
-        if (! $user && ! App::runningInConsole()) {
+        if (!$user && !App::runningInConsole()) {
             throw new AuthenticationException();
         } elseif (App::runningInConsole()) {
             $user = User::first();

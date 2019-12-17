@@ -8,17 +8,15 @@ class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         $connection = config('roles.connection');
         $table = config('roles.rolesTable');
         $tableCheck = Schema::connection($connection)->hasTable($table);
 
-        if (! $tableCheck) {
-            Schema::connection($connection)->create($table, function (Blueprint $table) {
+        if (!$tableCheck) {
+            Schema::connection($connection)->create($table, function (Blueprint $table): void {
                 $table->increments('id')->unsigned();
                 $table->string('name');
                 $table->string('slug')->unique();
@@ -32,10 +30,8 @@ class CreateRolesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $connection = config('roles.connection');
         $table = config('roles.rolesTable');

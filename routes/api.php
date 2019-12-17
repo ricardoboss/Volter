@@ -13,14 +13,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['prefix' => 'auth'], function (): void {
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::get('refresh', 'AuthController@refresh');
     Route::get('me', 'AuthController@me');
 });
 
-Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function (): void {
     Route::get('', 'PasswordController@index');
     Route::post('', 'PasswordController@create')->middleware('can:create,App\Models\Post');
 
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function () {
     Route::put('{password}/share', 'PasswordController@share')->middleware('can:share,password');
 });
 
-Route::group(['prefix' => 'users', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'users', 'middleware' => 'auth'], function (): void {
     Route::get('', 'UserController@index');
     Route::post('', 'UserController@create')->middleware('can:create,App\Models\User');
 

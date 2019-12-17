@@ -51,7 +51,7 @@ class Remove extends Command
         $id = $u->id;
 
         $this->show($u, ['id', 'name', 'email', 'created_at']);
-        if (! $this->confirm('Do you really want to delete this user (irreversible)?')) {
+        if (!$this->confirm('Do you really want to delete this user (irreversible)?')) {
             return 0;
         }
 

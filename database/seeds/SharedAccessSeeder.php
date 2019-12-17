@@ -14,10 +14,8 @@ class SharedAccessSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $passwords = Password::all();
         $users = User::all();

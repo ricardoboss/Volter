@@ -28,7 +28,7 @@ class LoginTest extends DuskTestCase
             'email' => 'taylor@laravel.com',
         ]);
 
-        $this->browse(function (Browser $browser) use ($user) {
+        $this->browse(function (Browser $browser) use ($user): void {
             $browser->visit('/')
                 ->assertPathIs('/login')
                 ->type('email', $user->email)

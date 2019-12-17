@@ -8,10 +8,8 @@ class CreatePermissionRoleTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         $connection = config('roles.connection');
         $table = config('roles.permissionsRoleTable');
@@ -19,8 +17,8 @@ class CreatePermissionRoleTable extends Migration
         $rolesTable = config('roles.rolesTable');
         $tableCheck = Schema::connection($connection)->hasTable($table);
 
-        if (! $tableCheck) {
-            Schema::connection($connection)->create($table, function (Blueprint $table) use ($permissionsTable, $rolesTable) {
+        if (!$tableCheck) {
+            Schema::connection($connection)->create($table, function (Blueprint $table) use ($permissionsTable, $rolesTable): void {
                 $table->increments('id')->unsigned();
                 $table->integer('permission_id')->unsigned()->index();
                 $table->foreign('permission_id')->references('id')->on($permissionsTable)->onDelete('cascade');
@@ -34,10 +32,8 @@ class CreatePermissionRoleTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $connection = config('roles.connection');
         $table = config('roles.permissionsRoleTable');

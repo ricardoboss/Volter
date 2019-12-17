@@ -13,12 +13,10 @@ class PasswordSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        factory(Password::class, 50)->make()->each(function (Password $password) {
+        factory(Password::class, 50)->make()->each(function (Password $password): void {
             $password->creator()->associate(User::all()->random());
             $password->save();
         });

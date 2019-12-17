@@ -33,10 +33,10 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        /** @var string|bool $token */
+        /** @var bool|string $token */
         $token = auth()->attempt($credentials);
 
-        if (! $token) {
+        if (!$token) {
             return response()->failed(
                 ApiErrorCode::unauthenticated(),
                 401,

@@ -16,10 +16,8 @@ class ResponseMacroServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         /*
          * Returns a successful api response.

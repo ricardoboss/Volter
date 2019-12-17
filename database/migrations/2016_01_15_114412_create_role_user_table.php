@@ -8,18 +8,16 @@ class CreateRoleUserTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         $connection = config('roles.connection');
         $table = config('roles.roleUserTable');
         $rolesTable = config('roles.rolesTable');
         $tableCheck = Schema::connection($connection)->hasTable($table);
 
-        if (! $tableCheck) {
-            Schema::connection($connection)->create($table, function (Blueprint $table) use ($rolesTable) {
+        if (!$tableCheck) {
+            Schema::connection($connection)->create($table, function (Blueprint $table) use ($rolesTable): void {
                 $table->increments('id')->unsigned();
                 $table->integer('role_id')->unsigned()->index();
                 $table->foreign('role_id')->references('id')->on($rolesTable)->onDelete('cascade');
@@ -33,10 +31,8 @@ class CreateRoleUserTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $connection = config('roles.connection');
         $table = config('roles.roleUserTable');

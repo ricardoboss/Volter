@@ -8,12 +8,10 @@ class CreateSharedAccessTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('shared_access', function (Blueprint $table) {
+        Schema::create('shared_access', function (Blueprint $table): void {
             $table->unsignedBigInteger('password_id');
             $table->unsignedBigInteger('user_id');
             $table->string('key');
@@ -24,10 +22,8 @@ class CreateSharedAccessTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('shared_access');
     }

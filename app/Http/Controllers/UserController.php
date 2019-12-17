@@ -30,7 +30,7 @@ class UserController extends Controller
     /**
      * Create a new user.
      */
-    public function create()
+    public function create(): void
     {
         // TODO: create user from request data
     }
@@ -46,7 +46,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): void
     {
         // TODO: modify user
     }

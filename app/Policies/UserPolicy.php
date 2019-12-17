@@ -70,7 +70,7 @@ class UserPolicy
      */
     public function promote(User $user, User $subject): bool
     {
-        return $user->hasPermission('user.promote') && ! $subject->hasRole('admin');
+        return $user->hasPermission('user.promote') && !$subject->hasRole('admin');
     }
 
     /**
