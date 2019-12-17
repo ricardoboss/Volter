@@ -1,9 +1,27 @@
 php:
   preset: laravel
   enabled:
+    - concat_with_spaces
     - linebreak_after_opening_tag
+    - no_unset_cast
+    - no_useless_else
+    - non_printable_character
+    - phpdoc_annotation_without_dot
+    - phpdoc_link_to_see
+    - phpdoc_no_empty_return
+    - phpdoc_order
+    - phpdoc_property
+    - phpdoc_types_order
+    - property_separation
+    - return_type_declaration
+    - single_line_throw
+    - ternary_to_null_coalescing
+    - void_return
   disabled:
     - blank_line_after_opening_tag
+    - concat_without_spaces
+    - not_operator_with_space
+    - single_quote
   finder:
     not-name:
       - index.php
