@@ -1,3 +1,5 @@
+![](https://github.styleci.io/repos/228243964/shield)
+
 # Volter
 
 Volter (pronounced: _woltr_) is an in-house password storage.
