@@ -3,24 +3,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import PasswordsDisplay from '../../components/PasswordsDisplay';
+    import { mapGetters } from 'vuex';
+    import PasswordsDisplay from '../../components/PasswordsDisplay';
 
-export default {
-    components: { PasswordsDisplay },
+    export default {
+        components: { PasswordsDisplay },
 
-    async created() {
-        if (this.all.length === 0) await this.loadMore();
-    },
-
-    methods: {
-        async loadMore() {
-            await this.$store.dispatch('passwords/fetchNextPage');
+        async created() {
+            if (this.all.length === 0) await this.loadMore();
         },
-    },
 
-    computed: {
-        ...mapGetters('passwords', ['all']),
-    },
-};
+        methods: {
+            async loadMore() {
+                await this.$store.dispatch('passwords/fetchNextPage');
+            },
+        },
+
+        computed: {
+            ...mapGetters('passwords', ['all']),
+        },
+    };
 </script>

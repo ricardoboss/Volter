@@ -41,54 +41,54 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
-import LoadingOverlay from '../components/LoadingOverlay';
-import { homeRoute, loginRoute } from '../router';
+    import { mapGetters, mapState } from 'vuex';
+    import LoadingOverlay from '../components/LoadingOverlay';
+    import { homeRoute, loginRoute } from '../router';
 
-export default {
-    components: { LoadingOverlay },
+    export default {
+        components: { LoadingOverlay },
 
-    async created() {
-        if (this.isAuthenticated) return;
+        async created() {
+            if (this.isAuthenticated) return;
 
-        try {
-            // attempt to log in from a stored token
-            await this.$store.dispatch('auth/loginFromStorage');
-
-            // check if authenticated now for redirection
-            if (!this.isAuthenticated) return;
-
-            await this.$router.continue(homeRoute);
-        } catch (e) {
-            console.log('Error while logging in via storage: ', e);
-        }
-    },
-
-    methods: {
-        async logout() {
             try {
-                await this.$store.dispatch('auth/logout');
+                // attempt to log in from a stored token
+                await this.$store.dispatch('auth/loginFromStorage');
 
-                await this.$router.push(loginRoute);
+                // check if authenticated now for redirection
+                if (!this.isAuthenticated) return;
 
-                this.$swal({
-                    toast: true,
-                    text: 'Goodbye!',
-                    timer: 3000,
-                    type: 'success',
-                    showConfirmButton: false,
-                    position: 'top',
-                });
+                await this.$router.continue(homeRoute);
             } catch (e) {
-                console.warn('Error while logging out: ' + e);
+                console.log('Error while logging in via storage: ', e);
             }
         },
-    },
 
-    computed: {
-        ...mapState(['api', 'auth']),
+        methods: {
+            async logout() {
+                try {
+                    await this.$store.dispatch('auth/logout');
 
-        ...mapGetters('auth', ['isAuthenticated']),
-    },
-};
+                    await this.$router.push(loginRoute);
+
+                    this.$swal({
+                        toast: true,
+                        text: 'Goodbye!',
+                        timer: 3000,
+                        type: 'success',
+                        showConfirmButton: false,
+                        position: 'top',
+                    });
+                } catch (e) {
+                    console.warn('Error while logging out: ' + e);
+                }
+            },
+        },
+
+        computed: {
+            ...mapState(['api', 'auth']),
+
+            ...mapGetters('auth', ['isAuthenticated']),
+        },
+    };
 </script>

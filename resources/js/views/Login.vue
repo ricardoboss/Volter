@@ -11,43 +11,43 @@
 </template>
 
 <script>
-import LoginForm from '../components/LoginForm';
+    import LoginForm from '../components/LoginForm';
 
-export default {
-    components: { LoginForm },
+    export default {
+        components: { LoginForm },
 
-    methods: {
-        onLoginSuccess() {
-            this.$swal({
-                toast: true,
-                text: 'Welcome back!',
-                type: 'success',
-                timer: 3000,
-                showConfirmButton: false,
-                position: 'top',
-            });
+        methods: {
+            onLoginSuccess() {
+                this.$swal({
+                    toast: true,
+                    text: 'Welcome back!',
+                    type: 'success',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    position: 'top',
+                });
+            },
+
+            onLoginFail(error) {
+                this.$swal({
+                    title: 'Login failed',
+                    text: error ?? 'Please check your login credentials.',
+                    type: 'error',
+                });
+            },
         },
-
-        onLoginFail(error) {
-            this.$swal({
-                title: 'Login failed',
-                text: error ?? 'Please check your login credentials.',
-                type: 'error',
-            });
-        },
-    },
-};
+    };
 </script>
 
 <style scoped>
-#wrapper {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-}
+    #wrapper {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+    }
 
-#login-form-container {
-    max-width: 300px;
-}
+    #login-form-container {
+        max-width: 300px;
+    }
 </style>
