@@ -55,13 +55,14 @@ class PasswordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Password $password)
+    public function delete(Password $password): JsonResponse
     {
         try {
             if ($password->delete()) {
                 return response()->empty();
             }
-        } catch (Exception $ignored) { /* Only occurs if the primary key is not defined in the model. */
+        } catch (Exception $ignored) {
+            /* Only occurs if the primary key is not defined in the model. */
         }
 
         return response()->failed(ApiErrorCode::delete_failed());

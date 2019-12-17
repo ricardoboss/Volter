@@ -1,5 +1,8 @@
 <?php
 
+use App\Providers\CollectionMacroServiceProvider;
+use App\Providers\ObserverServiceProvider;
+
 return [
 
     /*
@@ -179,8 +182,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ResponseMacroServiceProvider::class,
-        \App\Providers\ObserverServiceProvider::class,
-        \App\Providers\CollectionMacroServiceProvider::class,
+        ObserverServiceProvider::class,
+        CollectionMacroServiceProvider::class,
 
     ],
 

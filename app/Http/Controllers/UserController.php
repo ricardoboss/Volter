@@ -8,6 +8,7 @@ use App\Enums\ApiErrorCode;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 /**
@@ -54,7 +55,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(User $user)
+    public function delete(User $user): JsonResponse
     {
         try {
             if ($user->delete()) {

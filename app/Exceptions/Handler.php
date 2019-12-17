@@ -49,6 +49,7 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param Request $request
+     *
      * @return Response
      */
     public function render($request, Exception $exception)
@@ -60,11 +61,14 @@ class Handler extends ExceptionHandler
      * Prepare a JSON response for the given exception.
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
-    protected function prepareJsonResponse($request, Exception $e)
+    public function prepareJsonResponse($request, Exception $e)
     {
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
         $status = $this->isHttpException($e) ? $e->getStatusCode() : 500;
+
         $error = ApiErrorCode::exception();
         if ($status == 401) {
             $error = ApiErrorCode::unauthenticated();
@@ -78,6 +82,9 @@ class Handler extends ExceptionHandler
             $error = ApiErrorCode::server_error();
         }
 
+        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+        $headers = $this->isHttpException($e) ? $e->getHeaders() : [];
+
         return new JsonResponse(
             [
                 'success' => false,
@@ -86,7 +93,7 @@ class Handler extends ExceptionHandler
                 'messages' => [$e->getMessage()],
             ],
             $status,
-            $this->isHttpException($e) ? $e->getHeaders() : [],
+            $headers,
             JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
         );
     }

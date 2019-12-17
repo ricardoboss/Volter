@@ -67,10 +67,8 @@ class AuthController extends Controller
 
     /**
      * Refresh a token.
-     *
-     * @return JsonResponse
      */
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         return response()->access_token(auth()->refresh(), ['Access token refreshed.']);
     }

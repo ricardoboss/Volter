@@ -75,6 +75,8 @@ class Password extends Model
 
     /**
      * Get the decrypted value of this password.
+     *
+     * @return string|null
      */
     public function getValueAttribute(string $value): ?string
     {

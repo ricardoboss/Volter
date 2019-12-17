@@ -9,8 +9,6 @@ if (!function_exists('get_table_cols')) {
     /**
      * Get model attributes from database columns.
      *
-     * @param string $modelClass
-     *
      * @return array|null
      */
     function get_table_cols(string $modelClass): ?array
@@ -25,8 +23,6 @@ if (!function_exists('get_table_cols')) {
 if (!function_exists('get_model_attrs')) {
     /**
      * Get model attributes from database columns.
-     *
-     * @param string $modelClass
      *
      * @return array|null
      */

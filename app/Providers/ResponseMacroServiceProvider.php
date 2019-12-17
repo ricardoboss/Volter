@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Enums\ApiErrorCode;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
@@ -98,9 +97,11 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 ],
             ];
 
+            /** @noinspection PhpUndefinedMethodInspection */
             // TTL can be infinite (null).
             // CAUTION! Tokens must not have the 'exp' claim if TTL is set to null!
             $ttl = auth()->factory()->getTTL();
+
             $responseData['data']['expires_at'] = $ttl != null ? now()->addMinutes($ttl)->timestamp : null;
 
             if ($messages) {

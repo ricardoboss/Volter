@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,6 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionInterface
 {
     use Notifiable, HasRoleAndPermissionTrait;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -26,7 +26,6 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
     protected $fillable = [
         'name', 'email', 'password',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -35,7 +34,6 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
     protected $hidden = [
         'password', 'remember_token',
     ];
-
     /**
      * The attributes that should be cast to native types.
      *
@@ -57,16 +55,16 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
 
     /**
      * The passwords the user has access to.
+     *
+     * @return Collection|Password[]
      */
     public function getPasswordsAttribute()
     {

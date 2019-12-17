@@ -1,0 +1,3 @@
+/**
+ * @property ${TYPE_HINT}
+ */

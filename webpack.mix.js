@@ -11,6 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
+// noinspection JSUnresolvedFunction
 mix.js('resources/js/app.ts', 'public/js')
     .css('resources/sass/app.scss', 'public/css')
     .options({
@@ -33,4 +34,5 @@ mix.js('resources/js/app.ts', 'public/js')
         }
     });
 
+// noinspection JSUnresolvedFunction
 mix.disableNotifications();

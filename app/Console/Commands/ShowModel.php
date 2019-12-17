@@ -16,6 +16,8 @@ trait ShowModel
 {
     /**
      * Print a table with only the headers and one row containing the given attributes.
+     *
+     * @noinspection PhpDocSignatureInspection
      */
     public function show(Model $model, array $attributes): void
     {

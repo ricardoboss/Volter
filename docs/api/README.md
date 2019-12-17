@@ -191,8 +191,7 @@ Result:
             "updated_by": 3,
             "deleted_at": null,
             "deleted_by": null
-        },
-        ...
+        }
     ],
     "links": {
         "first": "host/api/passwords?page=1",

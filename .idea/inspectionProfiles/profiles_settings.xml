@@ -1,7 +1,6 @@
 <component name="InspectionProjectProfileManager">
   <settings>
-    <option name="PROJECT_PROFILE" value="SyntecLabs" />
-    <option name="USE_PROJECT_PROFILE" value="true" />
+    <option name="PROJECT_PROFILE" value="Custom-StyleCI" />
     <version value="1.0" />
   </settings>
 </component>

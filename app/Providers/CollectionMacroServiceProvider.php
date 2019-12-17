@@ -25,11 +25,12 @@ class CollectionMacroServiceProvider extends ServiceProvider
          * @param int $total
          * @param int $page
          * @param string $pageName
-         * @return array
+         * @return LengthAwarePaginator
          */
         Collection::macro('paginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
             $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
 
+            /** @noinspection PhpUndefinedMethodInspection */
             return new LengthAwarePaginator(
                 $this->forPage($page, $perPage),
                 $total ?: $this->count(),

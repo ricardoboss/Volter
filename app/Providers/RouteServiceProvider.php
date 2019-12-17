@@ -1,10 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * Class RouteServiceProvider
+ */
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -43,7 +47,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes are typically stateless.
      */
-    protected function mapApiRoutes(): void
+    public function mapApiRoutes(): void
     {
         Route::prefix('api')
             ->middleware('api')
@@ -56,7 +60,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * These routes all receive session state, CSRF protection, etc.
      */
-    protected function mapWebRoutes(): void
+    public function mapWebRoutes(): void
     {
         Route::middleware('web')
             ->namespace($this->namespace)

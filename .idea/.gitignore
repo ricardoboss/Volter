@@ -19,3 +19,9 @@
 
 !inspectionProfiles/
 !inspectionProfiles/*
+
+!fileTemplates/
+!fileTemplates/**
+
+!codeStyles/
+!codeStyles/*
