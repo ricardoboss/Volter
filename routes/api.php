@@ -22,14 +22,14 @@ Route::group(['prefix' => 'auth'], function (): void {
 
 Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function (): void {
     Route::get('', 'PasswordController@index');
-    Route::post('', 'PasswordController@create')->middleware('can:create,App\Models\Post');
+    Route::post('', 'PasswordController@create');
 
-    Route::get('{password}', 'PasswordController@view')->middleware('can:view,password');
-    Route::put('{password}', 'PasswordController@edit')->middleware('can:edit,password');
-    Route::delete('{password}', 'PasswordController@delete')->middleware('can:delete,password');
-    Route::delete('{password}/destroy', 'PasswordController@destroy')->middleware('can:destroy,password');
+    Route::get('{password}', 'PasswordController@view');
+    Route::put('{password}', 'PasswordController@update');
+    Route::delete('{password}', 'PasswordController@delete');
+    Route::delete('{password}/destroy', 'PasswordController@destroy');
 
-    Route::put('{password}/share', 'PasswordController@share')->middleware('can:share,password');
+    Route::put('{password}/share', 'PasswordController@share');
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth'], function (): void {
@@ -37,6 +37,6 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function (): void {
     Route::post('', 'UserController@create')->middleware('can:create,App\Models\User');
 
     Route::get('{user}', 'UserController@view')->middleware('can:view,user');
-    Route::put('{user}', 'UserController@edit')->middleware('can:edit,user');
+    Route::put('{user}', 'UserController@update')->middleware('can:update,user');
     Route::delete('{user}', 'UserController@delete')->middleware('can:delete,user');
 });

@@ -25,9 +25,9 @@ class PasswordPolicy
     }
 
     /**
-     * Whether a user can edit a password.
+     * Whether a user can update a password.
      */
-    public function edit(User $user, Password $password): bool
+    public function update(User $user, Password $password): bool
     {
         if ($user->hasPermission('password.edit.any')) {
             return true;

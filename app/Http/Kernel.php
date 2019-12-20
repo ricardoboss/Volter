@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http;
 
+use App\Http\Middleware\ApiResponseWrapper;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckForMaintenanceMode;
 use App\Http\Middleware\EncryptCookies;
@@ -48,7 +49,6 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
     ];
-
     /**
      * The application's route middleware groups.
      *
@@ -68,9 +68,9 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            ApiResponseWrapper::class,
         ],
     ];
-
     /**
      * The application's route middleware.
      *
@@ -93,7 +93,6 @@ class Kernel extends HttpKernel
         'permission' => VerifyPermission::class,
         'level' => VerifyLevel::class,
     ];
-
     /**
      * The priority-sorted list of middleware.
      *

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\ApiErrorCode;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
@@ -47,7 +46,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): void
+    public function update(User $user): void
     {
         // TODO: modify user
     }

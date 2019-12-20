@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Enums\ApiErrorCode;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\AuthenticationException;
 
 /**
  * Class AuthController.
@@ -28,20 +27,18 @@ class AuthController extends Controller
 
     /**
      * Get a JWT via given credentials.
+     *
+     * @throws AuthenticationException
      */
-    public function login(): JsonResponse
+    public function login(): array
     {
         $credentials = request(['email', 'password']);
 
-        /** @var bool|string $token */
+        /** @var false|string $token */
         $token = auth()->attempt($credentials);
 
         if (!$token) {
-            return response()->failed(
-                ApiErrorCode::unauthenticated(),
-                401,
-                ['Invalid login credentials.']
-            );
+            throw new AuthenticationException();
         }
 
         return response()->access_token($token);
@@ -50,26 +47,24 @@ class AuthController extends Controller
     /**
      * Log the current user out.
      */
-    public function logout(): JsonResponse
+    public function logout(): void
     {
         auth()->logout();
-
-        return response()->success(true, ['Logout successful.']);
     }
 
     /**
      * Get the currently authenticated user.
      */
-    public function me(): JsonResponse
+    public function me(): UserResource
     {
-        return response()->success(new UserResource(auth()->user()));
+        return new UserResource(auth()->user());
     }
 
     /**
      * Refresh a token.
      */
-    public function refresh(): JsonResponse
+    public function refresh(): array
     {
-        return response()->access_token(auth()->refresh(), ['Access token refreshed.']);
+        return response()->access_token(auth()->refresh());
     }
 }

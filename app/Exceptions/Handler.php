@@ -7,7 +7,6 @@ namespace App\Exceptions;
 use App\Enums\ApiErrorCode;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -55,46 +54,5 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
-    }
-
-    /**
-     * Prepare a JSON response for the given exception.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function prepareJsonResponse($request, Exception $e)
-    {
-        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-        $status = $this->isHttpException($e) ? $e->getStatusCode() : 500;
-
-        $error = ApiErrorCode::exception();
-        if ($status == 401) {
-            $error = ApiErrorCode::unauthenticated();
-        } elseif ($status == 403) {
-            $error = ApiErrorCode::unauthorized();
-        } elseif ($status == 404) {
-            $error = ApiErrorCode::not_found();
-        } elseif ($status == 429) {
-            $error = ApiErrorCode::too_many_requests();
-        } elseif ($status >= 500) {
-            $error = ApiErrorCode::server_error();
-        }
-
-        /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-        $headers = $this->isHttpException($e) ? $e->getHeaders() : [];
-
-        return new JsonResponse(
-            [
-                'success' => false,
-                'result' => $this->convertExceptionToArray($e),
-                'error' => $error,
-                'messages' => [$e->getMessage()],
-            ],
-            $status,
-            $headers,
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
-        );
     }
 }

@@ -49,9 +49,9 @@ class UserPolicy
     }
 
     /**
-     * Whether a user can edit another user.
+     * Whether a user can update another user.
      */
-    public function edit(User $user, User $subject): bool
+    public function update(User $user, User $subject): bool
     {
         if ($user->hasPermission('user.edit.any')) {
             return true;

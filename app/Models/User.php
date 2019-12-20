@@ -48,10 +48,8 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): int
     {
         return $this->getKey();
     }
@@ -61,7 +59,10 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
      */
     public function getJWTCustomClaims(): array
     {
-        return [];
+        return [
+            'roles' => $this->getRoles()->pluck('slug')->toArray(),
+            'permissions' => $this->getPermissions()->pluck('slug')->toArray(),
+        ];
     }
 
     /**
