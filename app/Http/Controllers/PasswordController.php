@@ -44,7 +44,7 @@ class PasswordController extends Controller
     /**
      * Returns the specified password.
      *
-     * @throws AuthorizationException If the user cannot view the specified password.
+     * @throws AuthorizationException if the user cannot view the specified password
      */
     public function view(Password $password): PasswordResource
     {
@@ -56,7 +56,7 @@ class PasswordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @throws AuthorizationException If the user cannot update the password.
+     * @throws AuthorizationException if the user cannot update the password
      */
     public function update(Password $password): PasswordResource
     {
@@ -70,8 +70,8 @@ class PasswordController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @throws AuthorizationException If the user cannot delete the given password.
-     * @throws Exception If the primary key is not defined on the model.
+     * @throws AuthorizationException if the user cannot delete the given password
+     * @throws Exception if the primary key is not defined on the model
      */
     public function delete(Password $password): ?bool
     {
@@ -83,7 +83,7 @@ class PasswordController extends Controller
     /**
      * Share access to a password.
      *
-     * @throws AuthorizationException If the user cannot share the given password.
+     * @throws AuthorizationException if the user cannot share the given password
      */
     public function share(Password $password): void
     {
@@ -94,7 +94,7 @@ class PasswordController extends Controller
     /**
      * Destroy the specified resource from storage.
      *
-     * @throws AuthorizationException If the user cannot destroy the given password.
+     * @throws AuthorizationException if the user cannot destroy the given password
      */
     public function destroy(Password $password): ?bool
     {
