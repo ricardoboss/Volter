@@ -49,6 +49,7 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
     ];
+
     /**
      * The application's route middleware groups.
      *
@@ -71,6 +72,7 @@ class Kernel extends HttpKernel
             ApiResponseWrapper::class,
         ],
     ];
+
     /**
      * The application's route middleware.
      *
@@ -93,6 +95,7 @@ class Kernel extends HttpKernel
         'permission' => VerifyPermission::class,
         'level' => VerifyLevel::class,
     ];
+
     /**
      * The priority-sorted list of middleware.
      *

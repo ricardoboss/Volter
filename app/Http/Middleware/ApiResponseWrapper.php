@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
- * Class ApiResponseWrapper
+ * Class ApiResponseWrapper.
  */
 class ApiResponseWrapper
 {
