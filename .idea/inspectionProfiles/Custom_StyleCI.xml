@@ -33,6 +33,9 @@
     <inspection_tool class="PhpDocSignatureInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <option name="ALLOW_MISSING_PARAMETERS" value="true" />
     </inspection_tool>
+    <inspection_tool class="PhpIncompatibleReturnTypeInspection" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="STRICT_TYPE_CHECKING" value="true" />
+    </inspection_tool>
     <inspection_tool class="PhpInconsistentReturnPointsInspection" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="PhpMissingDocCommentInspection" enabled="true" level="WARNING" enabled_by_default="false">
       <scope name="PHP Source" level="WARNING" enabled="true">
