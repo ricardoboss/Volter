@@ -1,7 +1,6 @@
 <?php
 
 /** @var Factory $factory */
-
 use App\Models\Password;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
