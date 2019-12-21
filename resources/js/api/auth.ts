@@ -28,14 +28,8 @@ async function login(email: String, password: String): Promise<JsonWebToken> {
 
         return response.data.data;
     } catch (e) {
-        if (
-            typeof e !== 'undefined' &&
-            e.hasOwnProperty("data") &&
-            e.data.hasOwnProperty("messages") &&
-            Array.isArray(e.data.messages) &&
-            e.data.messages.length > 0
-        ) {
-            throw e.data.messages[0];
+        if (typeof e !== 'undefined' && e.hasOwnProperty("data") && e.data.hasOwnProperty("message")) {
+            throw e.data.message;
         }
 
         throw e;
