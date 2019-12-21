@@ -45,18 +45,17 @@ Responses are typically in JSON. Every JSON response can contains the following 
 ```json
 {
   "success": false,
-  "result": null,
-  "error": "invalid_credentials",
-  "messages": [
-    "Invalid login credentials."
-  ]
+  "data": {
+    "message": "Unauthenticated."
+  }
 }
 ```
 
 * `success`: whether or not the request was successfully processed.
-* `result`: not-null for requests which return data. If `success` is `false`, this is `null` most of the time.
-* `messages`: status messages, usually meant for reporting information to the user.
-* `error`: (optional) error type to help debug what went wrong.
+* `data`: contains the actual data for the request. Can be null for failed requests.
+
+It is also possible that there are more keys at the top level of the JSON response.
+They are usually meta-data for the response such as `meta` and `links` for pagination.
 
 The response code is also important for handling errors.
 The response above for example has response code `401 Unauthorized`.
@@ -77,7 +76,7 @@ The environments are stored in the `http-client.env.json` file.
 For private variables you can copy the file `http-client.private.env.example.json` to `http-client.private.env.json` and update the values.
 It will automatically be ignored by git.
 
-If you now execute a request within PhpStorm from a `.http` file, the included tests are automatically executed.
+If you now execute a request within PhpStorm from a `.http` file, the included tests are automatically executed and evaluated.
 
 **For testing without PhpStorm**, you can use any generic API testing utility.
 We recommend using [Postman](https://www.getpostman.com/) for this.
@@ -101,9 +100,12 @@ Result:
 
 ```json
 {
-    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU3NTExNjQzMSwiZXhwIjoxNTc1MTIwMDMxLCJuYmYiOjE1NzUxMTY0MzEsImp0aSI6InNhUmI3WktiZnBsazJpYksiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.J4mWIsXWgwLJRxcwLGYbaxYxHrmzF0KGMDH6JIMXh_o",
+  "success": true,
+  "data": {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1Ni...",
     "token_type": "bearer",
-    "expires_in": 3600
+    "expires_at": 1576900183
+  }
 }
 ```
 
@@ -118,7 +120,10 @@ Authorization: Bearer {{access_token}}
 Result:
 
 ```json
-true
+{
+  "success": true,
+  "data": null
+}
 ```
 
 ### Refresh
@@ -143,12 +148,12 @@ Result:
 
 ```json
 {
+  "success": true,
+  "data": {
     "id": 1,
     "name": "Ricardo Boss",
-    "email": "r@b",
-    "email_verified_at": "2019-11-27 23:52:20",
-    "created_at": "2019-11-27 22:50:45",
-    "updated_at": "2019-11-27 22:55:22"
+    "email": "r@b"
+  }
 }
 ```
 

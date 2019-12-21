@@ -12,7 +12,11 @@ email=test@example.com&password=wrong
     });
 
     client.test("Success", function () {
-        client.assert(!response.body["success"], "Request was successful but shouldn't have been");
+        client.assert(!response.body["success"], "Request was successful but shouldn't have been successful");
+    });
+
+    client.test("Message", function () {
+        client.assert(response.body["data"]["message"] === "Unauthenticated.", "Unexpected message");
     });
  %}
 
