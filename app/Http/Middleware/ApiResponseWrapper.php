@@ -30,7 +30,6 @@ class ApiResponseWrapper
 
         if ($response instanceof JsonResponse) {
             /** @var JsonResponse $response */
-
             $data = $response->getData(true);
 
             $content = array_merge($content, $data);
