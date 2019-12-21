@@ -32,7 +32,13 @@ class ApiResponseWrapper
             /** @var JsonResponse $response */
             $data = $response->getData(true);
 
-            $content = array_merge($content, $data);
+            if (is_array($data) && array_key_exists('data', $data)) {
+                $content = array_merge($content, $data);
+            } elseif (is_object($data) && property_exists($data, 'data')) {
+                $content = array_merge($content, json_decode(json_encode($data), true));
+            } else {
+                $content['data'] = $data;
+            }
         } else {
             $content['data'] = $response->getOriginalContent();
         }
