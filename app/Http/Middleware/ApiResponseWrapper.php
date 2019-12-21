@@ -24,11 +24,19 @@ class ApiResponseWrapper
     {
         /** @var Response $response */
         $response = $next($request);
-        $original = $response->getOriginalContent();
         $content = [
             'success' => $response->isSuccessful(),
-            'data' => $original->toArray(),
         ];
+
+        if ($response instanceof JsonResponse) {
+            /** @var JsonResponse $response */
+
+            $data = $response->getData(true);
+
+            $content = array_merge($content, $data);
+        } else {
+            $content['data'] = $response->getOriginalContent();
+        }
 
         $jsonContent = json_encode($content, JsonResponse::DEFAULT_ENCODING_OPTIONS);
         $response->setContent($jsonContent);

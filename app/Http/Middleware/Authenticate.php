@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Enums\ApiErrorCode;
 use Closure;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
@@ -21,19 +20,12 @@ class Authenticate extends Middleware
      * @param Request $request
      * @param string[] ...$guards
      *
+     * @throws AuthenticationException
      * @return mixed
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        try {
-            $this->authenticate($request, $guards);
-        } catch (AuthenticationException $e) {
-            return response()->failed(
-                ApiErrorCode::unauthorized(),
-                403,
-                ['Unauthorized.']
-            );
-        }
+        $this->authenticate($request, $guards);
 
         return $next($request);
     }
