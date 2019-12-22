@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {homeRoute} from '../router';
+    import { homeRoute } from '../router';
 
     export default {
         props: {
