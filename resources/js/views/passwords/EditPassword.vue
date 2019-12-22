@@ -3,9 +3,12 @@
         <b-form class="my-4" v-if="!loading" @submit.prevent="submitModel" @reset="resetModel">
             <h2>Editing {{ model.name }}</h2>
 
-            <b-form-group label="Name" label-for="name"
-                          description="An easy to identify and unique name for this password.">
-                <b-form-input id="name" v-model="model.name" type="text" required placeholder="Please enter a name"/>
+            <b-form-group
+                label="Name"
+                label-for="name"
+                description="An easy to identify and unique name for this password."
+            >
+                <b-form-input id="name" v-model="model.name" type="text" required placeholder="Please enter a name" />
             </b-form-group>
 
             <b-button type="submit" variant="primary">Submit</b-button>
@@ -13,7 +16,7 @@
         </b-form>
 
         <div v-else class="my-4 d-block">
-            <b-spinner class="mx-auto d-block" type="grow" variant="primary"/>
+            <b-spinner class="mx-auto d-block" type="grow" variant="primary" />
         </div>
 
         <router-link :to="{ path: '/passwords' }">&laquo; back to overview</router-link>
@@ -21,8 +24,8 @@
 </template>
 
 <script>
-    import api from "../../api";
-    import router from "../../router";
+    import api from '../../api';
+    import router from '../../router';
 
     export default {
         async mounted() {
@@ -30,7 +33,7 @@
                 return;
             }
 
-            console.log("Mounted without model. Fetching...");
+            console.log('Mounted without model. Fetching...');
 
             let password = await api.passwords.get(this.$route.params.id);
 
@@ -47,10 +50,8 @@
 
         methods: {
             async storeModel(model) {
-                if (this.model !== null)
-                    this.original = Object.assign({}, this.model);
-                else
-                    this.original = Object.assign({}, model);
+                if (this.model !== null) this.original = Object.assign({}, this.model);
+                else this.original = Object.assign({}, model);
 
                 this.model = model;
             },
@@ -67,17 +68,17 @@
                 await this.$swal({
                     title: 'Successfully updated',
                     text: 'Changes were saved.',
-                    type: 'success'
+                    type: 'success',
                 });
 
                 this.submitting = false;
-            }
+            },
         },
 
         computed: {
             loading() {
                 return this.model === null || this.submitting;
-            }
+            },
         },
 
         async beforeRouteEnter(to, from, next) {
@@ -117,9 +118,7 @@
                 });
             }
         },
-    }
+    };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -19,7 +19,7 @@
         </template>
 
         <template v-slot:cell(value)="data">
-            <spoiler :value_provider="fetchPassword" :context="data.item.id"/>
+            <spoiler :value_provider="fetchPassword" :context="data.item.id" />
         </template>
 
         <template v-slot:cell(actions)="data">
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import { mapState } from 'vuex';
     import Spoiler from './Spoiler';
     import api from '../api';
 
