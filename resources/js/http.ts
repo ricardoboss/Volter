@@ -1,5 +1,7 @@
 import axios from "axios";
 import store from "./store";
+import swal from "sweetalert2";
+import router, {loginRoute} from "./router";
 
 /**
  * == /!\ ======================================================================= /!\ ==
@@ -45,10 +47,33 @@ axios.interceptors.response.use(
 );
 
 /**
+ * Interceptor for logging the user out if we receive a 401 response.
+ * A 401 status indicates that our jwt is expired.
+ */
+axios.interceptors.response.use(
+    async response => await response,
+    async error => {
+        if (error.response.status === 401 && store.getters['auth/isAuthenticated']) {
+            console.warn("Got HTTP status 401. Logging out.");
+
+            await store.dispatch('auth/logout', {invalidate: false});
+            await router.push(loginRoute);
+            await swal.fire(
+                'Session expired',
+                'You have been logged out due to your session being expired.',
+                'warning'
+            );
+        }
+
+        throw error;
+    }
+);
+
+/**
  * Interceptor for handling failed requests
  */
 axios.interceptors.response.use(
-    async response => response,
+    async response => await response,
     async error => {
         // flatten the error down to the response from the server
         throw error.response;
