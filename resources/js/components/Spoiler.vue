@@ -1,8 +1,8 @@
 <template>
     <b-badge :variant="shown_variant" @click="toggle" class="spoiler p-2">
-        <span v-if="!shown">Click to reveal</span>
-        <span v-else-if="shown && loading">Loading...</span>
-        <span v-else-if="shown && !loading" v-text="value" />
+        <span v-if="loading">Loading...</span>
+        <span v-else-if="shown" v-text="value"/>
+        <span v-else>Click to reveal</span>
     </b-badge>
 </template>
 
@@ -28,38 +28,71 @@
                 type: String,
                 default: 'light',
             },
+            errored_variant: {
+                type: String,
+                default: 'danger',
+            },
         },
 
         data() {
             return {
                 shown: false,
                 loading: false,
+                errored: false,
                 value: null,
             };
         },
 
         methods: {
             async toggle() {
-                this.shown = !this.shown;
+                this.errored = false;       // reset error state
+                this.value = null;          // reset value
+                this.shown = !this.shown;   // toggle shown state
 
-                this.$emit(this.shown ? 'revealed' : 'hidden');
+                // check if toggled to hidden state
+                if (!this.shown) {
+                    this.$emit('hidden');
 
-                if (!this.shown) return;
+                    return;
+                }
 
+                // shown === true so we have to reveal the value
                 this.loading = true;
 
-                // call the value provider
-                this.value = await this.value_provider.call(null, this.context);
+                try {
+                    // call the value provider
+                    this.value = await this.value_provider.call(null, this.context);
 
-                this.loading = false;
+                    this.$emit('revealed', this.value);
+                } catch (e) {
+                    this.errored = true;
+                    this.shown = true;
+
+                    if (
+                            typeof e !== 'undefined' &&
+                            e.hasOwnProperty('data') &&
+                            e.data.hasOwnProperty('data') &&
+                            e.data.data.hasOwnProperty('message')
+                    )
+                        this.value = e.data.data.message;
+                    else {
+                        this.value = "Error getting value";
+                        console.error(e);
+                    }
+
+                    this.$emit('errored', e);
+                } finally {
+                    this.loading = false;
+                }
             },
         },
 
         computed: {
             shown_variant() {
-                if (this.shown && !this.loading) return this.revealed_variant;
-                else if (this.loading) return this.loading_variant;
-                else return this.variant;
+                if (this.loading) return this.loading_variant;
+                if (this.errored) return this.errored_variant;
+                if (this.shown) return this.revealed_variant;
+                return this.variant;
             },
         },
     };
