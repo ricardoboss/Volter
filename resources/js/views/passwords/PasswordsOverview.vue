@@ -1,8 +1,5 @@
 <template>
-    <passwords-display
-        :passwords="this.all"
-        :fields="['created_by', 'name', 'updated_at', 'updated_by', 'actions']"
-    />
+    <passwords-display :passwords="this.all" :fields="['created_by', 'name', 'updated_at', 'updated_by', 'actions']" />
 </template>
 
 <script>

@@ -36,7 +36,7 @@
                     return;
                 }
 
-            console.log('Mounted without model. Fetching...');
+                console.log('Mounted without model. Fetching...');
 
                 let password = await api.passwords.get(id);
 
