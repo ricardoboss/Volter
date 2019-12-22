@@ -41,9 +41,9 @@
 </template>
 
 <script>
-    import { mapGetters, mapState } from 'vuex';
+    import {mapGetters, mapState} from 'vuex';
     import LoadingOverlay from '../components/LoadingOverlay';
-    import { homeRoute, loginRoute } from '../router';
+    import {homeRoute, loginRoute} from '../router';
 
     export default {
         components: { LoadingOverlay },
@@ -66,22 +66,16 @@
 
         methods: {
             async logout() {
-                try {
-                    await this.$store.dispatch('auth/logout');
-
-                    await this.$router.push(loginRoute);
-
-                    this.$swal({
-                        toast: true,
-                        text: 'Goodbye!',
-                        timer: 3000,
-                        type: 'success',
-                        showConfirmButton: false,
-                        position: 'top',
-                    });
-                } catch (e) {
-                    console.warn('Error while logging out: ' + e);
-                }
+                await this.$store.dispatch('auth/logout');
+                await this.$router.push(loginRoute);
+                await this.$swal({
+                    toast: true,
+                    text: 'Goodbye!',
+                    timer: 3000,
+                    type: 'success',
+                    showConfirmButton: false,
+                    position: 'top',
+                });
             },
         },
 
