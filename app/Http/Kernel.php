@@ -106,6 +106,7 @@ class Kernel extends HttpKernel
     protected $middlewarePriority = [
         StartSession::class,
         ShareErrorsFromSession::class,
+        ApiResponseWrapper::class,
         Authenticate::class,
         ThrottleRequests::class,
         AuthenticateSession::class,
