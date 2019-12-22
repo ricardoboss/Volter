@@ -92,7 +92,7 @@ const actions = {
         return {user, token};
     },
 
-    async logout({commit}: ActionContext<AuthState, RootState>): Promise<void> {
+    async logout({commit}: ActionContext<AuthState, RootState>, payload: { invalidate: boolean } | undefined): Promise<void> {
         // get token from local storage
         let token = getTokenFromStorage();
         if (token === null)
@@ -104,11 +104,15 @@ const actions = {
         commit('unsetUser');
         commit('unsetToken');
 
+        // check if token should be invalidated
+        if (typeof payload !== 'undefined' && !payload.invalidate)
+            return;
+
         try {
             // logout from the api
             await api.auth.logout(token);
         } catch (e) {
-            throw new Error("Token invalidation failed. Assuming it is already invalid. Error: " + e);
+            console.warn("Token invalidation failed. Assuming it is already invalid. Error: ", e);
         }
     }
 };
