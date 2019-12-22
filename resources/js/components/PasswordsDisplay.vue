@@ -23,7 +23,9 @@
         </template>
 
         <template v-slot:cell(actions)="data">
-            <slot v-bind:password="data.item"/>
+            <slot>
+                <router-link v-if="data.item.editable" :to="'/passwords/' + data.item.id">edit</router-link>
+            </slot>
         </template>
     </b-table>
 </template>

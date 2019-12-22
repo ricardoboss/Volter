@@ -58,12 +58,10 @@ const actions = {
         // store token in state
         commit('setToken', token);
 
-        // get user
+        // request user information using the token
         let user = await requestUser(commit, token);
         if (user === null)
             return null;
-
-        // request user information using the token
 
         return {user, token};
     },

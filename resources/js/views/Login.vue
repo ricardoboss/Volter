@@ -28,10 +28,10 @@
                 });
             },
 
-            onLoginFail(error) {
+            onLoginFail(e) {
                 this.$swal({
                     title: 'Login failed',
-                    text: error ?? 'Please check your login credentials.',
+                    text: e ?? 'Please check your login credentials.',
                     type: 'error',
                 });
             },

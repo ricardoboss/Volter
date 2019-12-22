@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import { homeRoute } from '../router';
+    import {homeRoute} from '../router';
 
     export default {
         props: {
@@ -58,8 +58,8 @@
 
                         await this.$router.continue(homeRoute);
                     }
-                } catch (err) {
-                    this.$emit('login-fail', err);
+                } catch (e) {
+                    this.$emit('login-fail', e);
                 }
             },
         },
