@@ -41,9 +41,9 @@
 </template>
 
 <script>
-    import {mapGetters, mapState} from 'vuex';
+    import { mapGetters, mapState } from 'vuex';
     import LoadingOverlay from '../components/LoadingOverlay';
-    import {homeRoute, loginRoute} from '../router';
+    import { homeRoute, loginRoute } from '../router';
 
     export default {
         components: { LoadingOverlay },
