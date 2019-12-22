@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Frontend" pattern="file[volter]:resources/js//*||file[volter]:resources/sass//*||file:package.json||file[volter]:docs//*||file[volter]:tests/Browser//*||file:webpack.mix.js||file:tsconfig.json" />
+</component>
