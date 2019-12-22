@@ -1,8 +1,6 @@
 <template>
     <passwords-display :passwords="this.all"
-                       :fields="['created_by', 'id', 'version', 'updated_at', 'updated_by', 'actions']">
-        <router-link>edit</router-link>
-    </passwords-display>
+                       :fields="['created_by', 'id', 'version', 'updated_at', 'updated_by', 'actions']"/>
 </template>
 
 <script>
