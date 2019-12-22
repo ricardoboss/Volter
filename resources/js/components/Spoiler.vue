@@ -1,7 +1,7 @@
 <template>
     <b-badge :variant="shown_variant" @click="toggle" class="spoiler p-2">
         <span v-if="loading">Loading...</span>
-        <span v-else-if="shown" v-text="value"/>
+        <span v-else-if="shown" v-text="value" />
         <span v-else>Click to reveal</span>
     </b-badge>
 </template>
@@ -45,9 +45,9 @@
 
         methods: {
             async toggle() {
-                this.errored = false;       // reset error state
-                this.value = null;          // reset value
-                this.shown = !this.shown;   // toggle shown state
+                this.errored = false; // reset error state
+                this.value = null; // reset value
+                this.shown = !this.shown; // toggle shown state
 
                 // check if toggled to hidden state
                 if (!this.shown) {
@@ -69,14 +69,14 @@
                     this.shown = true;
 
                     if (
-                            typeof e !== 'undefined' &&
-                            e.hasOwnProperty('data') &&
-                            e.data.hasOwnProperty('data') &&
-                            e.data.data.hasOwnProperty('message')
+                        typeof e !== 'undefined' &&
+                        e.hasOwnProperty('data') &&
+                        e.data.hasOwnProperty('data') &&
+                        e.data.data.hasOwnProperty('message')
                     )
                         this.value = e.data.data.message;
                     else {
-                        this.value = "Error getting value";
+                        this.value = 'Error getting value';
                         console.error(e);
                     }
 
