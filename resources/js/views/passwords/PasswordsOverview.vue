@@ -1,9 +1,12 @@
 <template>
-    <passwords-display :passwords="this.all" :fields="['created_by', 'id', 'version', 'value', 'updated_at']" />
+    <passwords-display :passwords="this.all"
+                       :fields="['created_by', 'id', 'version', 'updated_at', 'updated_by', 'actions']">
+        <router-link>edit</router-link>
+    </passwords-display>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import {mapGetters} from 'vuex';
     import PasswordsDisplay from '../../components/PasswordsDisplay';
 
     export default {

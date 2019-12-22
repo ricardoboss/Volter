@@ -19,13 +19,17 @@
         </template>
 
         <template v-slot:cell(value)="data">
-            <spoiler :value_provider="fetchPassword" :context="data.item.id" />
+            <spoiler :value_provider="fetchPassword" :context="data.item.id"/>
+        </template>
+
+        <template v-slot:cell(actions)="data">
+            <slot v-bind:password="data.item"/>
         </template>
     </b-table>
 </template>
 
 <script>
-    import { mapState } from 'vuex';
+    import {mapState} from 'vuex';
     import Spoiler from './Spoiler';
     import api from '../api';
 
@@ -33,10 +37,6 @@
         components: { Spoiler },
         props: {
             passwords: Array,
-            autoload_more: {
-                type: Boolean,
-                default: true,
-            },
             type: {
                 type: String,
                 default: 'table',
@@ -59,6 +59,7 @@
                             'updated_by',
                             'deleted_at',
                             'deleted_by',
+                            'actions',
                         ].includes(field)
                     ),
             },
