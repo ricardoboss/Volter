@@ -1,9 +1,9 @@
 <template>
     <div>
-        <password-form v-if="model != null" v-model="model" @submit="submitModel"/>
+        <password-form v-if="model != null" v-model="model" @submit="submitModel" />
 
         <div v-else class="d-block">
-            <b-spinner class="mx-auto d-block" variant="primary"/>
+            <b-spinner class="mx-auto d-block" variant="primary" />
         </div>
 
         <router-link :to="{ path: '/passwords' }">&laquo; back to overview</router-link>
@@ -12,10 +12,10 @@
 
 <script>
     import api from '../../api';
-    import PasswordForm from "../../components/PasswordForm";
+    import PasswordForm from '../../components/PasswordForm';
 
     export default {
-        components: {PasswordForm},
+        components: { PasswordForm },
 
         data() {
             return {
