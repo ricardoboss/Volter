@@ -1,6 +1,13 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <option name="LINE_SEPARATOR" value="&#10;" />
+    <HTMLCodeStyleSettings>
+      <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+    </HTMLCodeStyleSettings>
+    <JSCodeStyleSettings version="0">
+      <option name="SPACES_WITHIN_IMPORTS" value="true" />
+      <option name="USE_CHAINED_CALLS_GROUP_INDENTS" value="true" />
+    </JSCodeStyleSettings>
     <PHPCodeStyleSettings>
       <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />
       <option name="PHPDOC_BLANK_LINE_BEFORE_TAGS" value="true" />
@@ -17,6 +24,10 @@
       <option name="KEEP_BLANK_LINES_AFTER_LBRACE" value="0" />
       <option name="FORCE_SHORT_DECLARATION_ARRAY_STYLE" value="true" />
     </PHPCodeStyleSettings>
+    <XML>
+      <option name="XML_ATTRIBUTE_WRAP" value="4" />
+      <option name="XML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+    </XML>
     <codeStyleSettings language="PHP">
       <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="0" />
       <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
