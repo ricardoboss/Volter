@@ -1,38 +1,51 @@
 <template>
     <b-form class="my-4" @submit.prevent="$emit('submit', model)">
         <b-form-group
-                label="Name"
-                label-for="name"
-                description="An easy to identify and unique name for this password."
+            label="Name"
+            label-for="name"
+            description="An easy to identify and unique name for this password."
         >
-            <b-form-input id="name" :readonly="!editable" v-model="model.name" type="text" required
-                          placeholder="Please enter a name"/>
+            <b-form-input
+                id="name"
+                :readonly="!editable"
+                v-model="model.name"
+                type="text"
+                required
+                placeholder="Please enter a name"
+            />
         </b-form-group>
 
         <b-form-group
-                label="Notes"
-                label-for="notes"
-                description="A description of the service this password is used for."
+            label="Notes"
+            label-for="notes"
+            description="A description of the service this password is used for."
         >
-            <b-textarea id="notes" :readonly="!editable" v-model="model.notes" style="min-height: 5rem"/>
+            <b-textarea id="notes" :readonly="!editable" v-model="model.notes" style="min-height: 5rem" />
         </b-form-group>
 
-        <b-form-group
-                label="Value"
-                label-for="value"
-                description="The password itself."
-        >
+        <b-form-group label="Value" label-for="value" description="The password itself.">
             <b-input-group>
-                <b-form-input id="value" v-model="model.value" :readonly="!value_revealed || !editable"
-                              :type="value_revealed ? 'text' : 'password'"
-                              :autocomplete="value_revealed ? 'new-password' : 'off'"
-                              required placeholder="Please enter the password"/>
+                <b-form-input
+                    id="value"
+                    v-model="model.value"
+                    :readonly="!value_revealed || !editable"
+                    :type="value_revealed ? 'text' : 'password'"
+                    :autocomplete="value_revealed ? 'new-password' : 'off'"
+                    required
+                    placeholder="Please enter the password"
+                />
 
                 <template v-slot:append>
-                    <b-button :variant="value_revealed ? 'warning' : 'outline-warning'"
-                              v-text="value_revealed ? 'Hide' : 'Show'" @click="value_revealed = !value_revealed"/>
-                    <b-button v-if="generator_enabled" :variant="generator_visible ? 'secondary' : 'outline-secondary'"
-                              @click="toggleGenerator">
+                    <b-button
+                        :variant="value_revealed ? 'warning' : 'outline-warning'"
+                        v-text="value_revealed ? 'Hide' : 'Show'"
+                        @click="value_revealed = !value_revealed"
+                    />
+                    <b-button
+                        v-if="generator_enabled"
+                        :variant="generator_visible ? 'secondary' : 'outline-secondary'"
+                        @click="toggleGenerator"
+                    >
                         Generator
                     </b-button>
                 </template>
@@ -42,7 +55,7 @@
         <b-card v-if="generator_enabled" v-show="generator_visible">
             <b-card-text>
                 <b-form-group :label="'Length: ' + generator_length" label-cols-sm="2">
-                    <b-form-input type="range" v-model="generator_length" min="6" max="64"/>
+                    <b-form-input type="range" v-model="generator_length" min="6" max="64" />
                 </b-form-group>
 
                 <b-form-group>
@@ -62,7 +75,7 @@
 </template>
 
 <script>
-    import PasswordGenerator from "../services/PasswordGenerator";
+    import PasswordGenerator from '../services/PasswordGenerator';
 
     export default {
         props: {
@@ -76,7 +89,7 @@
             generator: {
                 type: Boolean,
                 default: true,
-            }
+            },
         },
 
         data() {
@@ -101,11 +114,11 @@
                 this.value_revealed = true;
 
                 this.model.value = PasswordGenerator.generate(
-                        this.generator_length,
-                        this.generator_symbols,
-                        this.generator_numbers,
-                        ['`'],
-                        [],
+                    this.generator_length,
+                    this.generator_symbols,
+                    this.generator_numbers,
+                    ['`'],
+                    []
                 );
             },
         },
@@ -114,6 +127,6 @@
             generator_enabled() {
                 return this.generator && this.editable;
             },
-        }
-    }
+        },
+    };
 </script>
