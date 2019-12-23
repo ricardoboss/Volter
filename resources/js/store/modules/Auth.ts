@@ -43,7 +43,7 @@ const state = {
 } as AuthState;
 
 const getters = {
-    isAuthenticated() {
+    isAuthenticated(state: AuthState) {
         return state.token !== null && state.user !== null;
     },
 };
