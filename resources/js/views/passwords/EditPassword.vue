@@ -1,22 +1,9 @@
 <template>
     <div>
-        <b-form class="my-4" v-if="!loading" @submit.prevent="submitModel" @reset="resetModel">
-            <h2>Editing {{ model.name }}</h2>
+        <password-form v-if="model != null" v-model="model" @submit.prevent="submitModel"/>
 
-            <b-form-group
-                label="Name"
-                label-for="name"
-                description="An easy to identify and unique name for this password."
-            >
-                <b-form-input id="name" v-model="model.name" type="text" required placeholder="Please enter a name" />
-            </b-form-group>
-
-            <b-button type="submit" variant="primary">Submit</b-button>
-            <b-button type="reset" variant="outline-danger">Reset</b-button>
-        </b-form>
-
-        <div v-else class="my-4 d-block">
-            <b-spinner class="mx-auto d-block" type="grow" variant="primary" />
+        <div v-else class="d-block">
+            <b-spinner class="mx-auto d-block" variant="primary"/>
         </div>
 
         <router-link :to="{ path: '/passwords' }">&laquo; back to overview</router-link>
@@ -25,8 +12,11 @@
 
 <script>
     import api from '../../api';
+    import PasswordForm from "../../components/PasswordForm";
 
     export default {
+        components: {PasswordForm},
+
         async mounted() {
             const id = this.$route.params.id;
 
@@ -53,17 +43,6 @@
         },
 
         methods: {
-            storeModel(model) {
-                if (this.model !== null) this.original = Object.assign({}, this.model);
-                else this.original = Object.assign({}, model);
-
-                this.model = model;
-            },
-
-            async resetModel() {
-                this.model = Object.assign({}, this.original);
-            },
-
             async submitModel() {
                 this.submitting = true;
 
@@ -76,6 +55,13 @@
                 });
 
                 this.submitting = false;
+            },
+
+            storeModel(model) {
+                if (this.model !== null) this.original = Object.assign({}, this.model);
+                else this.original = Object.assign({}, model);
+
+                this.model = model;
             },
         },
 
@@ -127,5 +113,3 @@
         },
     };
 </script>
-
-<style scoped></style>
