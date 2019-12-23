@@ -1,6 +1,6 @@
 <template>
     <div>
-        <password-form v-if="model != null" v-model="model" @submit.prevent="submitModel"/>
+        <password-form v-if="model != null" v-model="model" @submit="submitModel"/>
 
         <div v-else class="d-block">
             <b-spinner class="mx-auto d-block" variant="primary"/>
@@ -17,23 +17,6 @@
     export default {
         components: {PasswordForm},
 
-        async mounted() {
-            const id = this.$route.params.id;
-
-            // if the page is being accessed directly, the
-            setTimeout(async () => {
-                if (this.model !== null) {
-                    return;
-                }
-
-                console.log('Mounted without model. Fetching...');
-
-                let password = await api.passwords.get(id);
-
-                await this.storeModel(password);
-            }, 2000);
-        },
-
         data() {
             return {
                 model: null,
@@ -43,10 +26,12 @@
         },
 
         methods: {
-            async submitModel() {
+            async submitModel(model) {
                 this.submitting = true;
 
-                await api.passwords.edit(this.model);
+                await api.passwords.edit(model);
+
+                this.storeModel(model);
 
                 await this.$swal({
                     title: 'Successfully updated',
