@@ -72,6 +72,12 @@ const actions = {
         if (token === null)
             return null;
 
+        if (token.is_expired()) {
+            console.warn("Trying to refresh expired token...");
+
+            token = await api.auth.refresh(token);
+        }
+
         // commit token to state
         commit('setToken', token);
 
@@ -79,13 +85,6 @@ const actions = {
         let user = await requestUser(commit, token);
         if (user === null)
             return null;
-
-        if (token.is_expired()) {
-            let refreshedToken = await api.auth.refresh(token);
-            commit('setToken', refreshedToken);
-
-            token = refreshedToken;
-        }
 
         return {user, token};
     },

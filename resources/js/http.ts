@@ -76,6 +76,6 @@ axios.interceptors.response.use(
     async response => await response,
     async error => {
         // flatten the error down to the response from the server
-        throw error.response;
+        throw error?.response ?? new Error("Unknown error.");
     }
 );
