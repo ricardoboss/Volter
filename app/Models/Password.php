@@ -83,7 +83,7 @@ class Password extends Model
         if (!array_key_exists('raw_value', $this->attributes) ||
             $this->attributes['raw_value'] === null
         ) {
-            return null;
+            return;
         }
 
         return decrypt($this->attributes['raw_value']);
