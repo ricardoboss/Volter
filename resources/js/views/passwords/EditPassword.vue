@@ -1,10 +1,12 @@
 <template>
     <div>
-        <password-form v-if="model != null" v-model="model" @submit="submitModel" />
+        <keep-alive>
+            <password-form v-if="model != null" v-model="model" :editable="model.editable" @submit="submitModel" />
 
-        <div v-else class="d-block">
-            <b-spinner class="mx-auto d-block" variant="primary" />
-        </div>
+            <div v-else class="d-block">
+                <b-spinner class="mx-auto d-block" variant="primary" />
+            </div>
+        </keep-alive>
 
         <router-link :to="{ path: '/passwords' }">&laquo; back to overview</router-link>
     </div>
@@ -29,7 +31,9 @@
             async submitModel(model) {
                 this.submitting = true;
 
-                await api.passwords.edit(model);
+                console.log(model);
+
+                await this.$store.dispatch('passwords/update', {password: model});
 
                 this.storeModel(model);
 
@@ -47,6 +51,11 @@
                 else this.original = Object.assign({}, model);
 
                 this.model = model;
+            },
+
+            revertChanges() {
+                if (this.original !== null)
+                    this.model = Object.assign({}, this.original);
             },
         },
 

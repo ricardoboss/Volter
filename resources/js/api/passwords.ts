@@ -71,7 +71,7 @@ async function get(id: string): Promise<IPassword> {
     return response.data.data;
 }
 
-async function edit(password: IPassword): Promise<IPassword> {
+async function update(password: IPassword): Promise<IPassword> {
     if (password === null)
         throw new Error("password cannot be null!");
 
@@ -128,7 +128,7 @@ export default {
     list,
     create,
     get,
-    edit,
+    update,
     delete: _delete,
     destroy,
     share

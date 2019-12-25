@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\UpdateException;
 use App\Http\Resources\PasswordResource;
 use App\Models\Password;
 use App\Models\User;
@@ -58,14 +59,22 @@ class PasswordController extends Controller
      * Show the form for editing the specified resource.
      *
      * @throws AuthorizationException if the user cannot update the password
+     * @throws UpdateException if updating the values in database fails
      */
     public function update(Password $password): PasswordResource
     {
+        // fetch all values from db
+        $password->refresh();
+
         $this->authorize('update', $password);
 
+        // get new values from request
         $values = request()->input();
 
-        Password::firstOrFail($password->id)->update($values);
+        // update values in database
+        if (!$password->update($values)) {
+            throw new UpdateException("Updating values in database failed.");
+        }
 
         return new PasswordResource($password);
     }

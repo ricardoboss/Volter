@@ -56,7 +56,7 @@ const actions = {
 
     async update({commit}: ActionContext<PasswordsState, RootState>, payload: { password: IPassword }): Promise<IPassword> {
         // update password in api
-        let updatedPassword = await api.passwords.edit(payload.password);
+        let updatedPassword = await api.passwords.update(payload.password);
 
         commit('storePassword', updatedPassword);
 
