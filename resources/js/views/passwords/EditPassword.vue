@@ -33,7 +33,7 @@
 
                 console.log(model);
 
-                await this.$store.dispatch('passwords/update', {password: model});
+                await this.$store.dispatch('passwords/update', { password: model });
 
                 this.storeModel(model);
 
@@ -54,8 +54,7 @@
             },
 
             revertChanges() {
-                if (this.original !== null)
-                    this.model = Object.assign({}, this.original);
+                if (this.original !== null) this.model = Object.assign({}, this.original);
             },
         },
 
