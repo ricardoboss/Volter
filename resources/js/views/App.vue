@@ -32,18 +32,18 @@
             </b-collapse>
         </b-navbar>
 
-        <main class="container mt-4">
-            <loading-overlay v-if="this.api.loading" />
+        <main class="container my-4">
+            <loading-overlay v-if="this.api.loading"/>
 
-            <router-view />
+            <router-view/>
         </main>
     </div>
 </template>
 
 <script>
-    import { mapGetters, mapState } from 'vuex';
+    import {mapGetters, mapState} from 'vuex';
     import LoadingOverlay from '../components/LoadingOverlay';
-    import { homeRoute, loginRoute } from '../router';
+    import {homeRoute, loginRoute} from '../router';
 
     export default {
         components: { LoadingOverlay },
