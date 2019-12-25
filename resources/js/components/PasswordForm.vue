@@ -16,11 +16,11 @@
         </b-form-group>
 
         <b-form-group
-                label="Notes"
-                label-for="notes"
-                description="A description of the service this password is used for."
+            label="Notes"
+            label-for="notes"
+            description="A description of the service this password is used for."
         >
-            <b-textarea id="notes" :readonly="!editable" v-model="model.notes" style="min-height: 5rem"/>
+            <b-textarea id="notes" :readonly="!editable" v-model="model.notes" style="min-height: 5rem" />
         </b-form-group>
 
         <b-form-row>
@@ -32,28 +32,28 @@
             <b-col cols="12" lg="8">
                 <b-form-group description="The password itself.">
                     <b-form-input
-                            id="value"
-                            v-model="model.value"
-                            :readonly="!value_revealed || !editable"
-                            :type="value_revealed ? 'text' : 'password'"
-                            :autocomplete="value_revealed ? 'new-password' : 'off'"
-                            required
-                            placeholder="Please enter the password"
+                        id="value"
+                        v-model="model.value"
+                        :readonly="!value_revealed || !editable"
+                        :type="value_revealed ? 'text' : 'password'"
+                        :autocomplete="value_revealed ? 'new-password' : 'off'"
+                        required
+                        placeholder="Please enter the password"
                     />
                 </b-form-group>
             </b-col>
             <b-col cols="12" lg="4">
                 <b-button-group class="d-flex">
                     <b-button
-                            :variant="value_revealed ? 'warning' : 'outline-warning'"
-                            v-text="(value_revealed ? 'Hide' : 'Show') + ' Password'"
-                            @click="value_revealed = !value_revealed"
+                        :variant="value_revealed ? 'warning' : 'outline-warning'"
+                        v-text="(value_revealed ? 'Hide' : 'Show') + ' Password'"
+                        @click="value_revealed = !value_revealed"
                     />
                     <b-button
-                            v-if="generator_enabled"
-                            :variant="generator_visible ? 'secondary' : 'outline-secondary'"
-                            v-text="(generator_visible ? 'Hide' : 'Show') + ' Generator'"
-                            @click="toggleGenerator"
+                        v-if="generator_enabled"
+                        :variant="generator_visible ? 'secondary' : 'outline-secondary'"
+                        v-text="(generator_visible ? 'Hide' : 'Show') + ' Generator'"
+                        @click="toggleGenerator"
                     />
                 </b-button-group>
             </b-col>
@@ -63,7 +63,7 @@
                 <b-card>
                     <b-card-text>
                         <b-form-group :label="'Length: ' + generator_length" label-cols-sm="2">
-                            <b-form-input type="range" v-model="generator_length" min="6" max="64"/>
+                            <b-form-input type="range" v-model="generator_length" min="6" max="64" />
                         </b-form-group>
 
                         <b-form-group>
