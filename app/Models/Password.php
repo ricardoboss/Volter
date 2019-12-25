@@ -37,7 +37,7 @@ class Password extends Model
     protected $fillable = [
         'name',
         'notes',
-        'raw_value',
+        'value',
     ];
 
     /**
