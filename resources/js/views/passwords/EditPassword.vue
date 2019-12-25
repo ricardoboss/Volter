@@ -31,8 +31,6 @@
             async submitModel(model) {
                 this.submitting = true;
 
-                console.log(model);
-
                 await this.$store.dispatch('passwords/update', { password: model });
 
                 this.storeModel(model);
