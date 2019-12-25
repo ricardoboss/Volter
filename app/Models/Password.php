@@ -37,7 +37,7 @@ class Password extends Model
     protected $fillable = [
         'name',
         'notes',
-        'value',
+        'raw_value',
     ];
 
     /**
@@ -46,7 +46,7 @@ class Password extends Model
      * @var array
      */
     protected $hidden = [
-        'value',
+        'raw_value',
     ];
 
     /**
@@ -76,15 +76,17 @@ class Password extends Model
     /**
      * Get the decrypted value of this password.
      *
-     * @return string|null
+     * @return mixed
      */
-    public function getValueAttribute(string $value): ?string
+    public function getValueAttribute()
     {
-        if ($value === null) {
+        if (!array_key_exists('raw_value', $this->attributes) ||
+            $this->attributes['raw_value'] === null
+        ) {
             return null;
         }
 
-        return decrypt($value);
+        return decrypt($this->attributes['raw_value']);
     }
 
     /**
@@ -92,6 +94,6 @@ class Password extends Model
      */
     public function setValueAttribute(string $value): void
     {
-        $this->attributes['value'] = isset($value) ? encrypt($value) : null;
+        $this->attributes['raw_value'] = isset($value) ? encrypt($value) : null;
     }
 }

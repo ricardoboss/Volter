@@ -36,9 +36,10 @@ class PasswordController extends Controller
     {
         $this->authorize('create', Password::class);
 
-        // TODO: create password from request data
+        $values = request()->input();
+        $password = Password::create($values);
 
-        return new PasswordResource(new Password());
+        return new PasswordResource($password);
     }
 
     /**
@@ -62,7 +63,9 @@ class PasswordController extends Controller
     {
         $this->authorize('update', $password);
 
-        // TODO: modify password
+        $values = request()->input();
+
+        Password::firstOrFail($password->id)->update($values);
 
         return new PasswordResource($password);
     }

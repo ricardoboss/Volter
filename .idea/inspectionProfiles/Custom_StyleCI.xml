@@ -43,6 +43,7 @@
       </scope>
       <option name="CHECK_FIELD" value="true" />
     </inspection_tool>
+    <inspection_tool class="PhpMissingFieldTypeInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpMissingStrictTypesDeclarationInspection" enabled="true" level="WARNING" enabled_by_default="false">
       <scope name="PHP Source" level="WARNING" enabled="true" />
     </inspection_tool>
