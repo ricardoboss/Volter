@@ -27,6 +27,18 @@
                 <router-link v-if="data.item.editable" :to="'/passwords/' + data.item.id">edit</router-link>
             </slot>
         </template>
+
+        <template v-slot:cell(created_at)="data">
+            <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
+        </template>
+
+        <template v-slot:cell(updated_at)="data">
+            <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
+        </template>
+
+        <template v-slot:cell(deleted_at)="data">
+            <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
+        </template>
     </b-table>
 </template>
 
