@@ -32,14 +32,14 @@
             <b-col cols="12" lg="8">
                 <b-form-group description="The password itself.">
                     <b-form-input
-                            id="value"
-                            v-model="model.value"
-                            :readonly="!value_revealed || !editable"
-                            :type="value_revealed ? 'text' : 'password'"
-                            :autocomplete="value_revealed ? 'new-password' : 'off'"
-                            @click="selectPassword"
-                            required
-                            placeholder="Please enter the password"
+                        id="value"
+                        v-model="model.value"
+                        :readonly="!value_revealed || !editable"
+                        :type="value_revealed ? 'text' : 'password'"
+                        :autocomplete="value_revealed ? 'new-password' : 'off'"
+                        @click="selectPassword"
+                        required
+                        placeholder="Please enter the password"
                     />
                 </b-form-group>
             </b-col>
@@ -125,17 +125,17 @@
                 this.value_revealed = true;
 
                 this.model.value = PasswordGenerator.generate(
-                        this.generator_length,
-                        this.generator_symbols,
-                        this.generator_numbers,
-                        ['`'],
-                        []
+                    this.generator_length,
+                    this.generator_symbols,
+                    this.generator_numbers,
+                    ['`'],
+                    []
                 );
             },
 
             selectPassword() {
                 document.getElementById('value').select();
-            }
+            },
         },
 
         computed: {
