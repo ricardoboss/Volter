@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\TokenRefreshException;
 use App\Http\Resources\UserResource;
 use Illuminate\Auth\AuthenticationException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 /**
  * Class AuthController.
@@ -21,7 +24,6 @@ class AuthController extends Controller
             ->only([
                 'logout',
                 'me',
-                'refresh',
             ]);
     }
 
@@ -38,7 +40,7 @@ class AuthController extends Controller
         $token = auth()->attempt($credentials);
 
         if (!$token) {
-            throw new AuthenticationException();
+            throw new AuthenticationException("Invalid credentials.");
         }
 
         return response()->access_token($token);
@@ -62,9 +64,19 @@ class AuthController extends Controller
 
     /**
      * Refresh a token.
+     *
+     * @throws TokenRefreshException if the token cannot be refreshed.
      */
     public function refresh(): array
     {
-        return response()->access_token(auth()->refresh());
+        try {
+            // refresh the token sent by the user
+            $token = auth()->refresh();
+
+            // send it as the new access token
+            return response()->access_token($token);
+        } catch (TokenInvalidException | JWTException $e) {
+            throw new TokenRefreshException('Provided token cannot be refreshed.', $e);
+        }
     }
 }
