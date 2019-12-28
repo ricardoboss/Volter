@@ -11,21 +11,12 @@ Whether you need information about the API or some other part of Volter, everyth
 
 `docs/`
 * `api/`:
-  The entry point for everything API related. 
+  The entry point for everything API related.
 
 
 ## Development Environment Setup
 
 Simply follow these steps to set up your local development environment:
-
-### Dependency Setup
-
-First, install the composer and node dependencies:
-
-```bash
-$ composer install
-$ yarn
-```
 
 ### Environment Specific Setup
 
@@ -55,9 +46,25 @@ SEED_MAIL=you@example.org
 SEED_PASS=secure
 ```
 
-Afterwards, run `php artisan key:generate` to generate an `APP_KEY`, which is used to encrypt cookies and sign JWTs.
+### Dependency Setup
+
+First, install the composer and node dependencies:
+
+```bash
+$ composer install
+$ yarn
+```
+
+Afterwards, run
+```bash
+$ php artisan key:generate
+$ php artisan jwt:secret -f
+```
+
+to generate an `APP_KEY` and `JWT_SECRET`, which are used to encrypt cookies and sign JWTs.
 
 > Keep in mind that **changing** or **loosing** your `APP_KEY` means that you are unable to decrypt encrypted values.
+> Losing `JWT_SECRET` only invalidates all tokens, which is like logging all users out at once.
 
 ### API Testing Setup
 
