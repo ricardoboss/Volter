@@ -1,14 +1,12 @@
 <template>
     <div>
-        <keep-alive>
-            <password-form v-if="model != null" v-model="model" :editable="model.editable" @submit="submitModel" />
-
-            <div v-else class="d-block">
-                <b-spinner class="mx-auto d-block" variant="primary" />
-            </div>
-        </keep-alive>
-
         <router-link :to="{ path: '/passwords' }">&laquo; back to overview</router-link>
+
+        <div v-if="loading" class="d-block">
+            <b-spinner class="mx-auto d-block" variant="primary" />
+        </div>
+
+        <password-form v-else v-model="model" :editable="model.editable" @submit="submitModel" />
     </div>
 </template>
 
@@ -22,7 +20,6 @@
         data() {
             return {
                 model: null,
-                original: null,
                 submitting: false,
             };
         },
@@ -33,7 +30,7 @@
 
                 await this.$store.dispatch('passwords/update', { password: model });
 
-                this.storeModel(model);
+                this.model = model;
 
                 await this.$swal({
                     title: 'Successfully updated',
@@ -42,17 +39,8 @@
                 });
 
                 this.submitting = false;
-            },
 
-            storeModel(model) {
-                if (this.model !== null) this.original = Object.assign({}, this.model);
-                else this.original = Object.assign({}, model);
-
-                this.model = model;
-            },
-
-            revertChanges() {
-                if (this.original !== null) this.model = Object.assign({}, this.original);
+                await this.$router.push({ path: '/passwords' });
             },
         },
 
@@ -66,9 +54,7 @@
             try {
                 next(async vm => {
                     let id = vm.$route.params.id;
-                    let password = await api.passwords.get(id);
-
-                    vm.storeModel(password);
+                    vm.model = await api.passwords.get(id);
                 });
             } catch (e) {
                 next(async vm => {
@@ -87,9 +73,7 @@
             this.model = null;
 
             try {
-                let password = await api.passwords.get(this.$route.params.id);
-
-                this.storeModel(password);
+                this.model = await api.passwords.get(this.$route.params.id);
 
                 next();
             } catch (e) {
