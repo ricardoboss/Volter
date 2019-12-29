@@ -58,7 +58,5 @@ class Add extends Command
 
         $this->info("User created with role '{$role->name}':");
         $this->show($user, ['id', 'name', 'email', 'created_at']);
-
-        return;
     }
 }

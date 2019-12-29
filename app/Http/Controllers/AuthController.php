@@ -65,7 +65,7 @@ class AuthController extends Controller
     /**
      * Refresh a token.
      *
-     * @throws TokenRefreshException if the token cannot be refreshed.
+     * @throws TokenRefreshException if the token cannot be refreshed
      */
     public function refresh(): array
     {
