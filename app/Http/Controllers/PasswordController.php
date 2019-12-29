@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\DeleteException;
 use App\Exceptions\UpdateException;
 use App\Http\Resources\PasswordResource;
 use App\Models\Password;
@@ -83,13 +84,17 @@ class PasswordController extends Controller
      * Remove the specified resource from storage.
      *
      * @throws AuthorizationException if the user cannot delete the given password
-     * @throws Exception if the primary key is not defined on the model
+     * @throws DeleteException if deleting of the password fails
      */
     public function delete(Password $password): ?bool
     {
         $this->authorize('delete', $password);
 
-        return $password->delete();
+        try {
+            return $password->delete();
+        } catch (Exception $e) {
+            throw new DeleteException("Could not delete password.", $e);
+        }
     }
 
     /**
@@ -100,6 +105,7 @@ class PasswordController extends Controller
     public function share(Password $password): void
     {
         $this->authorize('share', $password);
+
         // TODO: implement sharing of passwords
     }
 
@@ -107,11 +113,16 @@ class PasswordController extends Controller
      * Destroy the specified resource from storage.
      *
      * @throws AuthorizationException if the user cannot destroy the given password
+     * @throws DeleteException if the password cannot be destroyed
      */
     public function destroy(Password $password): ?bool
     {
         $this->authorize('destroy', $password);
 
-        return $password->forceDelete();
+        try {
+            return $password->forceDelete();
+        } catch (Exception $e) {
+            throw new DeleteException("Could not destroy password.", $e);
+        }
     }
 }
