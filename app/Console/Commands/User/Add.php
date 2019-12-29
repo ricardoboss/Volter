@@ -8,6 +8,7 @@ use App\Console\Commands\ShowModel;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use jeremykenedy\LaravelRoles\Models\Role;
 
 /**
  * Class Add.
@@ -52,9 +53,12 @@ class Add extends Command
         $user->save();
         $user->refresh();
 
-        $this->info('User created:');
+        $role = Role::where('slug', 'user')->firstOrFail();
+        $user->attachRole($role);
+
+        $this->info("User created with role '{$role->name}':");
         $this->show($user, ['id', 'name', 'email', 'created_at']);
 
-        return 0;
+        return;
     }
 }
