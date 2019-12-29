@@ -8,9 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 /**
- * Class TokenRefreshException
- *
- * @package App\Exceptions
+ * Class TokenRefreshException.
  */
 class TokenRefreshException extends HttpException
 {
