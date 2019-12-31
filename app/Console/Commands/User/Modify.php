@@ -37,21 +37,38 @@ class Modify extends Command
      */
     public function handle(): bool
     {
-        $identifier = $this->argument('id');
-        $u = User::where('id', $identifier)
+        $identifier = $this->argument('user');
+
+        /** @var User $user */
+        $user = User::where('id', $identifier)
             ->orWhere('email', $identifier)
             ->orWhere('name', $identifier)
             ->first();
 
-        if ($u == null) {
+        if ($user == null) {
             $this->error("Could not find user with id, email or name \"$identifier\"");
 
             return false;
         }
 
-        $availableAttrs = get_model_attrs(User::class);
+        // gather the column names which should be excluded from modifying
+        $excludeCols = [
+            $user->getKeyName(),            // primary key
+            $user->getUpdatedAtColumn(),    // timestamp is automatically updated
+            $user->getCreatedAtColumn(),    // should not be edited
+            'password',                     // sensitive and hashed
+            'remember_token',               // automatically generated, might be removed later
+        ];
 
-        $this->show($u, collect($availableAttrs)->except(['password'])->toArray());
+        // exclude fields which are not meant to be edited directly
+        $availableAttrs = collect(get_table_cols(User::class))
+            ->filter(function ($value) use ($excludeCols) {
+                return !in_array($value, $excludeCols);
+            })
+            ->values()
+            ->all();
+
+        $this->show($user, $availableAttrs);
 
         if (!$this->hasArgument('attribute') || !in_array($this->argument('attribute'), $availableAttrs)) {
             $attribute = $this->choice('Please choose an attribute to set', $availableAttrs);
@@ -59,13 +76,13 @@ class Modify extends Command
             $attribute = $this->argument('attribute');
         }
 
-        $value = $this->argument('value') ?? $this->ask("New value of $attribute", $u->{$attribute});
+        $value = $this->argument('value') ?? $this->ask("New value of $attribute", $user->{$attribute});
 
-        $u->{$attribute} = $value;
-        $u->save();
+        $user->{$attribute} = $value;
+        $user->save();
 
         $this->info('User saved:');
-        $this->show($u, collect($availableAttrs)->except('password')->toArray());
+        $this->show($user, collect($availableAttrs)->except('password')->toArray());
 
         return true;
     }
