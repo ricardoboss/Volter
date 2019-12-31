@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\User;
 
+use App\Console\Commands\ShowModel;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Console\Command;
