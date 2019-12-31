@@ -13,7 +13,10 @@ jobs:
       fail-fast: false      
       matrix:
         operating-system: [ubuntu-latest, windows-latest]
-        php-version: ['7.3', '7.4', '8.0']
+        php-version: ['7.3', '7.4']
+    env:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
     steps:
       - name: Checkout source
         uses: actions/checkout@v1
@@ -24,13 +27,13 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: phpunit
           coverage: xdebug
-          extensions: curl, fileinfo, intl, mbstring, openssl, pdo_sqlite
+          extensions: curl, fileinfo, intl, mbstring, openssl, pdo_sqlite, zip
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install PHP Dependencies
-        run: composer install --no-interaction --no-suggest --prefer-dist
+        run: composer install --no-interaction --no-progress --no-suggest --prefer-dist
 
       - name: Install NPM Dependencies
         run: yarn install --frozen-lockfile --non-interactive
@@ -47,9 +50,6 @@ jobs:
           touch database/database.sqlite
 
       - name: Migrate Database
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
         run: php artisan migrate --force
 
       - name: Build Frontend Scaffolding
