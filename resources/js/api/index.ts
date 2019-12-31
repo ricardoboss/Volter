@@ -1,4 +1,5 @@
 import auth from "./auth";
+import email from "./email";
 import passwords from "./passwords";
 
 export function inject(url: string, queryParams: {[id: string]: string}) {
@@ -22,5 +23,6 @@ export function inject(url: string, queryParams: {[id: string]: string}) {
 
 export default {
     auth,
-    passwords
+    passwords,
+    email,
 }
