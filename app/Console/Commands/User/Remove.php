@@ -20,7 +20,9 @@ class Remove extends Command
      *
      * @var string
      */
-    protected $signature = 'user:remove {attribute} {value}';
+    protected $signature = 'user:remove
+                                {attribute : The attribute to filter by}
+                                {value : The value of the attribute to filter by}';
 
     /**
      * The console command description.
@@ -31,34 +33,32 @@ class Remove extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): bool
     {
         $availableAttrs = get_model_attrs(User::class);
-        $u = User::where($this->argument('attribute'), $this->argument('value'))->first();
+        $user = User::where($this->argument('attribute'), $this->argument('value'))->first();
 
-        while ($u == null) {
+        while ($user == null) {
             $this->error('No user found!');
 
             $attribute = $this->choice('Select one of these attributes', $availableAttrs);
             $value = $this->ask('Value of attribute');
 
-            $u = User::where($attribute, $value)->first();
+            $user = User::where($attribute, $value)->first();
         }
 
-        $id = $u->id;
+        $id = $user->id;
 
-        $this->show($u, ['id', 'name', 'email', 'created_at']);
+        $this->show($user, ['id', 'name', 'email', 'created_at']);
         if (!$this->confirm('Do you really want to delete this user (irreversible)?')) {
-            return 0;
+            return false;
         }
 
-        $u->forceDelete();
+        $user->forceDelete();
 
         $this->info("User with id $id deleted.");
 
-        return 0;
+        return true;
     }
 }

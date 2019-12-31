@@ -20,7 +20,10 @@ class Modify extends Command
      *
      * @var string
      */
-    protected $signature = 'user:mod {id} {attribute?} {value?}';
+    protected $signature = 'user:mod
+                                {user : The ID of the user}
+                                {attribute? : The attribute to modify}
+                                {value? : The new value of the attribute}';
 
     /**
      * The console command description.
@@ -31,10 +34,8 @@ class Modify extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): bool
     {
         $identifier = $this->argument('id');
         $u = User::where('id', $identifier)
@@ -45,7 +46,7 @@ class Modify extends Command
         if ($u == null) {
             $this->error("Could not find user with id, email or name \"$identifier\"");
 
-            return 1;
+            return false;
         }
 
         $availableAttrs = get_model_attrs(User::class);
@@ -66,6 +67,6 @@ class Modify extends Command
         $this->info('User saved:');
         $this->show($u, collect($availableAttrs)->except('password')->toArray());
 
-        return 0;
+        return true;
     }
 }

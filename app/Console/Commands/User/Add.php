@@ -23,9 +23,10 @@ class Add extends Command
      * @var string
      */
     protected $signature = 'user:add
-                            {name? : The name of the new user}
-                            {email? : The email address of the new user}
-                            {pass? : The password of the new user}';
+                                {name? : The name of the new user}
+                                {email? : The email address of the new user}
+                                {pass? : The password of the new user}
+                                {--role=user : The role slug to attach to the new user}';
 
     /**
      * The console command description.
@@ -36,14 +37,13 @@ class Add extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name') ?? $this->ask('Name');
         $email = $this->argument('email') ?? $this->ask('E-Mail Address');
         $password = $this->argument('pass') ?? $this->secret('Password (hidden)');
+        $role_slug = $this->option('role');
 
         $user = new User();
         $user->name = $name;
@@ -53,7 +53,7 @@ class Add extends Command
         $user->save();
         $user->refresh();
 
-        $role = Role::where('slug', 'user')->firstOrFail();
+        $role = Role::where('slug', $role_slug)->firstOrFail();
         $user->attachRole($role);
 
         $this->info("User created with role '{$role->name}':");

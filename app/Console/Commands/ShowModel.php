@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Trait PrintModel.
  *
- *
  * @method void table($headers, $rows, $tableStyle = 'default', array $columnStyles = [])
  */
 trait ShowModel

@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Console\Commands\User\Add;
+use App\Console\Commands\User\Modify;
+use App\Console\Commands\User\Remove;
+use App\Console\Commands\Verify;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +21,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Add::class,
+        Modify::class,
+        Remove::class,
+        Verify::class,
     ];
 
     /**
@@ -25,8 +32,9 @@ class Kernel extends ConsoleKernel
      */
     public function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+
+        })->weekdays()->dailyAt('10:00');
     }
 
     /**
