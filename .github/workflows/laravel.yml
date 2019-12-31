@@ -24,6 +24,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: phpunit
           coverage: xdebug
+          extensions: curl, fileinfo, intl, mbstring, openssl, pdo_mysql
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
