@@ -1,4 +1,5 @@
 ![](https://github.styleci.io/repos/228243964/shield)
+![](https://github.com/ricardoboss/Volter/workflows/Laravel%20CI/badge.svg)
 
 # Volter
 
