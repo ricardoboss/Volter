@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UserCommandsTest extends TestCase
