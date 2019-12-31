@@ -20,7 +20,7 @@ class UserCommandsTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
             'email' => 'test@example.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
         ]);
 
         $user = User::whereEmail('test@example.com')->first();
