@@ -32,8 +32,7 @@ class Kernel extends ConsoleKernel
      */
     public function schedule(Schedule $schedule): void
     {
-        $schedule->call(function () {
-
+        $schedule->call(function (): void {
         })->weekdays()->dailyAt('10:00');
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Console\Command;
 
 /**
- * Class NotifyUnverifiedUsers
+ * Class NotifyUnverifiedUsers.
  */
 class Verify extends Command
 {
@@ -32,7 +32,7 @@ class Verify extends Command
     protected $description = 'Mark a user\'s e-mail address as verified.';
 
     /**
-     * @var bool Whether we are updating multiple users or just one.
+     * @var bool whether we are updating multiple users or just one
      */
     private $is_mass_updating = false;
 
@@ -54,17 +54,17 @@ class Verify extends Command
             }
 
             return $result;
-        } else {
-            $user = User::whereId($id)->firstOrFail();
-
-            return $this->verifyUser($user);
         }
+        $user = User::whereId($id)->firstOrFail();
+
+        return $this->verifyUser($user);
     }
 
     /**
      * Handle this command if one user is specified.
      */
-    private function verifyUser(User $user): bool {
+    private function verifyUser(User $user): bool
+    {
         if (!$this->hasOption('force') && $user->hasVerifiedEmail()) {
             $this->warn("User {$user->name} has already verified their e-mail address ({$user->email}).");
 
