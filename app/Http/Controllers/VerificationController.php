@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -43,7 +42,7 @@ class VerificationController extends Controller
      *
      * @throws AuthorizationException
      */
-    public function verify(Request $request): RedirectResponse
+    public function verify(Request $request): void
     {
         if (!hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
             throw new AuthorizationException;
@@ -54,14 +53,14 @@ class VerificationController extends Controller
         }
 
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect('/');
+            return;
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return redirect('/')->with('verified', true);
+        return;
     }
 
     /**
