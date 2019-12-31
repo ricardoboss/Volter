@@ -66,7 +66,7 @@ class Verify extends Command
      */
     private function verifyUser(User $user): bool {
         if (!$this->hasOption('force') && $user->hasVerifiedEmail()) {
-            $this->warn("User {$user->name} has already verified their e-mail address.");
+            $this->warn("User {$user->name} has already verified their e-mail address ({$user->email}).");
 
             return true;
         }
@@ -74,7 +74,7 @@ class Verify extends Command
         if ($this->hasOption('notify')) {
             $user->sendEmailVerificationNotification();
 
-            $this->info("User {$user->name} has successfully been notified to verify their e-mail address.");
+            $this->info("User {$user->name} has successfully been notified to verify their e-mail address ({$user->email}).");
         } else {
             if ($user->markEmailAsVerified()) {
                 event(new Verified($user));

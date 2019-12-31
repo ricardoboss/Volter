@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,6 +65,14 @@ class User extends Authenticatable implements JWTSubject, HasRoleAndPermissionIn
             'roles' => $this->getRoles()->pluck('slug')->toArray(),
             'permissions' => $this->getPermissions()->pluck('slug')->toArray(),
         ];
+    }
+
+    /**
+     * Send the email verification notification.
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmail());
     }
 
     /**
