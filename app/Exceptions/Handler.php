@@ -64,8 +64,18 @@ class Handler extends ExceptionHandler
      */
     public function unauthenticated($request, AuthenticationException $exception)
     {
-        return $request->expectsJson()
-            ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->to($exception->redirectTo() ?? '/login?continue_with=' . urlencode($request->path()));
+        if ($request->expectsJson()) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        } else {
+            $redirect = $exception->redirectTo();
+            if ($redirect === null) {
+                $redirect = '/login?continue_with=';
+
+                $current_uri = $request->getRequestUri();
+                $redirect .= rawurlencode($current_uri);
+            }
+
+            return redirect()->to($redirect);
+        }
     }
 }
