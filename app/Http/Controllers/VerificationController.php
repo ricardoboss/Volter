@@ -10,20 +10,22 @@ use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Http\Request;
 
 /**
- * Class VerificationController
+ * Class VerificationController.
  */
 class VerificationController extends Controller
 {
     use RedirectsUsers;
+
     /**
-     * @var string The path to redirect to after verification.
+     * @var string the path to redirect to after verification
      */
     protected $redirectTo = '/';
 
     /**
      * Check if the currently authenticated user has verified their e-mail address.
      */
-    public function check(): bool {
+    public function check(): bool
+    {
         /** @var User $user */
         $user = auth()->user();
 
@@ -52,8 +54,6 @@ class VerificationController extends Controller
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
-
-        return;
     }
 
     /**
@@ -66,7 +66,5 @@ class VerificationController extends Controller
         }
 
         $request->user()->sendEmailVerificationNotification();
-
-        return;
     }
 }
