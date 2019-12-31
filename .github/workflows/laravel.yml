@@ -29,10 +29,17 @@ jobs:
           coverage: xdebug
           extensions: curl, fileinfo, intl, mbstring, openssl, pdo_sqlite, zip
 
-      - name: Create Database
+      - name: Create Database (Linux)
+        if: runner.OS == 'Linux'
         run: |
           mkdir -p database
           touch database/database.sqlite
+          
+      - name: Create Database (Windows)
+        if: runner.OS == 'Windows'
+        run: |
+          mkdir -p database -f
+          echo $null >> database/database.sqlite
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
