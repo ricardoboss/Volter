@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\User;
 use Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserModifyCommandsTest extends TestCase
@@ -23,7 +22,7 @@ class UserModifyCommandsTest extends TestCase
         $this->user = factory(User::class)->create([
             'name' => "John Doe",
             'email' => "test@example.com",
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
         ]);
     }
 
