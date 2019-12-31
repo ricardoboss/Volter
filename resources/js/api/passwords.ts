@@ -3,6 +3,7 @@ import {AxiosResponse} from "axios";
 import IApiResponse from "../types/IApiResponse";
 import Vue from "vue";
 import IPagination, {IPaginationLinks} from "../types/IPagination";
+import {inject} from "./index";
 
 const endpoints = {
     list: '/api/passwords',
@@ -13,25 +14,6 @@ const endpoints = {
     destroy: '/api/passwords/{password}/destroy',
     share: '/api/passwords/{password}/share',
 };
-
-function inject(url: string, queryParams: any) {
-    if (queryParams === null)
-        return url;
-
-    let params = new URLSearchParams();
-
-    Object.keys(queryParams).forEach(key => {
-        if (url.indexOf("{" + key + "}") >= 0)
-            url = url.replace("{" + key + "}", queryParams[key]);
-        else
-            params.append(key, queryParams[key]);
-    });
-
-    if (params.toString().length > 0)
-        url += "?" + params.toString();
-
-    return url;
-}
 
 async function list(data: IPaginationLinks | null = null): Promise<IPagination<IPassword>> {
     let url: string = endpoints.list;
