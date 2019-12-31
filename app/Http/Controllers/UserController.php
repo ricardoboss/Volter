@@ -16,6 +16,14 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class UserController extends Controller
 {
     /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(): AnonymousResourceCollection

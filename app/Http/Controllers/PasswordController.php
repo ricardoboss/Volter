@@ -19,6 +19,14 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class PasswordController extends Controller
 {
     /**
+     * PasswordController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(): AnonymousResourceCollection

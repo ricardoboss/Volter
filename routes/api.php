@@ -20,7 +20,7 @@ Route::group(['prefix' => 'auth'], function (): void {
     Route::get('me', 'AuthController@me');
 });
 
-Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function (): void {
+Route::group(['prefix' => 'passwords'], function (): void {
     Route::get('', 'PasswordController@index');
     Route::post('', 'PasswordController@create');
 
@@ -32,7 +32,7 @@ Route::group(['prefix' => 'passwords', 'middleware' => 'auth'], function (): voi
     Route::put('{password}/share', 'PasswordController@share');
 });
 
-Route::group(['prefix' => 'users', 'middleware' => 'auth'], function (): void {
+Route::group(['prefix' => 'users'], function (): void {
     Route::get('', 'UserController@index');
     Route::post('', 'UserController@create')->middleware('can:create,App\Models\User');
 
@@ -41,7 +41,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function (): void {
     Route::delete('{user}', 'UserController@delete')->middleware('can:delete,user');
 });
 
-Route::group(['prefix' => 'email', 'middleware' => 'auth'], function (): void {
+Route::group(['prefix' => 'email'], function (): void {
     Route::get('verify', 'VerificationController@check')->name('verification.notice');
     Route::get('verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
     Route::post('resend', 'VerificationController@resend')->name('verification.resend');
