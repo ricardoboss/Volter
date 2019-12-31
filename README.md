@@ -1,5 +1,8 @@
-![](https://github.styleci.io/repos/228243964/shield?style=plastic)
-![](https://github.com/ricardoboss/Volter/workflows/Laravel%20CI/badge.svg)
+[![](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](https://github.com/ricardoboss/Volter/blob/master/LICENSE)
+[![](https://img.shields.io/badge/php-%3E=7.3-blue?style=flat-square)](https://github.com/ricardoboss/Volter/blob/master/composer.json#L14)
+[![](https://img.shields.io/badge/laravel-v6.2-FF2D20?style=flat-square)](#)
+[![](https://github.styleci.io/repos/228243964/shield)](https://github.styleci.io/repos/228243964)
+[![](https://github.com/ricardoboss/Volter/workflows/Laravel%20CI/badge.svg)](https://github.com/ricardoboss/Volter/actions)
 
 # Volter
 
