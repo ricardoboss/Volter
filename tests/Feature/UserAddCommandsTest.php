@@ -43,7 +43,8 @@ class UserAddCommandsTest extends TestCase
         $this->checkUserExists();
     }
 
-    private function checkUserExists(string $role = 'user') {
+    private function checkUserExists(string $role = 'user'): void
+    {
         $this->assertDatabaseHas('users', [
             'name' => 'John Doe',
             'email' => 'test@example.com',

@@ -7,12 +7,12 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
 
 /**
- * Trait CreatesApplication
+ * Trait CreatesApplication.
  */
 trait CreatesApplication
 {
     /**
-     * Creates the application
+     * Creates the application.
      */
     final public function createApplication(): Application
     {
