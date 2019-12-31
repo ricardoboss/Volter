@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Class VerificationController
+ * Class VerificationController.
  */
 class VerificationController extends Controller
 {
