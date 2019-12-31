@@ -66,16 +66,15 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson()) {
             return response()->json(['message' => $exception->getMessage()], 401);
-        } else {
-            $redirect = $exception->redirectTo();
-            if ($redirect === null) {
-                $redirect = '/login?continue_with=';
-
-                $current_uri = $request->getRequestUri();
-                $redirect .= rawurlencode($current_uri);
-            }
-
-            return redirect()->to($redirect);
         }
+        $redirect = $exception->redirectTo();
+        if ($redirect === null) {
+            $redirect = '/login?continue_with=';
+
+            $current_uri = $request->getRequestUri();
+            $redirect .= rawurlencode($current_uri);
+        }
+
+        return redirect()->to($redirect);
     }
 }
