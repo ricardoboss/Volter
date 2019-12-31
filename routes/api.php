@@ -40,3 +40,9 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth'], function (): void {
     Route::put('{user}', 'UserController@update')->middleware('can:update,user');
     Route::delete('{user}', 'UserController@delete')->middleware('can:delete,user');
 });
+
+Route::group(['prefix' => 'email', 'middleware' => 'auth'], function (): void {
+    Route::get('verify', 'VerificationController@check')->name('verification.notice');
+    Route::get('verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
+    Route::post('resend', 'VerificationController@resend')->name('verification.resend');
+});
