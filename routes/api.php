@@ -42,7 +42,7 @@ Route::group(['prefix' => 'users'], function (): void {
 });
 
 Route::group(['prefix' => 'email'], function (): void {
-    Route::get('verify', 'VerificationController@check')->name('verification.notice');
+    Route::get('check', 'VerificationController@check')->name('verification.notice');
     Route::get('verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
     Route::post('resend', 'VerificationController@resend')->name('verification.resend');
 });
