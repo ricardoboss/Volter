@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Trait PrintModel.
  *
- * @method void table($headers, $rows, $tableStyle = 'default', array $columnStyles = [])
+ * @mixin Command
  */
 trait ShowModel
 {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\User;
 
+use App\Console\Commands\FiltersUsers;
 use App\Console\Commands\ShowModel;
 use App\Models\User;
 use Exception;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Output\Output;
  */
 class Modify extends Command
 {
-    use ShowModel;
+    use ShowModel, FiltersUsers;
 
     /**
      * The name and signature of the console command.
@@ -44,7 +45,7 @@ class Modify extends Command
      */
     public function handle(): int
     {
-        $user = $this->getUser();
+        $user = $this->getUser($this->argument('filter'));
 
         if ($user === null) {
             $this->warn('No user was found.', Output::VERBOSITY_VERBOSE);
@@ -125,47 +126,5 @@ class Modify extends Command
         $this->show($user, $availableAttrs);
 
         return 0;
-    }
-
-    /**
-     * Try to get the user by the supplied filter argument.
-     */
-    private function getUser(): ?User
-    {
-        $identifier = $this->argument('filter');
-
-        $users = User::where('id', $identifier)
-            ->orWhere('email', 'LIKE', "%$identifier%");
-
-        $count = $users->count();
-        $this->info("Found $count user(s).", Output::VERBOSITY_VERBOSE);
-
-        if ($count == 0) {
-            $this->error("Could not find user with id or email \"$identifier\"");
-
-            return null;
-        }
-
-        if ($count > 1 && $this->input->isInteractive()) {
-            $choices = $users->get()
-                ->map(function (User $user) {
-                    return "Name: $user->name, E-Mail: $user->email, Created: $user->created_at, Id: $user->id";
-                })
-                ->all();
-
-            $choice = $this->choice('Filter is ambiguous, found multiple users! Which user do you want to edit',
-                $choices);
-
-            $id = Str::after($choice, 'Id: ');
-            $user = User::whereId($id)->first();
-        } elseif ($count > 1) {
-            $this->error("Filter is ambiguous! Found $count users that match the given filter \"$identifier\". Cannot continue without interaction.");
-
-            return null;
-        } else {
-            $user = $users->first();
-        }
-
-        return $user;
     }
 }
