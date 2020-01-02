@@ -19,6 +19,7 @@ use Symfony\Component\Console\Output\Output;
 class Modify extends Command
 {
     use ShowModel;
+
     /**
      * The name and signature of the console command.
      *
@@ -28,6 +29,7 @@ class Modify extends Command
                                 {filter : A value to filter the users by. Can be an ID or e-mail}
                                 {attribute? : The attribute to modify}
                                 {value? : The new value of the attribute}';
+
     /**
      * The console command description.
      *
