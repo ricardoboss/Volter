@@ -19,11 +19,8 @@ class UserModifyCommandsTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create([
-            'name' => "John Doe",
-            'email' => "test@example.com",
-            'password' => Hash::make('password'),
-        ]);
+        factory(User::class, 10)->create();
+        $this->user = factory(User::class)->create(['name' => "John Doe"]);
     }
 
     public function testInteractiveWithId(): void
@@ -36,6 +33,11 @@ class UserModifyCommandsTest extends TestCase
         $this->withStaticInput($this->user->id, "email", "john@example.com");
     }
 
+    public function testStaticWithIdNonInteractive(): void
+    {
+        $this->withStaticInputNonInteractive($this->user->id, "email", "john@example.com");
+    }
+
     public function testInteractiveWithEmail(): void
     {
         $this->withInteractiveInput($this->user->email, "name", "Jane Doe");
@@ -46,19 +48,15 @@ class UserModifyCommandsTest extends TestCase
         $this->withStaticInput($this->user->email, "name", "Jane Doe");
     }
 
-    public function testInteractiveWithName(): void
+    public function testStaticWithEmailNonInteractive(): void
     {
-        $this->withInteractiveInput($this->user->name, "email", "john@example.com");
-    }
-
-    public function testStaticWithName(): void
-    {
-        $this->withStaticInput($this->user->name, "email", "john@example.com");
+        $this->withStaticInputNonInteractive($this->user->email, "name", "Jane Doe");
     }
 
     private function withInteractiveInput(string $filter, string $attr, string $value): void
     {
         $this->artisan("user:mod $filter")
+            ->expectsOutput("About to modify this user:")
             ->expectsQuestion("Please choose an attribute to set", $attr)
             ->expectsQuestion("New value of $attr", $value)
             ->expectsOutput("User saved:")
@@ -72,6 +70,19 @@ class UserModifyCommandsTest extends TestCase
     private function withStaticInput(string $filter, string $attr, string $value): void
     {
         $this->artisan("user:mod \"$filter\" \"$attr\" \"$value\"")
+            ->expectsOutput("About to modify this user:")
+            ->expectsOutput("User saved:")
+            ->assertExitCode(0);
+
+        $this->user->refresh();
+
+        $this->assertEquals($value, $this->user->{$attr});
+    }
+
+    private function withStaticInputNonInteractive(string $filter, string $attr, string $value): void
+    {
+        $this->artisan("user:mod \"$filter\" \"$attr\" \"$value\" -n")
+            ->expectsOutput("About to modify this user:")
             ->expectsOutput("User saved:")
             ->assertExitCode(0);
 
