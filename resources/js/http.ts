@@ -53,7 +53,7 @@ axios.interceptors.response.use(
 axios.interceptors.response.use(
     async response => await response,
     async error => {
-        if (error.response.status === 401 && store.getters['auth/isAuthenticated']) {
+        if (error?.response?.status === 401 && store.getters['auth/isAuthenticated']) {
             console.warn("Got HTTP status 401. Logging out.");
 
             await store.dispatch('auth/logout', {invalidate: false});
@@ -76,6 +76,6 @@ axios.interceptors.response.use(
     async response => await response,
     async error => {
         // flatten the error down to the response from the server
-        throw error?.response ?? new Error("Unknown error.");
+        throw error?.response ?? error ?? new Error("Unknown error.");
     }
 );
