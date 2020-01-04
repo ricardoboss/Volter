@@ -37,7 +37,7 @@
                         type: 'success',
                         timer: 3000,
                         showConfirmButton: false,
-                        position: 'top'
+                        position: 'top',
                     });
                 } catch (e) {
                     console.error(e);

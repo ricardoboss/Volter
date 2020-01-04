@@ -2,19 +2,19 @@
     <div>
         <div v-show="table_items.length > 0">
             <b-table
-                    :current-page="current_page"
-                    :fields="table_fields"
-                    :items="table_items"
-                    :per-page="per_page"
-                    :responsive="true"
-                    :stacked="type === 'list'"
-                    borderless
-                    hover
-                    no-provider-sorting
-                    primary-key="id"
-                    ref="table"
-                    small
-                    striped
+                :current-page="current_page"
+                :fields="table_fields"
+                :items="table_items"
+                :per-page="per_page"
+                :responsive="true"
+                :stacked="type === 'list'"
+                borderless
+                hover
+                no-provider-sorting
+                primary-key="id"
+                ref="table"
+                small
+                striped
             >
                 <template v-slot:cell()="data">
                     <span class="nobr">{{ data.value }}</span>
