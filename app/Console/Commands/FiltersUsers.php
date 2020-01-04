@@ -39,7 +39,7 @@ trait FiltersUsers
                 })
                 ->all();
 
-            $choice = $this->choice('Filter is ambiguous, found multiple users! Which user do you want to edit',
+            $choice = $this->choice('Filter is ambiguous, found multiple users! Please choose a user',
                 $choices);
 
             $id = Str::after($choice, 'Id: ');
