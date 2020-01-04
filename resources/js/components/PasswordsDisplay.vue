@@ -1,52 +1,58 @@
 <template>
     <div>
-        <b-table
-            :items="table_items"
-            :per-page="per_page"
-            :current-page="current_page"
-            :fields="table_fields"
-            primary-key="id"
-            hover
-            striped
-            borderless
-            small
-            :responsive="true"
-            :stacked="type === 'list'"
-            no-provider-sorting
-            ref="table"
-        >
-            <template v-slot:cell()="data">
-                <span class="nobr">{{ data.value }}</span>
-            </template>
+        <div v-show="table_items.length > 0">
+            <b-table
+                    :current-page="current_page"
+                    :fields="table_fields"
+                    :items="table_items"
+                    :per-page="per_page"
+                    :responsive="true"
+                    :stacked="type === 'list'"
+                    borderless
+                    hover
+                    no-provider-sorting
+                    primary-key="id"
+                    ref="table"
+                    small
+                    striped
+            >
+                <template v-slot:cell()="data">
+                    <span class="nobr">{{ data.value }}</span>
+                </template>
 
-            <template v-slot:cell(id)="data">
-                <code class="nobr">{{ data.value }}</code>
-            </template>
+                <template v-slot:cell(id)="data">
+                    <code class="nobr">{{ data.value }}</code>
+                </template>
 
-            <template v-slot:cell(value)="data">
-                <spoiler :value_provider="fetchPassword" :context="data.item.id" />
-            </template>
+                <template v-slot:cell(value)="data">
+                    <spoiler :context="data.item.id" :value_provider="fetchPassword" />
+                </template>
 
-            <template v-slot:cell(actions)="data">
-                <slot>
-                    <router-link v-if="data.item.editable" :to="'/passwords/' + data.item.id">edit</router-link>
-                </slot>
-            </template>
+                <template v-slot:cell(actions)="data">
+                    <slot>
+                        <router-link :to="'/passwords/' + data.item.id" v-if="data.item.editable">edit</router-link>
+                    </slot>
+                </template>
 
-            <template v-slot:cell(created_at)="data">
-                <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
-            </template>
+                <template v-slot:cell(created_at)="data">
+                    <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
+                </template>
 
-            <template v-slot:cell(updated_at)="data">
-                <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
-            </template>
+                <template v-slot:cell(updated_at)="data">
+                    <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
+                </template>
 
-            <template v-slot:cell(deleted_at)="data">
-                <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
-            </template>
-        </b-table>
+                <template v-slot:cell(deleted_at)="data">
+                    <span class="nobr">{{ new Date(data.value).toLocaleString() }}</span>
+                </template>
+            </b-table>
 
-        <b-pagination v-model="current_page" :per-page="per_page" :total-rows="total" @change="loadPage" />
+            <b-pagination :per-page="per_page" :total-rows="total" @change="loadPage" v-model="current_page" />
+        </div>
+
+        <b-alert :show="table_items.length === 0" variant="info">
+            There are no passwords to show.
+        </b-alert>
     </div>
 </template>
 
