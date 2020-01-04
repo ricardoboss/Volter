@@ -5,11 +5,14 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class MeTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @throws BindingResolutionException
      */
@@ -28,8 +31,8 @@ class MeTest extends TestCase
         ]);
 
         $response->assertSuccessful()
-            ->assertApiResponse()
             ->assertExactJson([
+                'success' => true,
                 'data' => [
                     'id' => $user->id,
                     'name' => $user->name,
