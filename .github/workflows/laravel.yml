@@ -81,6 +81,7 @@ jobs:
         run: vendor/bin/phpunit --verbose --coverage-clover=coverage.xml
 
       - name: Send code coverage report to Codecov.io
+        if: always()
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
