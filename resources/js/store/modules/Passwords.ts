@@ -23,9 +23,9 @@ const getters = {
 };
 
 const actions = {
-    async fetchNextPage({state, commit}: ActionContext<PasswordsState, RootState>): Promise<IPagination<IPassword>> {
+    async fetch({state, commit}: ActionContext<PasswordsState, RootState>, payload: { page: number, per_page: number }): Promise<IPagination<IPassword>> {
         // get next page from api
-        let pagination = await api.passwords.list(state.links);
+        let pagination = await api.passwords.list(payload);
 
         // store all received passwords in storage
         commit('storeData', pagination);

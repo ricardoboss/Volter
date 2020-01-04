@@ -15,10 +15,16 @@ const endpoints = {
     share: '/api/passwords/{password}/share',
 };
 
-async function list(data: IPaginationLinks | null = null): Promise<IPagination<IPassword>> {
-    let url: string = endpoints.list;
-    if (data !== null && data.next !== null)
-        url = data.next;
+async function listNext(data: IPaginationLinks | null = null): Promise<IPagination<IPassword>> {
+    let url = data?.next ?? endpoints.list;
+
+    let response: AxiosResponse<IPagination<IPassword>> = await Vue.axios.get(url);
+
+    return response.data;
+}
+
+async function list(data: { page: number, per_page: number }): Promise<IPagination<IPassword>> {
+    let url = endpoints.list + "?page=" + data.page + "&per_page=" + data.per_page;
 
     let response: AxiosResponse<IPagination<IPassword>> = await Vue.axios.get(url);
 
@@ -105,6 +111,7 @@ async function share(password: IPassword): Promise<any> {
 }
 
 export default {
+    listNext,
     list,
     create,
     get,
