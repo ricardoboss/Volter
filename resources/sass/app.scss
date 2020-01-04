@@ -1,8 +1,10 @@
 // variable overrides
 @import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
 @import 'variables';
+@import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+@import '~bootstrap-vue/src/variables';
+@import '~sweetalert2/src/variables';
 
 // Bootstrap
 @import '~bootstrap/scss/root';
@@ -40,14 +42,15 @@
 @import '~bootstrap/scss/utilities';
 @import '~bootstrap/scss/print';
 
-// Sweetalert2
-@import '~@sweetalert2/theme-bootstrap-4/bootstrap-4';
-
 // BootstrapVue
-@import '~bootstrap-vue';
+@import '~bootstrap-vue/src/utilities';
+@import '~bootstrap-vue/src/components/index';
 
 // Utility classes
 @import 'utilites';
 
 // Swal2 Overrides
 @import 'swal';
+
+// Icon styles
+@import 'icons';

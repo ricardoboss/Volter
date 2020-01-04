@@ -1,0 +1,8 @@
+.fa-icon {
+    position: relative;
+    top: -1px;
+
+    /* You would have to include the following two lines to make this work in Safari */
+    max-width: 100%;
+    max-height: 100%;
+}
