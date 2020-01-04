@@ -6,7 +6,7 @@
             <b-spinner class="mx-auto d-block" variant="primary" />
         </div>
 
-        <password-form v-else v-model="model" :editable="model.editable" @submit="submitModel" />
+        <password-form :editable="model.editable" @submit="submit" v-else v-model="model" />
     </div>
 </template>
 
@@ -25,22 +25,34 @@
         },
 
         methods: {
-            async submitModel(model) {
-                this.submitting = true;
+            async submit(password) {
+                try {
+                    this.submitting = true;
 
-                await this.$store.dispatch('passwords/update', { password: model });
+                    await this.$store.dispatch('passwords/update', { password });
 
-                this.model = model;
+                    this.model = password;
 
-                await this.$swal({
-                    title: 'Successfully updated',
-                    text: 'Changes were saved.',
-                    type: 'success',
-                });
+                    await this.$router.push({ path: '/passwords' });
 
-                this.submitting = false;
-
-                await this.$router.push({ path: '/passwords' });
+                    this.$swal({
+                        toast: true,
+                        title: 'Successfully Saved',
+                        text: 'Changes were saved successfully.',
+                        type: 'success',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        position: 'top',
+                    });
+                } catch (e) {
+                    this.$swal({
+                        title: 'Request Failed',
+                        text: e?.data?.data?.message ?? 'Changes could not be saved.',
+                        type: 'error',
+                    });
+                } finally {
+                    this.submitting = false;
+                }
             },
         },
 
