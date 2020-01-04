@@ -17,11 +17,12 @@ class UserRemoveTest extends TestCase
         factory(User::class, 1)->create();
         factory(User::class)->create([
             'name' => "John Doe",
-            'email' => "john@testing"
+            'email' => "john@testing",
         ]);
     }
 
-    public function testUnique() {
+    public function testUnique(): void
+    {
         $this->artisan('user:remove john@testing')
             ->expectsOutput("You are about to delete this user:")
             ->expectsQuestion("Do you really want to delete this user (irreversible)?", true)
@@ -31,7 +32,8 @@ class UserRemoveTest extends TestCase
         $this->assertDatabaseMissing('users', ['email' => "john@testing"]);
     }
 
-    public function testAbort() {
+    public function testAbort(): void
+    {
         $this->artisan('user:remove john@testing')
             ->expectsOutput("You are about to delete this user:")
             ->expectsQuestion("Do you really want to delete this user (irreversible)?", false)
@@ -41,7 +43,8 @@ class UserRemoveTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => "john@testing"]);
     }
 
-    public function testForce() {
+    public function testForce(): void
+    {
         $this->artisan('user:remove john@testing --force')
             ->expectsOutput("You are about to delete this user:")
             ->assertExitCode(0)

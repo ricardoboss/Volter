@@ -19,7 +19,7 @@ class LoginTest extends TestCase
         $response->assertUnauthorized()
             ->assertApiResponse(false)
             ->assertJsonFragment([
-                'message' => "Invalid credentials."
+                'message' => "Invalid credentials.",
             ]);
     }
 
@@ -41,8 +41,8 @@ class LoginTest extends TestCase
                 'data' => [
                     'token_type',
                     'access_token',
-                    'expires_at'
-                ]
+                    'expires_at',
+                ],
             ])
             ->assertJsonPath('data.token_type', 'bearer', true);
 

@@ -28,7 +28,8 @@ trait CreatesApplication
         return $app;
     }
 
-    private final function registerMacros() {
+    final private function registerMacros(): void
+    {
         TestResponse::macro('assertApiResponse', function (bool $success = true) {
             /** @var TestResponse $this */
             $this->assertJsonStructure([

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Output\Output;
 
 /**
- * Trait FiltersUsers
+ * Trait FiltersUsers.
  *
  * @mixin Command
  */
