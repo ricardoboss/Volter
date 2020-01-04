@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import PasswordForm from "../../components/PasswordForm";
+    import PasswordForm from '../../components/PasswordForm';
     export default {
         components: { PasswordForm },
 
@@ -36,7 +36,7 @@
                 this.submitting = false;
 
                 await this.$router.push({ path: '/passwords/' + password.id });
-            }
-        }
-    }
+            },
+        },
+    };
 </script>
