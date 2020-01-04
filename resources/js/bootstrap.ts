@@ -3,6 +3,8 @@ import axios from "axios"
 import VueAxios from "vue-axios";
 import VueSweetalert2 from "vue-sweetalert2";
 import BootstrapVue from "bootstrap-vue";
+import Icon from "vue-awesome/components/Icon.vue";
+import "./icons";
 import "./http";
 
 /**
@@ -35,3 +37,8 @@ Vue.use(VueSweetalert2);
  * Initialize BootstrapVue
  */
 Vue.use(BootstrapVue);
+
+/**
+ * Add the icon component
+ */
+Vue.component('v-icon', Icon);
