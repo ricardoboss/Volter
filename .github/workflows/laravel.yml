@@ -10,7 +10,7 @@ jobs:
     name: Laravel (PHP ${{ matrix.php-version }} on ${{ matrix.operating-system }})
     runs-on: ${{ matrix.operating-system }}
     strategy:
-      fail-fast: false      
+      fail-fast: false
       matrix:
         operating-system: [ubuntu-latest, windows-latest]
         php-version: ['7.3', '7.4']
@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
-          
+
       - name: Create Database (Windows)
         if: runner.OS == 'Windows'
         run: |
@@ -44,14 +44,20 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      - name: Cache PHP dependencies
+      - name: Cache PHP Dependencies
         uses: actions/cache@v1
         with:
           path: vendor
           key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
-        
+
       - name: Install PHP Dependencies
         run: composer install --no-interaction --no-progress --no-suggest --prefer-dist
+
+      - name: Cache NPM Dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install NPM Dependencies
         run: yarn install --frozen-lockfile --non-interactive
