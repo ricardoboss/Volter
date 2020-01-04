@@ -7,6 +7,7 @@ import Login from "./views/Login.vue";
 import Passwords from "./views/passwords/Passwords.vue";
 import PasswordsOverview from "./views/passwords/PasswordsOverview.vue";
 import EditPassword from "./views/passwords/EditPassword.vue";
+import NewPassword from "./views/passwords/NewPassword.vue";
 import NotFound from "./views/NotFound.vue";
 import {Route} from "vue-router/types/router";
 
@@ -60,14 +61,18 @@ const router = new VueRouterExtended({
                     component: PasswordsOverview,
                 },
                 {
+                    path: 'new',
+                    component: NewPassword,
+                },
+                {
                     path: ':id',
-                    component: EditPassword
+                    component: EditPassword,
                 }
             ]
         },
         {
             path: '*',
-            component: NotFound
+            component: NotFound,
         }
     ],
 });

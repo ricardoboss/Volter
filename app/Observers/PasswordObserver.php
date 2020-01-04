@@ -47,6 +47,7 @@ class PasswordObserver
         $user = $this->getUser();
 
         $password->id = Str::uuid()->toString();
+        $password->version = 0;
 
         // check if creator was already set
         if ($password->created_by == null) {

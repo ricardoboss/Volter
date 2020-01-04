@@ -46,7 +46,10 @@ class PasswordController extends Controller
     {
         $this->authorize('create', Password::class);
 
+        // get the values from the request
         $values = request()->input();
+
+        // create the password and persist it to the database
         $password = Password::create($values);
 
         return new PasswordResource($password);

@@ -29,8 +29,6 @@ async function create(name: string, notes: string, value: string): Promise<IPass
     if (name === null || value === null)
         throw new Error("name nor value can be null!");
 
-    // TODO: encrypt value before transmission
-
     let response: AxiosResponse<IApiResponse<IPassword>> = await Vue.axios.post(
         endpoints.create,
         {
