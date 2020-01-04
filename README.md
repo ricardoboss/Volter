@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)](https://github.com/ricardoboss/Volter/blob/master/LICENSE)
+[![](https://img.shields.io/badge/license-GPL3-brightgreen?style=flat-square)](https://github.com/ricardoboss/Volter/blob/master/LICENSE)
 [![](https://github.styleci.io/repos/228243964/shield)](https://github.styleci.io/repos/228243964)
 [![codecov](https://codecov.io/gh/ricardoboss/Volter/branch/master/graph/badge.svg?token=4vvncRsfFH)](https://codecov.io/gh/ricardoboss/Volter)
 [![](https://github.com/ricardoboss/Volter/workflows/Laravel%20CI/badge.svg)](https://github.com/ricardoboss/Volter/actions)
