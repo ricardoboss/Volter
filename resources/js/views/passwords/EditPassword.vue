@@ -37,14 +37,15 @@
 
                     this.$swal({
                         toast: true,
-                        title: 'Successfully Saved',
-                        text: 'Changes were saved successfully.',
+                        title: 'Changes Saved',
                         type: 'success',
                         timer: 3000,
                         showConfirmButton: false,
                         position: 'top',
                     });
                 } catch (e) {
+                    console.error(e);
+
                     this.$swal({
                         title: 'Request Failed',
                         text: e?.data?.data?.message ?? 'Changes could not be saved.',

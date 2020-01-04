@@ -12,6 +12,7 @@
 
 <script>
     import PasswordForm from '../../components/PasswordForm';
+
     export default {
         components: { PasswordForm },
 
@@ -23,19 +24,32 @@
 
         methods: {
             async submitModel(model) {
-                this.submitting = true;
+                try {
+                    this.submitting = true;
 
-                let password = await this.$store.dispatch('passwords/create', Object.assign({}, model));
+                    let password = await this.$store.dispatch('passwords/create', Object.assign({}, model));
 
-                await this.$swal({
-                    title: 'Successfully created',
-                    text: 'Your password was saved!',
-                    type: 'success',
-                });
+                    await this.$router.push({ path: '/passwords/' + password.id });
 
-                this.submitting = false;
+                    this.$swal({
+                        toast: true,
+                        title: 'Created Successfully',
+                        type: 'success',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        position: 'top'
+                    });
+                } catch (e) {
+                    console.error(e);
 
-                await this.$router.push({ path: '/passwords/' + password.id });
+                    this.$swal({
+                        title: 'Something went wrong',
+                        text: e?.data?.data?.message ?? 'Changes could not be saved.',
+                        type: 'error',
+                    });
+                } finally {
+                    this.submitting = false;
+                }
             },
         },
     };
