@@ -11,7 +11,11 @@
                 v-model="model.name"
                 type="text"
                 required
-                placeholder="Please enter a name"
+                autofocus
+                placeholder="Please enter a name (required)"
+                autocomplete="off"
+                autofill="off"
+                tabindex="1"
             />
         </b-form-group>
 
@@ -20,7 +24,7 @@
             label-for="notes"
             description="A description of the service this password is used for."
         >
-            <b-textarea id="notes" :readonly="!editable" v-model="model.notes" style="min-height: 5rem" />
+            <b-textarea tabindex="2" id="notes" placeholder="(optional)" :readonly="!editable" v-model="model.notes" style="min-height: 5rem" />
         </b-form-group>
 
         <b-form-row>
@@ -30,16 +34,18 @@
         </b-form-row>
         <b-form-row>
             <b-col cols="12" lg="8">
-                <b-form-group description="The password itself.">
+                <b-form-group description="The passwords' value.">
                     <b-form-input
                         id="value"
                         v-model="model.value"
-                        :readonly="!value_revealed || !editable"
+                        :readonly="!editable"
                         :type="value_revealed ? 'text' : 'password'"
-                        :autocomplete="value_revealed ? 'new-password' : 'off'"
+                        autocomplete="new-password"
+                        autofill="disabled"
                         @click="selectPassword"
                         required
-                        placeholder="Please enter the password"
+                        placeholder="Please enter a new value (required)"
+                        tabindex="3"
                     />
                 </b-form-group>
             </b-col>
@@ -49,12 +55,14 @@
                         :variant="value_revealed ? 'warning' : 'outline-warning'"
                         v-text="(value_revealed ? 'Hide' : 'Show') + ' Password'"
                         @click="value_revealed = !value_revealed"
+                        tabindex="5"
                     />
                     <b-button
                         v-if="generator_enabled"
                         :variant="generator_visible ? 'secondary' : 'outline-secondary'"
                         v-text="(generator_visible ? 'Hide' : 'Show') + ' Generator'"
                         @click="toggleGenerator"
+                        tabindex="6"
                     />
                 </b-button-group>
             </b-col>
@@ -64,24 +72,24 @@
                 <b-card>
                     <b-card-text>
                         <b-form-group :label="'Length: ' + generator_length" label-cols-sm="2">
-                            <b-form-input type="range" v-model="generator_length" min="6" max="64" />
+                            <b-form-input type="range" v-model="generator_length" min="6" max="64" tabindex="7" />
                         </b-form-group>
 
                         <b-form-group>
-                            <b-form-checkbox v-model="generator_symbols">Symbols</b-form-checkbox>
+                            <b-form-checkbox v-model="generator_symbols" tabindex="8">Symbols</b-form-checkbox>
                         </b-form-group>
 
                         <b-form-group>
-                            <b-form-checkbox v-model="generator_numbers">Numbers</b-form-checkbox>
+                            <b-form-checkbox v-model="generator_numbers" tabindex="9">Numbers</b-form-checkbox>
                         </b-form-group>
 
-                        <b-button variant="success" @click="generatePassword">Generate new password</b-button>
+                        <b-button variant="success" @click="generatePassword" tabindex="10">Generate new password</b-button>
                     </b-card-text>
                 </b-card>
             </b-col>
         </b-form-row>
 
-        <b-button class="mt-3" type="submit" variant="primary">Save</b-button>
+        <b-button class="mt-3" type="submit" variant="primary" :tabindex="generator_visible ? 11 : 4">Save</b-button>
     </b-form>
 </template>
 
@@ -91,7 +99,7 @@
     export default {
         props: {
             value: {
-                validator: val => val !== null,
+                type: Object,
             },
             editable: {
                 type: Boolean,
@@ -105,7 +113,7 @@
 
         data() {
             return {
-                model: this.value,
+                model: this.value ?? this.emptyPassword(),
                 original: Object.assign({}, this.value),
                 value_revealed: false,
 
@@ -117,6 +125,14 @@
         },
 
         methods: {
+            emptyPassword() {
+                return {
+                    name: null,
+                    notes: null,
+                    value: null,
+                }
+            },
+
             toggleGenerator() {
                 this.value_revealed = this.generator_visible = !this.generator_visible;
             },
