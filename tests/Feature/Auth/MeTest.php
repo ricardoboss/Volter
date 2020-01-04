@@ -16,7 +16,7 @@ class MeTest extends TestCase
     /**
      * @throws BindingResolutionException
      */
-    public function testMe()
+    public function testMe(): void
     {
         /** @var User $user */
         $user = factory(User::class)->create([
@@ -27,7 +27,7 @@ class MeTest extends TestCase
         $token = $this->app->make(Factory::class)->guard('api')->login($user);
 
         $response = $this->getJson('/api/auth/me', [
-            'Authorization' => "bearer $token"
+            'Authorization' => "bearer $token",
         ]);
 
         $response->assertSuccessful()
@@ -37,7 +37,7 @@ class MeTest extends TestCase
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
-                ]
+                ],
             ]);
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Output\Output;
 
 /**
- * Class Remove
+ * Class Remove.
  */
 class Remove extends Command
 {
