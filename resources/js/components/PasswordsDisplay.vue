@@ -92,7 +92,7 @@
                 current_page: 1,
                 per_page: 50,
                 total: 0,
-            }
+            };
         },
 
         async mounted() {
@@ -104,11 +104,12 @@
                 this.loadPage(this.current_page, true);
             },
 
-            async fetchPassword(id) { return (await api.passwords.get(id)).value; },
+            async fetchPassword(id) {
+                return (await api.passwords.get(id)).value;
+            },
 
             async loadPage(page, force = false) {
-                if (!force && page * this.per_page <= this.total)
-                    return;
+                if (!force && page * this.per_page <= this.total) return;
 
                 this.$emit('loading-page', page);
 
@@ -136,22 +137,21 @@
             },
 
             table_items() {
-                return this.all
-                        .map(password => {
-                            const data = { ...password };
+                return this.all.map(password => {
+                    const data = { ...password };
 
-                            if (password.deleted_at !== null) data._rowVariant = 'danger';
+                    if (password.deleted_at !== null) data._rowVariant = 'danger';
 
-                            if (password.created_by?.id !== this.auth.user?.id)
-                                data._cellVariants = { created_by: 'secondary' };
+                    if (password.created_by?.id !== this.auth.user?.id)
+                        data._cellVariants = { created_by: 'secondary' };
 
-                            data.created_by = password.created_by.name;
-                            data.updated_by = password.updated_by?.name ?? null;
-                            data.deleted_by = password.deleted_by?.name ?? null;
+                    data.created_by = password.created_by.name;
+                    data.updated_by = password.updated_by?.name ?? null;
+                    data.deleted_by = password.deleted_by?.name ?? null;
 
-                            return data;
-                        });
-            }
+                    return data;
+                });
+            },
         },
     };
 </script>

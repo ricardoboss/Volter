@@ -24,7 +24,14 @@
             label-for="notes"
             description="A description of the service this password is used for."
         >
-            <b-textarea tabindex="2" id="notes" placeholder="(optional)" :readonly="!editable" v-model="model.notes" style="min-height: 5rem" />
+            <b-textarea
+                tabindex="2"
+                id="notes"
+                placeholder="(optional)"
+                :readonly="!editable"
+                v-model="model.notes"
+                style="min-height: 5rem"
+            />
         </b-form-group>
 
         <b-form-row>
@@ -83,7 +90,9 @@
                             <b-form-checkbox v-model="generator_numbers" tabindex="9">Numbers</b-form-checkbox>
                         </b-form-group>
 
-                        <b-button variant="success" @click="generatePassword" tabindex="10">Generate new password</b-button>
+                        <b-button variant="success" @click="generatePassword" tabindex="10"
+                            >Generate new password</b-button
+                        >
                     </b-card-text>
                 </b-card>
             </b-col>
@@ -130,7 +139,7 @@
                     name: null,
                     notes: null,
                     value: null,
-                }
+                };
             },
 
             toggleGenerator() {
