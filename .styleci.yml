@@ -13,7 +13,6 @@ php:
     - phpdoc_property
     - phpdoc_types_order
     - property_separation
-    - return_type_declaration
     - single_line_throw
     - ternary_to_null_coalescing
     - void_return
