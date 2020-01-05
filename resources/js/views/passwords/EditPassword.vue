@@ -44,7 +44,7 @@
                         position: 'top',
                     });
                 } catch (e) {
-                    console.error("submit", e);
+                    console.error('submit', e);
 
                     this.$swal({
                         title: 'Request Failed',
@@ -70,7 +70,7 @@
                     vm.model = await api.passwords.get(id);
                 });
             } catch (e) {
-                console.error("beforeRouteEnter", e);
+                console.error('beforeRouteEnter', e);
 
                 next(async vm => {
                     await vm.$swal({
@@ -92,7 +92,7 @@
 
                 next();
             } catch (e) {
-                console.error("beforeRouteUpdate", e);
+                console.error('beforeRouteUpdate', e);
 
                 await next(from);
 
