@@ -1,5 +1,7 @@
+> # Notice
+> This project will not be developed further due to lack of knowledge, time, interest and money. Feel free to create forks and stick to what the license allows you to do (and what not to).
+
 [![](https://img.shields.io/badge/license-GPL3-brightgreen?style=flat-square)](https://github.com/ricardoboss/Volter/blob/master/LICENSE)
-[![](https://github.styleci.io/repos/228243964/shield)](https://github.styleci.io/repos/228243964)
 [![codecov](https://codecov.io/gh/ricardoboss/Volter/branch/master/graph/badge.svg?token=4vvncRsfFH)](https://codecov.io/gh/ricardoboss/Volter)
 [![](https://github.com/ricardoboss/Volter/workflows/Laravel%20CI/badge.svg)](https://github.com/ricardoboss/Volter/actions)
 
